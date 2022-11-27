@@ -1,0 +1,110 @@
+.container {
+    width: 100%;
+    height: 750px;
+    background-color: #999933;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 80%;
+    background-color: #acac94;
+    justify-content: space-between;
+}
+
+.calcInput {
+    display: flex;
+    flex-direction: row;
+    background-color: #eeeee4;
+    width: 95%;
+    height: 15%;
+    margin: 12px;
+    box-shadow: 0 5px 10px black;
+}
+
+.calcInput input {
+    outline: none;
+}
+
+.calcButtons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 20%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calcButtons>div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calcButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 100%;
+    background-color: #c9c971;
+    margin: 0 10px;
+    user-select: none;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.calcButton:hover {
+    background-color: #a0a078;
+}
+
+.calcButton:active {
+    transform: translateY(1px);
+}
+
+.calculatorType {
+    display: flex;
+    flex-direction: column;
+}
+
+.calculatorType>div {
+    font-size: xx-large;
+}
+
+.real {
+    display: flex;
+    flex-direction: row;
+}
+
+.real>input {
+    margin: 2px;
+}
+
+.mainDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.type {
+    background-color: #3b8a3b;
+    margin-bottom: 1px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.activeType {
+    background-color: #41b441;
+}
+
+.result {
+    
+}
