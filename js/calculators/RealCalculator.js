@@ -15,7 +15,7 @@ class RealCalculator {
         return a / b;
     }
 
-    prod(p, a) {
+    prod(a, p) {
         return p * a;
     }
 
@@ -29,15 +29,5 @@ class RealCalculator {
 
     zero() {
         return 0;
-    }
-
-    module(a) {
-        return Math.abs(a);
-    }
-
-    // насрал - надо убрать
-
-    getMethods() {
-        return [this.add, this.sub, this.mult, this.div, this.prod, this.pow, this.module]
     }
 }

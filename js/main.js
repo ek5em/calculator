@@ -1,104 +1,68 @@
-window.onload = () => {
-    document.querySelectorAll('.calcButton');
-    for (let child of document.querySelectorAll('.type')) {
-        child.addEventListener('click', (event) => UIHandler(event))
-    }
-}
+window.onload = function () {
 
-function UIHandler(event) {
-    const { target } = event;
-    const type = document.querySelectorAll('.type');
-    document.querySelector('.mainDiv').remove();
+    const inputA = document.querySelector('.inputA');
+    const inputB = document.querySelector('.inputB');
 
-    for (let i = 0; i < type.length; i++) {
-        type[i].classList.remove('activeType');
-    }
-    target.classList.add('activeType')
-    switch (target.dataset.content) {
-        case 'real': {
-            realUI();
-            const num = document.querySelector('.real').children;
-            const funcs = real.getMethods();
-            const buttons = document.querySelectorAll('.calcButton');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].addEventListener('click', function () {
-                    document.querySelector('.result').innerHTML = funcs[i](num.value - 0, num.value - 0);
-                })
+    function getEntity(str) {
+        if (str) {
+            str = str.replace(/\s/g, '');
+            //если вещественное
+            if (!isNaN(str - 0)) {
+                return (str - 0);
             }
-            break;
-        }
-        case 'complex': {
-            complexUI();
-            const real = document.querySelectorAll('.realNum');
-            const image = document.querySelectorAll('.imageNum');
-            const funcs = complex.getMethods();
-            const buttons = document.querySelectorAll('.calcButton');
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].addEventListener('click', function () {
-                    const result = funcs[i](new Complex(real[0].value - 0, image[0].value - 0), new Complex(real[1].value - 0, image[1].value - 0));
-                    document.querySelector('.result').innerHTML = `${result.re} + ${result.im}i`;
-
-                })
+            //если комлпекс
+            const arr = str.split('i');
+            if (arr.length === 2) {
+                const ch = arr[0].substr(arr[0].length - 1)
+                arr[0] = arr[0].slice(0, -1);
+                if (ch === '-') {
+                    arr[1] = ch + arr[1];
+                }
+                if (arr[0]) {
+                    return new Complex(arr[0] - 0, arr[1] - 0);
+                }
+                return new Complex(0, arr[1] - 0)
             }
-            break;
+            //если вектор
+            if (str[0] === '(') {
+                const arr = str.slice(1, -1).split(',');
+                return new Vector(arr.map(elem => elem - 0));
+            }
+            //если матрица
+
+            if (str[0] === '[') {
+                const arr = []
+                str.slice(1, -1).split('|').forEach((elem) =>
+                    arr.push(elem.split(';').map(value => value - 0)));
+                return new Matrix(arr);
+
+            }
         }
-        case 'vector': {
-            vectorUI();
-            break;
-        }
-    }
-}
-
-function realUI() {
-    const mainDiv = createDiv('mainDiv');
-    const div = createDiv('real');
-
-    div.appendChild(document.createElement('input'));
-    div.appendChild(document.createElement('input'));
-
-    mainDiv.appendChild(div);
-    document.querySelector('.calcInput').appendChild(mainDiv);
-}
-
-function complexUI() {
-    const mainDiv = createDiv('mainDiv');
-    const compl = [];
-
-    for (let i = 0; i < 2; i++) {
-        compl[i] = createDiv('complex');
-        compl[i].appendChild(createInput('realNum'));
-        compl[i].appendChild(createSpan('+'));
-        compl[i].appendChild(createInput('imageNum'))
-        compl[i].appendChild(createSpan('i'));
-        mainDiv.appendChild(compl[i]);
+        return null;
     }
 
-    document.querySelector('.calcInput').appendChild(mainDiv);
-}
+    function operandHandler(event) {
+        const a = getEntity(inputA.value);
+        const b = getEntity(inputB.value);
+        let calc = new RealCalculator;
+        if (a instanceof Complex) {
+            calc = new ComplexCalculator;
+        }
 
-function vectorUI() {
-    const mainDiv = createDiv('mainDiv');
-    document.querySelector('.calcInput').appendChild(mainDiv);
-}
+        if (a instanceof Vector) {
+            calc = new VectorCalculator;
+        }
 
-function createInput(__class) {
-    const input = document.createElement('input');
-    input.className = __class;
-    return input;
-}
+        if (a instanceof Matrix) {
+            calc = new MatrixCalculator;
+        }
 
-function createDiv(__class) {
-    const div = document.createElement('div');
-    div.classList = __class;
-    return div;
-}
+        const c = calc[event.target.dataset.operand](a, b)
 
-function createSpan(innerHTML) {
-    const span = document.createElement('span');
-    span.innerHTML = innerHTML;
-    return span;
-}
+        if (c) document.querySelector('.result').innerHTML = c.toString();
 
-const real = new RealCalculator;
-const complex = new ComplexCalculator;
-const vector = new VectorCalculator;
+    }
+
+    document.querySelectorAll('.operand')
+        .forEach(button => button.addEventListener('click', operandHandler))
+}

@@ -19,15 +19,21 @@
 .calcInput {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     background-color: #eeeee4;
     width: 95%;
-    height: 15%;
+    height: 20%;
     margin: 12px;
     box-shadow: 0 5px 10px black;
 }
 
-.calcInput input {
+.calcInput textarea {
+    text-align: center;
+    height: 50%;
+    margin: 10px;
     outline: none;
+    resize: none;
 }
 
 .calcButtons {
@@ -47,7 +53,7 @@
     align-items: center;
 }
 
-.calcButton {
+.operand {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -60,51 +66,18 @@
     transition: 0.1s;
 }
 
-.calcButton:hover {
+.operand:hover {
     background-color: #a0a078;
 }
 
-.calcButton:active {
+.operand:active {
     transform: translateY(1px);
 }
 
-.calculatorType {
+.resultContainer {
     display: flex;
-    flex-direction: column;
-}
-
-.calculatorType>div {
-    font-size: xx-large;
-}
-
-.real {
-    display: flex;
-    flex-direction: row;
-}
-
-.real>input {
-    margin: 2px;
-}
-
-.mainDiv {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
     align-items: center;
-}
-
-.type {
-    background-color: #3b8a3b;
-    margin-bottom: 1px;
-    text-align: center;
-    border-radius: 10px;
-}
-
-.activeType {
-    background-color: #41b441;
-}
-
-.result {
-    
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }

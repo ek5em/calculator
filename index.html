@@ -9,9 +9,11 @@
     <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
     <script src="js/types/Complex.js"></script>
     <script src="js/types/Vector.js"></script>
+    <script src="js/types/Matrix.js"></script>
     <script src="js/calculators/RealCalculator.js"></script>
     <script src="js/calculators/ComplexCalculator.js"></script>
     <script src="js/calculators/VectorCalculator.js"></script>
+    <script src="js/calculators/MatrixCalculator.js"></script>
     <script src='js/main.js'></script>
 </head>
 
@@ -19,29 +21,27 @@
     <div class="container">
         <div class="calculator">
             <div class="calcInput">
-                <div class="mainDiv"></div>
+                <textarea class="inputA"></textarea>
+                <textarea class="inputB"></textarea>
             </div>
-            <span class="result"></span>
+            <div class="resultContainer">
+                <span class="result"></span>
+            </div>
             <div class="calcButtons">
                 <div>
-                    <div class="calcButton">Add</div>
-                    <div class="calcButton">Sub</div>
-                    <div class="calcButton">Mult</div>
+                    <div class="operand" data-operand="add">Add</div>
+                    <div class="operand" data-operand="sub">Sub</div>
+                    <div class="operand" data-operand="mult">Mult</div>
                 </div>
                 <div>
-                    <div class="calcButton">Div</div>
-                    <div class="calcButton">Prod</div>
-                    <div class="calcButton">Pow</div>
+                    <div class="operand" data-operand="div">Div</div>
+                    <div class="operand" data-operand="prod">Prod</div>
+                    <div class="operand" data-operand="pow">Pow</div>
                 </div>
                 <div>
-                    <div class="calcButton">Module</div>
+                    <!--<div class="operand" data-operand="module">Module</div> -->
                 </div>
             </div>
-        </div>
-        <div class="calculatorType">
-            <div data-content="real" class="type">Real</div>
-            <div data-content="complex" class="type">Complex</div>
-            <div data-content="vector" class="type">Vector</div>
         </div>
     </div>
 </body>

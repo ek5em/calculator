@@ -1,18 +1,18 @@
 class VectorCalculator extends RealCalculator {
+    constructor(calc = new RealCalculator) {
+        this.calc = calc;
+    }
+
     div() {
         return null;
     }
 
     add(a, b) {
-        return new Vector(a.values.map((elem, i) => {
-            elem + b.values[i];
-        }));
+        return new Vector(a.values.map((elem, i) => elem + b.values[i]));
     }
 
     sub(a, b) {
-        return new Vector(a.values.map((elem, i) => {
-            elem - b.values[i];
-        }));
+        return new Vector(a.values.map((elem, i) => elem - b.values[i]));
     }
 
     mult(a, b) {
@@ -23,7 +23,7 @@ class VectorCalculator extends RealCalculator {
         ])
     }
 
-    prod(p, a) {
+    prod(a, p) {
         return new Vector(a.values.map((elem) => elem * p));
     }
 
@@ -40,6 +40,7 @@ class VectorCalculator extends RealCalculator {
         for (let i = 0; i < length; i++) {
             values.push(super.prod)
         }
+        return new Vector(values);
     }
 
     zero(length) {
