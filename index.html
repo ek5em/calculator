@@ -7,25 +7,34 @@
     <title>Page Title</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
-    <script src="js/types/Complex.js"></script>
-    <script src="js/types/Vector.js"></script>
-    <script src="js/types/Matrix.js"></script>
-    <script src="js/calculators/RealCalculator.js"></script>
-    <script src="js/calculators/ComplexCalculator.js"></script>
-    <script src="js/calculators/VectorCalculator.js"></script>
-    <script src="js/calculators/MatrixCalculator.js"></script>
+
+    <script src="js/calculator/entityTypes/Complex.js"></script>
+    <script src="js/calculator/entityTypes/Vector.js"></script>
+    <script src="js/calculator/entityTypes/Matrix.js"></script>
+
+    <script src="js/calculator/calculatorTypes/RealCalculator.js"></script>
+    <script src="js/calculator/calculatorTypes//ComplexCalculator.js"></script>
+    <script src="js/calculator/calculatorTypes//VectorCalculator.js"></script>
+    <script src="js/calculator/calculatorTypes//MatrixCalculator.js"></script>
+    <script src="js/calculator/calculatorTypes//Calculator.js"></script>
+
+    <script src="js/Polynom/Member.js"></script>
+    <script src="js/Polynom/Polynomial.js"></script>
+    <script src="js/Polynom/PolinomialCalculator.js"></script>
+
     <script src='js/main.js'></script>
 </head>
 
 <body>
-    <div class="container">
+    <div class="calcContainer">
+        <h1>Калькулятор</h1>
         <div class="calculator">
             <div class="calcInput">
                 <textarea class="inputA"></textarea>
                 <textarea class="inputB"></textarea>
             </div>
             <div class="resultContainer">
-                <span class="result"></span>
+                <textarea class="result" disabled></textarea>
             </div>
             <div class="calcButtons">
                 <div>
@@ -38,9 +47,30 @@
                     <div class="operand" data-operand="prod">Prod</div>
                     <div class="operand" data-operand="pow">Pow</div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="calcContainer">
+        <h1>Полиномы</h1>
+        <div class="calculator">
+            <div class="calcInput">
+                <textarea class="polyInputA" placeholder="Полином"></textarea>
+                <textarea class="polyInputB" placeholder="Полином"></textarea>
+                <textarea class="polyInputX" placeholder="x"></textarea>
+            </div>
+            <div class="resultContainer">
+                <textarea class="newPoly" disabled></textarea>
+            </div>
+            <div class="calcButtons">
                 <div>
-                    <!--<div class="operand" data-operand="module">Module</div> -->
+                    <div class="polyOperand" data-operand="add">+</div>
+                    <div class="polyOperand" data-operand="sub">-</div>
+                    <div class="polyOperand" data-operand="mult">*</div>
+                    <div class="resultButton">=</div>
                 </div>
+            </div>
+            <div class="resultContainer">
+                <textarea class="polyResult" disabled></textarea>
             </div>
         </div>
     </div>

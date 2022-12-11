@@ -15,7 +15,7 @@ class RealCalculator {
         return a / b;
     }
 
-    prod(a, p) {
+    prod(p, a) {
         return p * a;
     }
 

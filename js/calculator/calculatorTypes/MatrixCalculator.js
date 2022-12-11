@@ -1,12 +1,20 @@
-class MatrixCalculator extends RealCalculator {
+class MatrixCalculator {
+    constructor(calc) {
+        this.calc = calc;
+    }
+
+    div() {
+        return null;
+    }
+
     add(a, b) {
         return new Matrix(a.values.map((arr, i) =>
-            arr.map((elem, j) => elem + b.values[i][j])));
+            arr.map((elem, j) => this.calc.add(elem, b.values[i][j]))));
     }
 
     sub(a, b) {
         return new Matrix(a.values.map((arr, i) =>
-            arr.map((elem, j) => elem - b.values[i][j])))
+            arr.map((elem, j) => this.calc.sub(elem, b.values[i][j]))))
     }
 
     mult(a, b) {
@@ -14,19 +22,19 @@ class MatrixCalculator extends RealCalculator {
         for (let i = 0; i < a.values.length; i++) {
             values.push([]);
             for (let j = 0; j < a.values[i].length; j++) {
-                let sum = 0;
+                let s = this.calc.zero();
                 for (let k = 0; k < a.values[i].length; k++) {
-                    sum = sum + a.values[k][j] * b.values[j][k];
+                    s = this.calc.add(s, this.calc.mult(a.values[k][j], b.values[j][k]));
                 }
-                values[i][j] = sum;
+                values[i][j] = s;
             }
         }
         return new Matrix(values);
     }
 
-    prod(a, p) {
+    prod(p,a) {
         return new Matrix(a.values.map(arr =>
-            arr.map(elem => elem * p)))
+            arr.map(elem => this.calc.prod(p, elem))))
     }
 
     pow(a, p) {
@@ -42,7 +50,7 @@ class MatrixCalculator extends RealCalculator {
         for (let i = 0; i < length; i++) {
             values.push([]);
             for (let j = 0; j < length; j++) {
-                values[i][j] = 0;
+                values[i][j] = this.calc.zero();
             }
         }
         return new Matrix(values);
@@ -53,7 +61,7 @@ class MatrixCalculator extends RealCalculator {
         for (let i = 0; i < length; i++) {
             values.push([]);
             for (let j = 0; j < length; j++) {
-                values[i][j] = (i === j) ? 1 : 0;
+                values[i][j] = (i === j) ? this.calc.one() : this.calc.zero();
             }
         }
         return new Matrix(values);

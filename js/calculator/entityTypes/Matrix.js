@@ -1,5 +1,6 @@
 class Matrix {
     constructor(values) {
+        console.log(values)
         this.values = [];
         values.forEach((arr, i) => {
             this.values[i] = [];
@@ -10,8 +11,8 @@ class Matrix {
     }
 
     toString() {
-        const arr = [];
-        this.values.map((elem) => arr.push(elem.join('; ')));
-        return `[${arr.join('|<br></br> &nbsp;')}]`;
+        return `[${this.values.map(
+            arr => arr.map(el => el.toString()).join(';')
+        ).join('|\n')}]`
     }
 }

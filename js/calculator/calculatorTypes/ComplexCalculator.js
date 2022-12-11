@@ -16,7 +16,7 @@ class ComplexCalculator extends RealCalculator {
         return new Complex((a.re * b.re + a.im * b.im) / m, (a.im * b.re - a.re * b.im) / m);
     }
 
-    prod(a, p) {
+    prod(p, a) {
         return new Complex(a.re * p, a.im * p);
     }
 

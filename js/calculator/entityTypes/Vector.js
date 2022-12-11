@@ -5,6 +5,6 @@ class Vector {
     }
 
     toString() {
-        return `(${this.values.join(', ')})`
+        return `(${this.values.map(elem => elem.toString()).join(', ')})`;
     }
 }
