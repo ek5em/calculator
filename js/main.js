@@ -14,16 +14,17 @@ window.onload = function () {
         const inputA = document.querySelector('.polyInputA');
         const inputB = document.querySelector('.polyInputB');
 
-        const calc = new PolinomialCalculator;
+        const calc = new PolynomialCalculator;
         const a = calc.getPolynomial(inputA.value);
         const b = calc.getPolynomial(inputB.value);
+        console.log(a,b);
         const operand = event.target.dataset.operand;
         const c = calc[operand](a, b);
         document.querySelector('.newPoly').innerHTML = c.toString();
     }
 
     function resultHandler() {
-        const calc = new PolinomialCalculator;
+        const calc = new PolynomialCalculator;
         const inputX = document.querySelector('.polyInputX');
         const x = (new Calculator).getEntity(inputX.value);
         const c = calc.getPolynomial(document.querySelector('.newPoly').value);

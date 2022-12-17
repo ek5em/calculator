@@ -1,43 +1,40 @@
-class PolinomialCalculator {
+class PolynomialCalculator {
     polynomial(members) {
         return new Polynomial(members);
     }
 
+    getMember(str) {
+        if (str) {
+            const arr = str.split('x');
+            if (arr.length === 1) {
+                return new Member(arr[0])
+            }
+
+            arr[0] = arr[0].replaceAll('*', '');
+            arr[1] = arr[1].replaceAll('^', '');
+
+            if (arr[0] === '-') arr[0] = -1;
+            if (arr[0] === '') arr[0] = 1;
+            if (arr[1] === '') arr[1] = 1;
+
+            return new Member(arr[0], arr[1]);
+
+        }
+        return new Member;
+    }
+
     getPolynomial(str) {
         str = str.replace(/\s/g, "");
-        let arr = [];
-        if (str.includes('-')) {
-            str.split('-').map(elem => elem = arr.push('-' + elem));
-            arr[0] = arr[0].slice(1);
-            arr = (arr.map((elem) => elem.split('+')))
-                .reduce((s, elem) => s.concat(elem), []);
-        } else {
-            arr = str.split('+');
-        }
-
-        const members = [];
-        arr.map(elem => {
-            if (elem.length > 0) {
-                if (elem.includes('x')) {
-                    if (elem.includes('*x^')) {
-                        const member = elem.split('*x^')
-                            .map(value => value - 0);
-                        members.push(new Member(member[0], member[1]));
-                    } else if (elem.includes('*')) {
-                        members.push(new Member(elem.split('*x')[0] - 0, 1));
-                    } else if (elem.includes('^')) {
-                        members.push(new Member(1, elem.split('x^')[1] - 0));
-                    }
-                    else {
-                        members.push(new Member(1, 1));
-                    }
-                }
-                else {
-                    members.push(new Member(elem - 0));
-                }
+        if (str) {
+            const arr = str.split('+');
+            const arr2 = arr.map(elem => elem.split('-'));
+            for (let i = 0; i < arr2.length; i++) {
+                arr2[i] = arr2[i].map((elem, index) => index && elem ? `-${elem}` : elem);
             }
-        })
-        return new Polynomial(members);
+            const arr3 = arr2.reduce((s,arr) => s.concat(arr),[])
+            return new Polynomial(arr3.map(elem => this.getMember(elem)));
+        }
+        return new Polynomial;
     }
 
 
