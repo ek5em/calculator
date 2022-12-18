@@ -11,25 +11,25 @@ class App extends Component {
             }
         })
 
-        this.calculator = new Component({
+        this.calculator = new CalculatorComponent({
             id: 'calculator',
             parent: this.id,
             template: template.Calculator,
         })
 
-        this.polynomialCalculator = new Component({
+        this.polynomialCalculator = new PolynomialCalculatorComponent({
             id: 'polyomialCalculator',
             parent: this.id,
             template: template.PolynomialCalculator,
         })
 
-        this.graph2D = new Component({
+        this.graph2D = new Graph2DComponent({
             id: "graph2D",
             parent: this.id,
             template: template.Graph2D,
         })
 
-        this.esse = new Component({
+        this.esse = new EsseComponent({
             id: "esse",
             parent: this.id,
             template: template.Esse,

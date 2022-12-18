@@ -1,5 +1,5 @@
 Template.prototype.Menu = () =>
-`<button class ='mainMenuButton' data-item = 'esse'>Сочинение</button>
-<button class ='mainMenuButton' data-item = 'graph2D'>Графики</button>
-<button class ='mainMenuButton' data-item = 'calculator'>Калькулятор</button>
-<button class ='mainMenuButton' data-item = 'polynomialCalculator'>Полиномы</button>`
+`<div class ='mainMenuButton active' data-item = 'esse'>Сочинение</div>
+<div class ='mainMenuButton' data-item = 'graph2D'>Графики</div>
+<div class ='mainMenuButton' data-item = 'calculator'>Калькулятор</div>
+<div class ='mainMenuButton' data-item = 'polynomialCalculator'>Полиномы</div>`

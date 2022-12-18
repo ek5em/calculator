@@ -1,6 +1,5 @@
 Template.prototype.Calculator = () =>
-`<div class="calculator">
-    <div class="calcInput">
+`<div class="calcInput">
         <textarea class="inputA"></textarea>
         <textarea class="inputB"></textarea>
     </div>
@@ -18,5 +17,4 @@ Template.prototype.Calculator = () =>
             <div class="operand" data-operand="prod">Prod</div>
             <div class="operand" data-operand="pow">Pow</div>
         </div>
-    </div>
-</div>`
+    </div>`

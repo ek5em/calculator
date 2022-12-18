@@ -1,8 +1,8 @@
-Template.prototype.Graph2D = () =>
+Template.prototype.Graph2D = () => 
 `<canvas id="graph"></canvas>
 <div class="container">
     <div class="menuGraphButton"></div>
     <div class="funcMenu">
-        <div class="addFunction">Добавить</div>
+        <div class="addFunction"></div>
         <div class="funcs-сontainer"></div>
 </div>`

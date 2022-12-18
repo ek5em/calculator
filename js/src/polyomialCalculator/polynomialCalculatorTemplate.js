@@ -1,6 +1,5 @@
-Template.prototype.PolynomialCalculator = () => 
-`<div class="calculator">
-<div class="calcInput">
+Template.prototype.PolynomialCalculator = () =>
+`<div class="calcInput">
     <textarea class="polyInputA" placeholder="Полином"></textarea>
     <textarea class="polyInputB" placeholder="Полином"></textarea>
     <textarea class="polyInputX" placeholder="x"></textarea>
@@ -18,5 +17,4 @@ Template.prototype.PolynomialCalculator = () =>
 </div>
 <div class="resultContainer">
     <textarea class="polyResult" disabled></textarea>
-</div>
 </div>`

@@ -1,8 +1,4 @@
 class CalculatorComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     addEventListeners() {
         document.querySelectorAll('.operand')
             .forEach(button => button.addEventListener('click', (event) =>
@@ -19,6 +15,5 @@ class CalculatorComponent extends Component {
         const c = calc[operand](a, b);
         document.querySelector('.result').innerHTML = c.toString();
     }
-
 
 }
