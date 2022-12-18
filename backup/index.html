@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
+
+    <script src="js/calculator/entityTypes/Complex.js"></script>
+    <script src="js/calculator/entityTypes/Vector.js"></script>
+    <script src="js/calculator/entityTypes/Matrix.js"></script>
+
+    <script src="js/calculator/calculatorTypes/RealCalculator.js"></script>
+    <script src="js/calculator/calculatorTypes//ComplexCalculator.js"></script>
+    <script src="js/calculator/calculatorTypes//VectorCalculator.js"></script>
+    <script src="js/calculator/calculatorTypes//MatrixCalculator.js"></script>
+    <script src="js/calculator/calculatorTypes//Calculator.js"></script>
+
+    <script src="js/Polynom/Member.js"></script>
+    <script src="js/Polynom/Polynomial.js"></script>
+    <script src="js/Polynom/PolynomialCalculator.js"></script>
+
+    <script src='js/main.js'></script>
+</head>
+
+<body>
+    <div class="calcContainer">
+        <h1>Калькулятор</h1>
+        <div class="calculator">
+            <div class="calcInput">
+                <textarea class="inputA"></textarea>
+                <textarea class="inputB"></textarea>
+            </div>
+            <div class="resultContainer">
+                <textarea class="result" disabled></textarea>
+            </div>
+            <div class="calcButtons">
+                <div>
+                    <div class="operand" data-operand="add">Add</div>
+                    <div class="operand" data-operand="sub">Sub</div>
+                    <div class="operand" data-operand="mult">Mult</div>
+                </div>
+                <div>
+                    <div class="operand" data-operand="div">Div</div>
+                    <div class="operand" data-operand="prod">Prod</div>
+                    <div class="operand" data-operand="pow">Pow</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="calcContainer">
+        <h1>Полиномы</h1>
+        <div class="calculator">
+            <div class="calcInput">
+                <textarea class="polyInputA" placeholder="Полином"></textarea>
+                <textarea class="polyInputB" placeholder="Полином"></textarea>
+                <textarea class="polyInputX" placeholder="x"></textarea>
+            </div>
+            <div class="resultContainer">
+                <textarea class="newPoly" disabled></textarea>
+            </div>
+            <div class="calcButtons">
+                <div>
+                    <div class="polyOperand" data-operand="add">+</div>
+                    <div class="polyOperand" data-operand="sub">-</div>
+                    <div class="polyOperand" data-operand="mult">*</div>
+                    <div class="resultButton">=</div>
+                </div>
+            </div>
+            <div class="resultContainer">
+                <textarea class="polyResult" disabled></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
