@@ -1,5 +1,8 @@
 class Graph2d {
     constructor() {
+
+        this.isWorking = false;
+
         const height = 800;
         const width = 1200;
 
@@ -232,6 +235,7 @@ class Graph2d {
             }
         });
     }
+    
     // Math 
 
     getIntegral(f, a, b, d = 100) {

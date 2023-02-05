@@ -1,22 +1,29 @@
+.hide  {
+    display: none;
+}
+
 body {
     display: flex;
-    align-items: center;
     justify-content: center;
     background-color: #af6b12;
     height: 100vh;
+    overflow-y: hidden;
 }
 
 textarea {
     outline: none;
     min-height: 30px;
     min-width: 50px;
+    z-index: 3;
 }
 
 #app {
+    margin-top:5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border-radius: 5px;
-    height: 500px;
-    width: 900px;
-    background-color: #d6ac51;
+    width: 100%;
 }
 
 #menu {
@@ -52,33 +59,13 @@ textarea {
     transform: translateY(1px);
 }
 
-.calcContainer {
-    width: 100%;
-    background-color: #eeff00;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.calculator {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    background-color: #ffff00;
-    justify-content: space-between;
-    min-height: 350px;
-}
-
 .calcInput {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #eeeee4;
     height: 70px;
     margin: 12px;
-    box-shadow: 0 5px 10px black;
 }
 
 .calcInput textarea {
@@ -86,11 +73,6 @@ textarea {
     height: 50px;
     margin: 10px;
     outline: none;
-}
-
-textarea {
-    max-height: 200px;
-    max-width: 500px;
 }
 
 .resultContainer>textarea,
@@ -101,9 +83,13 @@ textarea {
     margin: 10px;
 }
 
-.polyResult {
-    max-width: none;
-    max-height: none;
+.newPoly {
+    z-index:1;
+}
+
+.result, .polyResult {
+    background-color: #bebeb2;
+    z-index: 1;
 }
 
 
@@ -115,6 +101,7 @@ textarea {
     justify-content: space-between;
     align-items: center;
     margin: 3px;
+    margin-bottom: 0;
 }
 
 .calcButtons>div {
@@ -134,7 +121,7 @@ textarea {
     height: 30px;
     width: 100px;
     background-color: #c9bc71;
-    margin: 0 10px;
+    margin: 0 10px 10px;
     user-select: none;
     transition: 0.1s;
 }
@@ -154,7 +141,6 @@ textarea {
 
 .resultContainer {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -168,6 +154,214 @@ textarea {
     text-align: center;
 }
 
-.hide  {
+#polyomialCalculator, #calculator{
+    background-color: #c57d1f;
+}
+
+#esse {
+    background-color: #b9a152;
+    border-radius: 20px;
+    text-indent: 20px;
+    font-family: "NICHTLUSTIG22", cursive;
+}
+
+#esse>div {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 25px;
+}
+
+#esse p {
+    margin: 0 10px 3px
+}
+
+#graph {
+    cursor: grab;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+#graph:active {
+    cursor: grabbing;
+}
+
+.funcs-сontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.funcBlock input::-webkit-outer-spin-button,
+.funcBlock input::-webkit-inner-spin-button {
+    appearance: none;
+}
+
+.funcBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+    width: 80%;
+}
+
+.funcBlock input {
+    margin: 1px;
+    text-align: center;
+    outline: none;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(212, 158, 86);
+    width: 0;
+    height: 800px;
+    max-height: 100%;
+    top: -805px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 18px;
+    scrollbar-gutter: stable;
+    transition: 1s;
+}
+
+.containerActive {
+    width: 500px;
+}
+
+.menuGraphButton {
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    right: -30px;
+    height: 30px;
+    width: 30px;
+    background-color: rgb(67, 166, 196);
+    cursor: pointer;
+}
+
+.funcMenu {
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.deleteFunc {
+    width: 15px;
+    height: 15px;
+    background-color: azure;
+    text-align: center;
+    line-height: 15px;
+    user-select: none;
+    border-radius: 5px;
+}
+
+.deleteFunc:hover {
+    background-color: rgb(218, 79, 79);
+}
+
+.addFunction {
+    width: 90px;
+    height: 20px;
+    margin-top: 5px;
+    text-align: center;
+    background-color: azure;
+    border-radius: 5px;
+    user-select: none;
+    transition: .1s;
+}
+
+.addFunction:hover {    
+    background-color: rgb(208, 245, 245);
+}
+
+.addFunction:active {
+    transform: translateY(2px);
+}
+
+.addFunction:hover,
+.deleteFunc:hover {
+    cursor: pointer;
+}
+
+
+
+.switch-btn {
+    display: inline-block;
+    width: 30px;
+    height: 15px;
+    border-radius: 19px;
+    background: #bfbfbf;
+    z-index: 0;
+    margin: 0;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition-duration: 300ms;
+}
+
+.switch-btn::after {
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 17px;
+    background: #fff;
+    left: 0;
+    transition-duration: 300ms;
+    position: absolute;
+    z-index: 1;
+}
+
+.switch-on {
+    background: #118c4e;
+}
+
+.switch-on::after {
+    left: 15px;
+}
+
+.inputColor {
+    border-radius: 50%;
+    background-color: transparent;
+    height: 25px;
+    width: 26px;
+    border: none;
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.inputColor::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.inputColor::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+.funcBlock>.inputA,
+.funcBlock>.inputB {
+    width: 30px;
+}
+
+.inputWidth,
+.inputFunc {
+    width: 60px;
+}
+
+.funcBlock>.inputA,
+.funcBlock>.inputB,
+.inputWidth,
+.inputFunc {
+    background-color: white;
+    border: 1px solid chocolate;
+    border-radius: 10px;
 }

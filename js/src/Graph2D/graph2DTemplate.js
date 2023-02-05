@@ -3,6 +3,6 @@ Template.prototype.Graph2D = () =>
 <div class="container">
     <div class="menuGraphButton"></div>
     <div class="funcMenu">
-        <div class="addFunction"></div>
+        <div class="addFunction">Добавить</div>
         <div class="funcs-сontainer"></div>
 </div>`

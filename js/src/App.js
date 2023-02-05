@@ -29,14 +29,13 @@ class App extends Component {
             template: template.Graph2D,
         })
 
-        this.esse = new EsseComponent({
+        /*this.esse = new EsseComponent({
             id: "esse",
             parent: this.id,
             template: template.Esse,
-        })
+        })*/
 
         this.polynomialCalculator.hide();
-        this.calculator.hide();
         this.graph2D.hide();
 
     }
@@ -45,7 +44,7 @@ class App extends Component {
         this.calculator.hide();
         this.polynomialCalculator.hide();
         this.graph2D.hide();
-        this.esse.hide();
+        //this.esse.hide();
         this[name].show();
     }
 

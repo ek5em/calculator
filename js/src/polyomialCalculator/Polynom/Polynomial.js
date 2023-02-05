@@ -6,7 +6,6 @@ class Polynomial {
 
     getValue(x) {
         const calc = new Calculator;
-        console.log(calc.zero(null,x))
         return this.poly.reduce((s, elem) => 
             s = calc.add(s, calc.prod(elem.value, calc.pow(x, elem.power))), calc.zero(null, x)
         );
