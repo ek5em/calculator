@@ -22,12 +22,13 @@ class UI {
 
         this.num = 0;
         document.querySelector('.addFunction').addEventListener('click', () => this.addFunctionHandler());
+        
         document.querySelector('.menuGraphButton').addEventListener('click', () => {
             document.querySelector('.container').classList.toggle('containerActive');
             if (this.MenuOpen) {
-                setTimeout(() => document.querySelector('.funcMenu').style.display = "none", 100);
+                setTimeout(() => document.querySelector('.block').classList.toggle('hide'), 100);
             } else {
-                setTimeout(() => document.querySelector('.funcMenu').style.display = "flex", 750);
+                setTimeout(() => document.querySelector('.block').classList.toggle('hide'), 750);
             }
             this.MenuOpen = !this.MenuOpen;
         });

@@ -8,7 +8,8 @@ class Menu extends Component {
 
         buttons.forEach(button =>
             button.addEventListener('click', (event) =>{
-                buttons.forEach(button => button.classList.remove('active'))
+                buttons.forEach((button) => 
+                    button.classList.remove('active'));
                 event.target.classList.add('active');
             }))
     }

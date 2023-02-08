@@ -6,8 +6,6 @@ body {
     display: flex;
     justify-content: center;
     background-color: #af6b12;
-    height: 100vh;
-    overflow-y: hidden;
 }
 
 textarea {
@@ -158,25 +156,6 @@ textarea {
     background-color: #c57d1f;
 }
 
-#esse {
-    background-color: #b9a152;
-    border-radius: 20px;
-    text-indent: 20px;
-    font-family: "NICHTLUSTIG22", cursive;
-}
-
-#esse>div {
-    width: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 25px;
-}
-
-#esse p {
-    margin: 0 10px 3px
-}
-
 #graph {
     cursor: grab;
     border: 1px solid black;
@@ -230,6 +209,10 @@ textarea {
     transition: 1s;
 }
 
+.container > .block {
+    width: 100%;
+}
+
 .containerActive {
     width: 500px;
 }
@@ -246,7 +229,7 @@ textarea {
 }
 
 .funcMenu {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;

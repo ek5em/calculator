@@ -1,4 +1,4 @@
-class ComplexCalculator extends RealCalculator {
+class ComplexCalculator {
     add(a, b) {
         return new Complex(a.re + b.re, a.im + b.im);
     }

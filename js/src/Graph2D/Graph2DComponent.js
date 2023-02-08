@@ -1,6 +1,153 @@
 class Graph2DComponent extends Component {
     constructor(props) {
         super(props);
-        new Graph2d;
+
+        console.log('const')
+
+        const height = 800;
+        const width = 1200;
+
+        this.prop = width / height;
+        this.WIN = {
+            left: -10 * this.prop,
+            bottom: -10,
+            width: 20 * this.prop,
+            height: 20,
+        }
+
+        this.mousePosX = 0;
+
+        this.canMove = false;
+        this.zoomStep = 1;
+        this.funcs = [];
+
+        this.Math2D = new Math2D;
+
+        this.canvas = new Canvas({
+            WIN: this.WIN,
+            id: 'graph',
+            width,
+            height,
+            callbacks: {
+                wheel: (event) => this.wheel(event),
+                mouseUp: () => this.mouseUp(),
+                mouseDown: () => this.mouseDown(),
+                mouseMove: (event) => this.mouseMove(event),
+                mouseLeave: () => this.mouseLeave(),
+            },
+        });
+
+        this.graph2D = new Graph2d(this.WIN, this.canvas);
+
+        new UI({
+            changeColor: (num, color) => this.changeColor(num, color),
+            changeWidth: (num, width) => this.changeWidth(num, width),
+            changeA: (num, value) => this.changeA(num, value),
+            changeB: (num, value) => this.changeB(num, value),
+            switchIntegralCheckBox: (num) => this.switchIntegralCheckBox(num),
+            switchDerivativeCheckBox: (num) => this.switchDerivativeCheckBox(num),
+            addFunction: (num, f) => this.addFunction(num, f),
+            delFunction: (num) => this.delFunction(num),
+            createObjectFunc: (num) => this.createObjectFunc(num),
+        })
+
+        setInterval ( () => {
+            this.graph2D.generate();
+            this.funcs.forEach(func => {
+                if (func) {
+                    const { f, color, width, a, b, showDerivative, showIntegral } = func;
+                    if (f) {
+                        this.graph2D.printFunction(f, color, width);
+                        if (showDerivative) {
+                            this.graph2D.printDerivative(f, this.mousePosX);
+                        }
+                        if ((a || b) && a !== b) {
+                            if (showIntegral) {
+                                if (a > b) {
+                                    this.graph2D.printIntegral(f, b, a, this.Math2D.getIntegral(f, b, a));
+                                } else {
+                                    this.graph2D.printIntegral(f, a, b, this.Math2D.getIntegral(f, a, b))
+                                }
+                            }
+                            if (this.Math2D.getZero(f, a, b) !== null) {
+                                this.canvas.point(this.Math2D.getZero(f, a, b), 0);
+                            }
+                        }
+                    }
+                }
+            });
+        }, 15)
+    }
+
+    // callbacks
+        // canvas
+    wheel(event) {
+        const delta = (event.wheelDelta > 0) ? -this.zoomStep : this.zoomStep;
+        if (this.WIN.width + delta * this.prop > 0 && this.WIN.height + delta > 0) {
+            this.WIN.width += this.prop * delta;
+            this.WIN.height += delta;
+            this.WIN.left -= this.prop * delta / 2;
+            this.WIN.bottom -= delta / 2;
+        }
+    }
+
+    mouseUp() {
+        this.canMove = false;
+    }
+
+    mouseDown() {
+        this.canMove = true;
+    }
+
+    mouseMove(event) {
+        if (this.canMove) {
+            this.WIN.left -= this.canvas.sx(event.movementX);
+            this.WIN.bottom -= this.canvas.sy(event.movementY);
+        }
+        this.mousePosX = this.WIN.left + this.canvas.sx(event.offsetX)
+    }
+
+    mouseLeave() {
+        this.canMove = false;
+    }
+        
+        // UI
+    changeWidth(num, width) {
+        this.funcs[num].width = width;
+    }
+
+    changeColor(num, color) {
+        this.funcs[num].color = color;
+    }
+
+    addFunction(num, f) {
+        this.funcs[num].f = f;
+    }
+
+    changeA(num, value) {
+        this.funcs[num].a = value - 0;
+    }
+
+    changeB(num, value) {
+        this.funcs[num].b = value - 0;
+    }
+
+    switchDerivativeCheckBox(num) {
+        this.funcs[num].showDerivative = !this.funcs[num].showDerivative;
+    }
+
+    switchIntegralCheckBox(num) {
+        this.funcs[num].showIntegral = !this.funcs[num].showIntegral;
+    }
+
+    delFunction(num) {
+        this.funcs[num] = null;
+    }
+
+    createObjectFunc(num) {
+        this.funcs[num] = {
+            color: 'black',
+            width: 2,
+        }
     }
 }
