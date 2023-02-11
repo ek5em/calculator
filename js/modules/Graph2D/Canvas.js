@@ -7,38 +7,38 @@ class Canvas {
         this.canvas.width = width;
         this.canvas.height = height;
 
+        this.WIN = WIN;
+
         const { wheel, mouseUp, mouseDown, mouseMove, mouseLeave } = callbacks;
         this.canvas.addEventListener('wheel', wheel);
         this.canvas.addEventListener('mousedown', mouseDown);
         this.canvas.addEventListener('mouseup', mouseUp);
         this.canvas.addEventListener('mousemove', mouseMove);
         this.canvas.addEventListener('mouseleave', mouseLeave);
-
-        this.WIN = WIN;
     }
 
     xs(x) {
-        return (x - this.WIN.left) / this.WIN.width * this.canvas.width;
+        return (x - this.WIN.LEFT) / this.WIN.WIDTH * this.canvas.width;
     }
 
     ys(y) {
-        return this.canvas.height - (y - this.WIN.bottom) / this.WIN.height * this.canvas.height;
+        return this.canvas.height - (y - this.WIN.BOTTOM) / this.WIN.HEIGHT * this.canvas.height;
     }
 
     sx(x) {
-        return x * this.WIN.width / this.canvas.width;
+        return x * this.WIN.WIDTH / this.canvas.width;
     }
 
     sy(y) {
-        return -y * this.WIN.height / this.canvas.height;
+        return -y * this.WIN.HEIGHT / this.canvas.height;
     }
 
     x(xs) {
-        return xs * this.WIN.width / this.canvas.width + this.WIN.left;
+        return xs * this.WIN.WIDTH / this.canvas.width + this.WIN.LEFT;
     }
 
     y(ys) {
-        return -ys * this.WIN.height / this.canvas.height + this.WIN.bottom + this.WIN.height;
+        return -ys * this.WIN.HEIGHT / this.canvas.height + this.WIN.BOTTOM + this.WIN.HEIGHT;
     }
 
     clear() {

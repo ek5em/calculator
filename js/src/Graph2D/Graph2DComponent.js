@@ -2,17 +2,15 @@ class Graph2DComponent extends Component {
     constructor(props) {
         super(props);
 
-        console.log('const')
-
         const height = 800;
         const width = 1200;
 
         this.prop = width / height;
         this.WIN = {
-            left: -10 * this.prop,
-            bottom: -10,
-            width: 20 * this.prop,
-            height: 20,
+            LEFT: -10 * this.prop,
+            BOTTOM: -10,
+            WIDTH: 20 * this.prop,
+            HEIGHT: 20,
         }
 
         this.mousePosX = 0;
@@ -79,15 +77,16 @@ class Graph2DComponent extends Component {
         }, 15)
     }
 
-    // callbacks
-        // canvas
+// callbacks
+    // canvas
     wheel(event) {
         const delta = (event.wheelDelta > 0) ? -this.zoomStep : this.zoomStep;
-        if (this.WIN.width + delta * this.prop > 0 && this.WIN.height + delta > 0) {
-            this.WIN.width += this.prop * delta;
-            this.WIN.height += delta;
-            this.WIN.left -= this.prop * delta / 2;
-            this.WIN.bottom -= delta / 2;
+
+        if (this.WIN.WIDTH + delta * this.prop > 0 && this.WIN.HEIGHT + delta > 0) {
+            this.WIN.WIDTH += this.prop * delta;
+            this.WIN.HEIGHT += delta;
+            this.WIN.LEFT -= this.prop * delta / 2;
+            this.WIN.BOTTOM -= delta / 2;
         }
     }
 
@@ -101,17 +100,17 @@ class Graph2DComponent extends Component {
 
     mouseMove(event) {
         if (this.canMove) {
-            this.WIN.left -= this.canvas.sx(event.movementX);
-            this.WIN.bottom -= this.canvas.sy(event.movementY);
+            this.WIN.LEFT -= this.canvas.sx(event.movementX);
+            this.WIN.BOTTOM -= this.canvas.sy(event.movementY);
         }
-        this.mousePosX = this.WIN.left + this.canvas.sx(event.offsetX)
+        this.mousePosX = this.WIN.LEFT + this.canvas.sx(event.offsetX)
     }
 
     mouseLeave() {
         this.canMove = false;
     }
         
-        // UI
+    // UI
     changeWidth(num, width) {
         this.funcs[num].width = width;
     }

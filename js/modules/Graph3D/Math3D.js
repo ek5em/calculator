@@ -1,0 +1,2 @@
+class Math3D {
+}

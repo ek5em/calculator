@@ -5,39 +5,39 @@ class Graph2d {
     }
 
     printOXY() {
-        const { left, width, height, bottom } = this.WIN;
-        this.canvas.line(left, 0, width + left, 0, 3);
-        this.canvas.line(0, bottom, 0, bottom + height, 3);
+        const { LEFT, WIDTH, HEIGHT, BOTTOM } = this.WIN;
+        this.canvas.line(LEFT, 0, WIDTH + LEFT, 0, 3);
+        this.canvas.line(0, BOTTOM, 0, BOTTOM + HEIGHT, 3);
     }
 
     grid(color = '#ccc') {
-        const { left, width, bottom, height } = this.WIN;
-        for (let i = 0; i <= left + width; i++) {
-            this.canvas.line(i, bottom, i, bottom + height, 1, color);
+        const { LEFT, WIDTH, BOTTOM, HEIGHT } = this.WIN;
+        for (let i = 0; i <= LEFT + WIDTH; i++) {
+            this.canvas.line(i, BOTTOM, i, BOTTOM + HEIGHT, 1, color);
         }
-        for (let i = 0; i >= left; i--) {
-            this.canvas.line(i, bottom, i, bottom + height, 1, color);
+        for (let i = 0; i >= LEFT; i--) {
+            this.canvas.line(i, BOTTOM, i, BOTTOM + HEIGHT, 1, color);
         }
-        for (let i = 0; i <= bottom + height; i++) {
-            this.canvas.line(left, i, left + width, i, 1, color);
+        for (let i = 0; i <= BOTTOM + HEIGHT; i++) {
+            this.canvas.line(LEFT, i, LEFT + WIDTH, i, 1, color);
         }
-        for (let i = 0; i >= bottom; i--) {
-            this.canvas.line(left, i, left + width, i, 1, color);
+        for (let i = 0; i >= BOTTOM; i--) {
+            this.canvas.line(LEFT, i, LEFT + WIDTH, i, 1, color);
         }
     }
 
     printNums() {
-        const { left, bottom, width, height } = this.WIN;
-        const streakLength = height / (width + 30);
+        const { LEFT, BOTTOM, WIDTH, HEIGHT } = this.WIN;
+        const streakLength = HEIGHT / (WIDTH + 30);
         const len = streakLength / 2;
-        const shiftY = -height * 0.01 - 0.04;
-        const shiftX = width * 0.001 + 0.04;
+        const shiftY = -HEIGHT * 0.01 - 0.04;
+        const shiftX = WIDTH * 0.001 + 0.04;
 
-        for (let i = Math.round(left); i < left + width; i++) {
+        for (let i = Math.round(LEFT); i < LEFT + WIDTH; i++) {
             this.canvas.line(i, len, i, -len, 2.5);
             this.canvas.printText(i, i + shiftX, shiftY);
         }
-        for (let i = Math.round(bottom); i < bottom + height; i++) {
+        for (let i = Math.round(BOTTOM); i < BOTTOM + HEIGHT; i++) {
             this.canvas.line(len, i, -len, i, 2.5);
             this.canvas.printText(i, shiftX, i + shiftY);
         }
@@ -47,22 +47,22 @@ class Graph2d {
         const dx = Math.pow(10, -9),
             k = (f(x + dx) - f(x)) / dx,
             b = f(x) - k * x,
-            x1 = this.WIN.left,
-            x2 = this.WIN.left + this.WIN.width,
+            x1 = this.WIN.LEFT,
+            x2 = this.WIN.LEFT + this.WIN.WIDTH,
             y1 = k * x1 + b,
             y2 = k * x2 + b;
         this.canvas.line(x1, y1, x2, y2, 1, 'red');
     }
 
     printFunction(f, color = 'black', lineWidth = 2) {
-        const { width, left, height } = this.WIN;
-        const dx = width / 1000;
-        let x = left;
+        const { WIDTH, LEFT, HEIGHT } = this.WIN;
+        const dx = WIDTH / 1000;
+        let x = LEFT;
 
-        while (x < width + left) {
+        while (x < WIDTH + LEFT) {
             const y1 = f(x);
             const y2 = f(x + dx);
-            if (Math.abs(y1 - y2) < height) {
+            if (Math.abs(y1 - y2) < HEIGHT) {
                 this.canvas.line(x, f(x), x + dx, f(x + dx), lineWidth, color);
             }
             else {

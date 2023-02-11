@@ -45,6 +45,7 @@ class App extends Component {
         this.calculator.hide();
         this.polynomialCalculator.hide();
         this.graph2D.hide();
+        this.graph3D.hide();
         this[name].show();
     }
 
