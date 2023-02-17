@@ -1,4 +1,4 @@
-class Menu extends Component {
+class MenuComponent extends Component {
     addEventListeners() {
         const buttons = document.querySelectorAll('.mainMenuButton');
         buttons.forEach(button =>

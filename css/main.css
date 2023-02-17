@@ -156,13 +156,13 @@ textarea {
     background-color: #c57d1f;
 }
 
-#graph {
+#canvas2D, #canvas3D {
     cursor: grab;
     border: 1px solid black;
     border-radius: 20px;
 }
 
-#graph:active {
+#canvas2D:active, #canvas3D:active {
     cursor: grabbing;
 }
 

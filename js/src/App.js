@@ -2,7 +2,7 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.menu = new Menu({
+        this.menu = new MenuComponent({
             id: 'menu',
             parent: this.id,
             template: template.Menu,

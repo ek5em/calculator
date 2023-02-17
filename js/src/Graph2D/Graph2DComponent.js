@@ -23,7 +23,7 @@ class Graph2DComponent extends Component {
 
         this.canvas = new Canvas({
             WIN: this.WIN,
-            id: 'graph',
+            id: 'canvas2D',
             width,
             height,
             callbacks: {
@@ -49,35 +49,43 @@ class Graph2DComponent extends Component {
             createObjectFunc: (num) => this.createObjectFunc(num),
         })
 
-        setInterval ( () => {
-            this.graph2D.generate();
-            this.funcs.forEach(func => {
-                if (func) {
-                    const { f, color, width, a, b, showDerivative, showIntegral } = func;
-                    if (f) {
-                        this.graph2D.printFunction(f, color, width);
-                        if (showDerivative) {
-                            this.graph2D.printDerivative(f, this.mousePosX);
-                        }
-                        if ((a || b) && a !== b) {
-                            if (showIntegral) {
-                                if (a > b) {
-                                    this.graph2D.printIntegral(f, b, a, this.Math2D.getIntegral(f, b, a));
-                                } else {
-                                    this.graph2D.printIntegral(f, a, b, this.Math2D.getIntegral(f, a, b))
-                                }
-                            }
-                            if (this.Math2D.getZero(f, a, b) !== null) {
-                                this.canvas.point(this.Math2D.getZero(f, a, b), 0);
-                            }
-                        }
-                    }
-                }
-            });
+        setInterval(() => {
+            this.renderGraph();
         }, 15)
     }
 
-// callbacks
+    renderGraph() {
+        this.canvas.clear();
+        this.graph2D.grid();
+        this.graph2D.printNums();
+        this.graph2D.printOXY();
+
+        this.funcs.forEach(func => {
+            if (func) {
+                const { f, color, width, a, b, showDerivative, showIntegral } = func;
+                if (f) {
+                    this.graph2D.printFunction(f, color, width);
+                    if (showDerivative) {
+                        this.graph2D.printDerivative(f, this.mousePosX);
+                    }
+                    if ((a || b) && a !== b) {
+                        if (showIntegral) {
+                            if (a > b) {
+                                this.graph2D.printIntegral(f, b, a, this.Math2D.getIntegral(f, b, a));
+                            } else {
+                                this.graph2D.printIntegral(f, a, b, this.Math2D.getIntegral(f, a, b))
+                            }
+                        }
+                        if (this.Math2D.getZero(f, a, b) !== null) {
+                            this.canvas.point(this.Math2D.getZero(f, a, b), 0);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // callbacks
     // canvas
     wheel(event) {
         const delta = (event.wheelDelta > 0) ? -this.zoomStep : this.zoomStep;
@@ -109,7 +117,7 @@ class Graph2DComponent extends Component {
     mouseLeave() {
         this.canMove = false;
     }
-        
+
     // UI
     changeWidth(num, width) {
         this.funcs[num].width = width;

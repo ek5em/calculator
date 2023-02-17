@@ -1,2 +1,2 @@
-Template.prototype.Graph3D = () => 
-`<canvas id = "scene"></canvas>`
+Template.prototype.Graph3D = () =>
+    `<canvas id = "canvas3D"></canvas>`

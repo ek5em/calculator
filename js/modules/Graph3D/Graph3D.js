@@ -2,49 +2,29 @@ class Graph3D {
     constructor(WIN, canvas) {
         this.WIN = WIN;
         this.canvas = canvas;
+        this.math3D = new Math3D({
+            WIN: this.WIN
+        });
     }
 
-    xs(point) {
-        const { CAMERA, FOCUS } = this.WIN;
-        return point.x * (CAMERA.z - FOCUS.z) / (CAMERA.z - point.z);
-    }
-
-    ys(point) {
-        const { CAMERA, FOCUS } = this.WIN;
-        return point.y * (CAMERA.z - FOCUS.z) / (CAMERA.z - point.z);
-    }
 
     drawPoint(point) {
-        this.canvas.point(this.xs(point), this.ys(point));
+        this.canvas.point(this.math3D.xs(point), this.math3D.ys(point), 'black', 3);
     }
 
-    drawLine(point1, point2,) {
-        this.canvas.line(this.xs(point1),
-            this.ys(point1),
-            this.xs(point2),
-            this.ys(point2));
+    drawEdge(edge) {
+        const { point1, point2 } = edge;
+        this.canvas.line(this.math3D.xs(point1), this.math3D.ys(point1),
+            this.math3D.xs(point2), this.math3D.ys(point2));
     }
 
-    drawCube(length) {
-        this.drawLine(new Point(-length, -length, 0), new Point(-length, length, 0));
-        this.drawLine(new Point(-length, length, 0), new Point(length, length, 0));
-        this.drawLine(new Point(length, length, 0), new Point(length, -length, 0));
-        this.drawLine(new Point(length, -length, 0), new Point(-length, -length, 0));
+    drawFigure(figure) {
+        figure.points.forEach((point) => {
+            this.drawPoint(point);
+        })
 
-        this.drawLine(new Point(-length, -length, 0), new Point(-length, -length, length));
-        this.drawLine(new Point(-length, length, 0), new Point(-length, length, length));
-        this.drawLine(new Point(length, length, 0), new Point(length, length, length));
-        this.drawLine(new Point(length, -length, 0), new Point(length, -length, length));
-
-        this.drawLine(new Point(-length, -length, length), new Point(-length, length, length));
-        this.drawLine(new Point(-length, length, length), new Point(length, length, length));
-        this.drawLine(new Point(length, length, length), new Point(length, -length, length));
-        this.drawLine(new Point(length, -length, length), new Point(-length, -length, length));
+        figure.edges.forEach((edge) => {
+            this.drawEdge(edge);
+        })
     }
-
-    generate() {
-        this.canvas.clear();
-        this.drawCube(10);
-    }
-
 }

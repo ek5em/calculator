@@ -1,5 +1,5 @@
 Template.prototype.Graph2D = () => 
-`<canvas id="graph"></canvas>
+`<canvas id="canvas2D"></canvas>
 <div class="container">
     <div class="menuGraphButton"></div>
     <div class = "block hide">

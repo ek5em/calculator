@@ -86,11 +86,4 @@ class Graph2d {
         this.canvas.polygon(points, color);
         this.canvas.line(a, 0, b, 0, 2, 'orange');
     }
-
-    generate() {
-        this.canvas.clear()
-        this.grid();
-        this.printNums();
-        this.printOXY();
-    }
 }
