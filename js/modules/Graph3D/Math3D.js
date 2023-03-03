@@ -77,4 +77,33 @@ class Math3D {
             [0, 0, 0, 1]
         ]
     }
+
+    calcCenters(figure) {
+        figure.polygons.forEach((polygon) => {
+            const points = polygon.points;
+            let x = 0, y = 0, z = 0;
+            for (let i = 0; i < points.length; i++) {
+                x += figure.points[points[i]].x;
+                y += figure.points[points[i]].y;
+                z += figure.points[points[i]].z;
+            };
+
+            polygon.center.x = x / points.length;
+            polygon.center.y = y / points.length;
+            polygon.center.z = z / points.length;
+        })
+    }
+
+    calcDistance(figure, endPoint, name) {
+        figure.polygons.forEach((polygon) => {
+            polygon[name] = Math.sqrt(
+                Math.pow(endPoint.x - polygon.center.x, 2) +
+                Math.pow(endPoint.y - polygon.center.y, 2) +
+                Math.pow(endPoint.z - polygon.center.z, 2));
+        });
+    }
+
+    sortByArtistAlgoritm(polygons) {
+        polygons.sort((a, b) => b.distance - a.distance);
+    }
 }

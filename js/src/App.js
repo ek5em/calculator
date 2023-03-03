@@ -35,9 +35,7 @@ class App extends Component {
             template: template.Graph3D,
         })
 
-        this.polynomialCalculator.hide();
-        this.calculator.hide();
-        this.graph3D.hide();
+        this.showMenuItem('graph3D');
 
     }
 

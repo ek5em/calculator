@@ -1,4 +1,4 @@
-class UI {
+class UI2D {
     constructor({
         changeColor,
         changeWidth,

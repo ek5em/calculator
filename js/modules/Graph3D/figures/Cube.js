@@ -1,29 +1,49 @@
-class Cube {
-    constructor() {
-        this.points = [
-            new Point(10, 10, 10),
-            new Point(-10, 10, 10),
-            new Point(10, -10, 10),
-            new Point(-10, -10, 10),
-            new Point(10, 10, -10),
-            new Point(10, -10, -10),
-            new Point(-10, 10, -10),
-            new Point(-10, -10, -10),
-        ];
+class Cube extends Figure {
+    constructor(size) {
+        super();
+        this.size = size;
 
-        this.edges = [
-            new Edge(this.points[0], this.points[4]),
-            new Edge(this.points[0], this.points[1]),
-            new Edge(this.points[0], this.points[2]),
-            new Edge(this.points[6], this.points[1]),
-            new Edge(this.points[6], this.points[4]),
-            new Edge(this.points[6], this.points[7]),
-            new Edge(this.points[5], this.points[7]),
-            new Edge(this.points[5], this.points[4]),
-            new Edge(this.points[5], this.points[2]),
-            new Edge(this.points[3], this.points[7]),
-            new Edge(this.points[3], this.points[2]),
-            new Edge(this.points[3], this.points[1]),
+        this.generateFigure();
+    }
+
+    generatePoints() {
+        this.points = [
+            new Point(this.size, this.size, this.size),
+            new Point(-this.size, this.size, this.size),
+            new Point(this.size, -this.size, this.size),
+            new Point(-this.size, -this.size, this.size),
+            new Point(this.size, this.size, -this.size),
+            new Point(this.size, -this.size, -this.size),
+            new Point(-this.size, this.size, -this.size),
+            new Point(-this.size, -this.size, -this.size),
         ];
+    }
+
+    generateEdges() {
+        this.edges = [
+            new Edge(0, 4),
+            new Edge(0, 1),
+            new Edge(0, 2),
+            new Edge(6, 1),
+            new Edge(6, 4),
+            new Edge(6, 7),
+            new Edge(5, 7),
+            new Edge(5, 4),
+            new Edge(5, 2),
+            new Edge(3, 7),
+            new Edge(3, 2),
+            new Edge(3, 1),
+        ];
+    }
+
+    generatePolygons() {
+        this.polygons = [
+            new Polygon([0, 1, 3, 2]),
+            new Polygon([0, 1, 6, 4]),
+            new Polygon([0, 2, 5, 4]),
+            new Polygon([2, 3, 7, 5]),
+            new Polygon([3, 1, 6, 7]),
+            new Polygon([4, 5, 7, 6]),
+        ]
     }
 }

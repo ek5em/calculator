@@ -37,7 +37,7 @@ class Graph2DComponent extends Component {
 
         this.graph2D = new Graph2d(this.WIN, this.canvas);
 
-        new UI({
+        new UI2D({
             changeColor: (num, color) => this.changeColor(num, color),
             changeWidth: (num, width) => this.changeWidth(num, width),
             changeA: (num, value) => this.changeA(num, value),
