@@ -1,21 +1,24 @@
 class Cube extends Figure {
-    constructor(size) {
-        super();
-        this.size = size;
+    constructor({
+        color = '#ee8844',
+        size = 10,
+        x, y, z }) {
+        super({ color, x, y, z });
+        this.size = size / 2;
 
         this.generateFigure();
     }
 
     generatePoints() {
         this.points = [
-            new Point(this.size, this.size, this.size),
-            new Point(-this.size, this.size, this.size),
-            new Point(this.size, -this.size, this.size),
-            new Point(-this.size, -this.size, this.size),
-            new Point(this.size, this.size, -this.size),
-            new Point(this.size, -this.size, -this.size),
-            new Point(-this.size, this.size, -this.size),
-            new Point(-this.size, -this.size, -this.size),
+            new Point(this.size + this.x, this.size + this.y, this.size + this.z),
+            new Point(-this.size + this.x, this.size + this.y, this.size + this.z),
+            new Point(this.size + this.x, -this.size + this.y, this.size + this.z),
+            new Point(-this.size + this.x, -this.size + this.y, this.size + this.z),
+            new Point(this.size + this.x, this.size + this.y, -this.size + this.z),
+            new Point(this.size + this.x, -this.size + this.y, -this.size + this.z),
+            new Point(-this.size + this.x, this.size + this.y, -this.size + this.z),
+            new Point(-this.size + this.x, -this.size + this.y, -this.size + this.z),
         ];
     }
 
@@ -38,12 +41,12 @@ class Cube extends Figure {
 
     generatePolygons() {
         this.polygons = [
-            new Polygon([0, 1, 3, 2]),
-            new Polygon([0, 1, 6, 4]),
-            new Polygon([0, 2, 5, 4]),
-            new Polygon([2, 3, 7, 5]),
-            new Polygon([3, 1, 6, 7]),
-            new Polygon([4, 5, 7, 6]),
+            new Polygon([0, 1, 3, 2], this.color),
+            new Polygon([0, 1, 6, 4], this.color),
+            new Polygon([0, 2, 5, 4], this.color),
+            new Polygon([2, 3, 7, 5], this.color),
+            new Polygon([3, 1, 6, 7], this.color),
+            new Polygon([4, 5, 7, 6], this.color),
         ]
     }
 }

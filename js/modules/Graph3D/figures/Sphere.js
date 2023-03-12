@@ -1,64 +1,74 @@
 class Sphere extends Figure {
-    constructor(radius, circles) {
-        super();
+    constructor({
+        radius = 10,
+        count = 20,
+        color = "#532190",
+        x, y, z }) {
+        super({ color, x, y, z });
 
         this.radius = radius;
-        this.circles = circles;
+        this.count = count;
 
         this.generateFigure();
     }
 
     generatePoints() {
-        let i = 0;
-        while (i < 2 * Math.PI) {
-            let j = 0;
-            while (j <= Math.PI) {
+        const propI = 2 * Math.PI / this.count;
+        const propJ = Math.PI / this.count
+        for (let i = 0; i < this.count; i++) {
+            for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.radius * Math.sin(i) * Math.cos(j),
-                    this.radius * Math.cos(i),
-                    this.radius * Math.sin(i) * Math.sin(j),
+                    this.x + this.radius * Math.sin(i * propI) * Math.cos(j * propJ),
+                    this.y + this.radius * Math.cos(i * propI),
+                    this.z + this.radius * Math.sin(i * propI) * Math.sin(j * propJ),
                 ));
-                j += Math.PI / this.circles * 2;
             }
-            i += Math.PI / this.circles;
         }
     }
 
     generateEdges() {
-        const step = this.circles / 2 + 1;
-        let i = 0;
-        while (i <= Math.pow(this.circles, 2) + 3 * step) {
-            for (let j = i; j < i + this.circles / 2; j++) {
-                this.edges.push(new Edge(j, j + 1));
+        for (let i = 0; i < this.count; i++) {
+            const k = i ? i - 1 : i;
+            for (let j = 0; j < this.count - 1; j++) {
+                this.edges.push(new Edge(j + i * this.count, j + i * this.count + 1));
+                this.edges.push(new Edge(j + i * this.count, j + k * this.count));
             }
-            i += step;
-        }
-
-        for (let i = 0; i <= this.circles / 2; i++) {
-            for (let j = i; j < this.circles * step; j += step) {
-                this.edges.push(new Edge(j, j + step));
-                this.edges.push(new Edge(this.points.length - j - 1, this.points.length - j - step - 1));
-            }
-        }
-
-        for (let i = 0; i <= this.circles / 2; i++) {
+            this.edges.push(new Edge(i * this.count, this.points.length - this.count * k - 1));
+            this.edges.push(new Edge(this.points.length - i * this.count - 1, this.points.length - k * this.count - 1));
             this.edges.push(new Edge(0, this.points.length - i - 1));
         }
+
     }
 
     generatePolygons() {
-        const step = this.circles / 2 + 1;
-
-        for (let i = 0, j = step - 1; i < this.points.length - step; i++) {
-            if (i !== j) {
-                this.polygons.push(new Polygon([i, i + 1, i + 1 + step, i + step]));
-            } else {
-                j += step;
+        for (let i = 0; i < this.count - 1; i++) {
+            for (let j = 0; j < this.count - 1; j++) {
+                this.polygons.push(new Polygon([
+                    j + i * this.count,
+                    j + 1 + i * this.count,
+                    j + 1 + (i + 1) * this.count,
+                    j + (i + 1) * this.count,
+                ], this.color));
             }
+
+            this.polygons.push(new Polygon([
+                this.points.length - i * this.count - 1,
+                this.points.length - (i ? i - 1 : i) * this.count - 1,
+                i * this.count,
+                (i + 1) * this.count,
+            ], this.color));
+
+            this.polygons.push(new Polygon([
+                0,
+                this.points.length - i - 1,
+                this.points.length - i - 2,
+            ], this.color))
         }
 
-        for (let i = 1; i < step; i++) {
-            this.polygons.push(new Polygon([0, this.points.length - i, this.points.length - i - 1]));
-        }
+        this.polygons.push(new Polygon([
+            0,
+            this.points.length - this.count,
+            this.count * 2 - 1,
+        ], this.color))
     }
 }

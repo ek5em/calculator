@@ -1,4 +1,4 @@
-.hide  {
+.hide {
     display: none;
 }
 
@@ -16,7 +16,7 @@ textarea {
 }
 
 #app {
-    margin-top:5vh;
+    margin-top: 5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -45,7 +45,7 @@ textarea {
 
 .active {
     background-color: #b6b84c;
-    border:1px solid #63b852;
+    border: 1px solid #63b852;
     transform: translateY(1px);
 }
 
@@ -82,10 +82,11 @@ textarea {
 }
 
 .newPoly {
-    z-index:1;
+    z-index: 1;
 }
 
-.result, .polyResult {
+.result,
+.polyResult {
     background-color: #bebeb2;
     z-index: 1;
 }
@@ -152,21 +153,25 @@ textarea {
     text-align: center;
 }
 
-#polyomialCalculator, #calculator{
+#polyomialCalculator,
+#calculator {
     background-color: #c57d1f;
 }
 
-#canvas2D, #canvas3D {
+#canvas2D,
+#canvas3D {
     cursor: grab;
     border: 1px solid black;
     border-radius: 20px;
 }
 
-#canvas2D:active, #canvas3D:active {
+#canvas2D:active,
+#canvas3D:active {
     cursor: grabbing;
 }
 
-#graph2D {
+#graph2D,
+#graph3D {
     max-height: 800px;
 }
 
@@ -199,7 +204,8 @@ textarea {
     outline: none;
 }
 
-.container {
+.container,
+.container3D {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -207,13 +213,14 @@ textarea {
     background-color: rgb(212, 158, 86);
     width: 0;
     height: 800px;
+    left: 1px;
     top: -806px;
-    border-top-left-radius: 15px;
+    border-top-left-radius: 17px;
     border-bottom-left-radius: 18px;
     transition: 1s;
 }
 
-.container > .block {
+.container>.block {
     width: 100%;
     max-height: 100%;
 }
@@ -222,7 +229,8 @@ textarea {
     width: 500px;
 }
 
-.menuGraphButton {
+.menuGraphButton,
+.menuGraph3DButton {
     position: absolute;
     border-radius: 50%;
     top: 0;
@@ -233,7 +241,8 @@ textarea {
     cursor: pointer;
 }
 
-.funcMenu {
+.funcMenu,
+.figuresMenu {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -256,7 +265,8 @@ textarea {
     background-color: rgb(218, 79, 79);
 }
 
-.addFunction {
+.addFunction,
+.addFigure {
     width: 90px;
     height: 20px;
     margin-top: 5px;
@@ -267,15 +277,18 @@ textarea {
     transition: .1s;
 }
 
-.addFunction:hover {    
+.addFunction:hover,
+.addFigure:hover {
     background-color: rgb(208, 245, 245);
+    cursor: pointer;
 }
 
-.addFunction:active {
+.addFunction:active,
+.addFigure:active {
     transform: translateY(2px);
 }
 
-.addFunction:hover,
+
 .deleteFunc:hover {
     cursor: pointer;
 }
@@ -353,4 +366,11 @@ textarea {
     background-color: white;
     border: 1px solid chocolate;
     border-radius: 10px;
+}
+
+#figuresList{
+    overflow-y:hidden;
+    width: 92px;
+    text-align: center;
+    outline: none;
 }

@@ -37,16 +37,22 @@ class Graph2DComponent extends Component {
 
         this.graph2D = new Graph2d(this.WIN, this.canvas);
 
-        new UI2D({
-            changeColor: (num, color) => this.changeColor(num, color),
-            changeWidth: (num, width) => this.changeWidth(num, width),
-            changeA: (num, value) => this.changeA(num, value),
-            changeB: (num, value) => this.changeB(num, value),
-            switchIntegralCheckBox: (num) => this.switchIntegralCheckBox(num),
-            switchDerivativeCheckBox: (num) => this.switchDerivativeCheckBox(num),
-            addFunction: (num, f) => this.addFunction(num, f),
-            delFunction: (num) => this.delFunction(num),
-            createObjectFunc: (num) => this.createObjectFunc(num),
+        new UI2DComponent({
+            id: 'UI2D',
+            parent: 'graph2D',
+            className: 'container',
+            template: template.UI2D,
+            callbacks: {
+                changeColor: (num, color) => this.changeColor(num, color),
+                changeWidth: (num, width) => this.changeWidth(num, width),
+                changeA: (num, value) => this.changeA(num, value),
+                changeB: (num, value) => this.changeB(num, value),
+                switchIntegralCheckBox: (num) => this.switchIntegralCheckBox(num),
+                switchDerivativeCheckBox: (num) => this.switchDerivativeCheckBox(num),
+                addFunction: (num, f) => this.addFunction(num, f),
+                delFunction: (num) => this.delFunction(num),
+                createObjectFunc: (num) => this.createObjectFunc(num),
+            }
         })
 
         setInterval(() => {
