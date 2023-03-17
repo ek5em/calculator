@@ -5,8 +5,8 @@ class Ellipsoid extends Figure {
         focusOz = 20,
         count = 20,
         color = '#225533',
-        x, y, z }) {
-        super({ color, x, y, z });
+        centre }) {
+        super({ color, centre });
 
         this.focusOx = focusOx;
         this.focusOy = focusOy;
@@ -22,9 +22,9 @@ class Ellipsoid extends Figure {
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.x + this.focusOx * Math.sin(i * propI) * Math.cos(j * propJ),
-                    this.y + this.focusOy * Math.cos(i * propI),
-                    this.z + this.focusOz * Math.sin(i * propI) * Math.sin(j * propJ),
+                    this.centre.x + this.focusOx * Math.sin(i * propI) * Math.cos(j * propJ),
+                    this.centre.y + this.focusOy * Math.cos(i * propI),
+                    this.centre.z + this.focusOz * Math.sin(i * propI) * Math.sin(j * propJ),
                 ));
             }
         }

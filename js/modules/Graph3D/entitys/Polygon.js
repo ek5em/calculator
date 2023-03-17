@@ -1,12 +1,20 @@
 class Polygon {
-    constructor(points, color = '#ee8448') {
+    constructor(
+        points,
+        color = '#ee8448',
+        centre = new Point,
+        distance = 0,
+        lumen = 1
+    ) {
         this.points = points;
-        this.center = new Point;
-        this.distance = 0;
-        this.lumen = 1;
-        this.color = this.hexToRgb(color);
+        this.centre = centre;
+        this.distance = distance;
+        this.lumen = lumen;
+        this.color = color;
+        this.normVector = {};
     }
-    hexToRgb(hex) {
+
+    hexToRGB(hex) {
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         return result ? {
             r: parseInt(result[1], 16),

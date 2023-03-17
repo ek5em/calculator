@@ -3,8 +3,8 @@ class Sphere extends Figure {
         radius = 10,
         count = 20,
         color = "#532190",
-        x, y, z }) {
-        super({ color, x, y, z });
+        centre }) {
+        super({ color, centre });
 
         this.radius = radius;
         this.count = count;
@@ -18,9 +18,9 @@ class Sphere extends Figure {
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.x + this.radius * Math.sin(i * propI) * Math.cos(j * propJ),
-                    this.y + this.radius * Math.cos(i * propI),
-                    this.z + this.radius * Math.sin(i * propI) * Math.sin(j * propJ),
+                    this.centre.x + this.radius * Math.sin(i * propI) * Math.cos(j * propJ),
+                    this.centre.y + this.radius * Math.cos(i * propI),
+                    this.centre.z + this.radius * Math.sin(i * propI) * Math.sin(j * propJ),
                 ));
             }
         }

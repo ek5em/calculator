@@ -2,6 +2,7 @@ class Math3D {
     constructor({ WIN }) {
         this.WIN = WIN;
     }
+
     xs(point) {
         const { CAMERA, FOCUS } = this.WIN;
         return (point.x - CAMERA.x) / (point.z - CAMERA.z) * (FOCUS.z - CAMERA.z) - CAMERA.x;
@@ -22,6 +23,30 @@ class Math3D {
             c[i] = s;
         }
         return c;
+    }
+
+    mutlMatrix(a, b) {
+        const result = [];
+        for (let i = 0; i < a.length; i++) {
+            result.push([]);
+            for (let j = 0; j < b[i].length; j++) {
+                result[i][j] = 0;
+                for (let k = 0; k < a[i].length; k++) {
+                    result[i][j] += a[i][k] * b[k][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    getTranformMatrix() {
+        return Array.from(arguments).reduce((result, matrix) =>
+            this.mutlMatrix(result, matrix), [
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        ]);
     }
 
     transformPoint(matrix, point) {
@@ -88,19 +113,58 @@ class Math3D {
                 z += figure.points[points[i]].z;
             };
 
-            polygon.center.x = x / points.length;
-            polygon.center.y = y / points.length;
-            polygon.center.z = z / points.length;
+            polygon.centre.x = x / points.length;
+            polygon.centre.y = y / points.length;
+            polygon.centre.z = z / points.length;
         })
     }
 
     calcDistance(figure, endPoint, name) {
         figure.polygons.forEach((polygon) => {
             polygon[name] = Math.sqrt(
-                Math.pow(endPoint.x - polygon.center.x, 2) +
-                Math.pow(endPoint.y - polygon.center.y, 2) +
-                Math.pow(endPoint.z - polygon.center.z, 2));
+                Math.pow(endPoint.x - polygon.centre.x, 2) +
+                Math.pow(endPoint.y - polygon.centre.y, 2) +
+                Math.pow(endPoint.z - polygon.centre.z, 2));
         });
+    }
+
+    calcNormVectors(figure) {
+        figure.polygons.forEach((polygon) => {
+            const p1 = figure.points[polygon.points[0]];
+            const p2 = figure.points[polygon.points[1]];
+            const p3 = figure.points[polygon.points[2]];
+            const a = [
+                p2.x - p1.x,
+                p2.y - p1.y,
+                p2.z - p1.z
+            ]
+            const b = [
+                p2.x - p3.x,
+                p2.y - p3.y,
+                p2.z - p3.z
+            ]
+
+            polygon.normVector = [
+                a[1] * b[2] - a[2] * b[1],
+                a[2] * b[0] - a[0] * b[2],
+                a[0] * b[1] - a[1] * b[0],
+            ]
+        })
+    }
+
+    calcAngle(a, b) {
+        const mult = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+        const moduleA = Math.sqrt(
+            Math.pow(a[0], 2) +
+            Math.pow(a[1], 2) +
+            Math.pow(a[2], 2)
+        );
+        const moduleB = Math.sqrt(
+            Math.pow(b[0], 2) +
+            Math.pow(b[1], 2) +
+            Math.pow(b[2], 2)
+        )
+        return Math.acos(mult / moduleA / moduleB);
     }
 
     sortByArtistAlgoritm(polygons) {
@@ -112,5 +176,5 @@ class Math3D {
         return res > 1 ? 1 : res;
     }
 
-    
+
 }

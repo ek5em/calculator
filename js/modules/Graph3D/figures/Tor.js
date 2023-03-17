@@ -4,8 +4,8 @@ class Tor extends Figure {
         radius2 = 10,
         count = 20,
         color = '#482153',
-        x, y, z, }) {
-        super({ color, x, y, z });
+        centre }) {
+        super({ color, centre });
 
         this.radius = radius;
         this.radius2 = radius2;
@@ -19,9 +19,9 @@ class Tor extends Figure {
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.x + (this.radius + this.radius2 * Math.cos(i * prop)) * Math.cos(j * prop),
-                    this.y + (this.radius + this.radius2 * Math.cos(i * prop)) * Math.sin(j * prop),
-                    this.z + this.radius2 * Math.sin(i * prop),
+                    this.centre.x + (this.radius + this.radius2 * Math.cos(i * prop)) * Math.cos(j * prop),
+                    this.centre.y + this.radius2 * Math.sin(i * prop),
+                    this.centre.z + (this.radius + this.radius2 * Math.cos(i * prop)) * Math.sin(j * prop),
                 ));
             }
         }

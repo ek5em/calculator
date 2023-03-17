@@ -2,23 +2,24 @@ class Cube extends Figure {
     constructor({
         color = '#ee8844',
         size = 10,
-        x, y, z }) {
-        super({ color, x, y, z });
-        this.size = size / 2;
+        centre }) {
+        super({ color, centre });
+        this.size = size;
 
         this.generateFigure();
     }
 
     generatePoints() {
+        const size = this.size / 2;
         this.points = [
-            new Point(this.size + this.x, this.size + this.y, this.size + this.z),
-            new Point(-this.size + this.x, this.size + this.y, this.size + this.z),
-            new Point(this.size + this.x, -this.size + this.y, this.size + this.z),
-            new Point(-this.size + this.x, -this.size + this.y, this.size + this.z),
-            new Point(this.size + this.x, this.size + this.y, -this.size + this.z),
-            new Point(this.size + this.x, -this.size + this.y, -this.size + this.z),
-            new Point(-this.size + this.x, this.size + this.y, -this.size + this.z),
-            new Point(-this.size + this.x, -this.size + this.y, -this.size + this.z),
+            new Point(size + this.centre.x, size + this.centre.y, size + this.centre.z),
+            new Point(-size + this.centre.x, size + this.centre.y, size + this.centre.z),
+            new Point(size + this.centre.x, -size + this.centre.y, size + this.centre.z),
+            new Point(-size + this.centre.x, -size + this.centre.y, size + this.centre.z),
+            new Point(size + this.centre.x, size + this.centre.y, -size + this.centre.z),
+            new Point(size + this.centre.x, -size + this.centre.y, -size + this.centre.z),
+            new Point(-size + this.centre.x, size + this.centre.y, -size + this.centre.z),
+            new Point(-size + this.centre.x, -size + this.centre.y, -size + this.centre.z),
         ];
     }
 

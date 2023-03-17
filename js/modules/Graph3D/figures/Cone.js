@@ -4,8 +4,8 @@ class Cone extends Figure {
         height = 10,
         count = 20,
         color = '#335544',
-        x, y, z }) {
-        super({ color, x, y, z });
+        centre }) {
+        super({ color, centre });
 
         this.radius = radius;
         this.height = height;
@@ -21,9 +21,9 @@ class Cone extends Figure {
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.x + i * propRadius * Math.cos(j * propAlpha),
-                    this.y + i * propHeight,
-                    this.z + i * propRadius * Math.sin(j * propAlpha),
+                    this.centre.x + i * propRadius * Math.cos(j * propAlpha),
+                    this.centre.y + i * propHeight,
+                    this.centre.z + i * propRadius * Math.sin(j * propAlpha),
                 ))
             }
         }
@@ -31,9 +31,9 @@ class Cone extends Figure {
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.x + i * propRadius * Math.cos(j * propAlpha),
-                    this.y - i * propHeight,
-                    this.z + i * propRadius * Math.sin(j * propAlpha),
+                    this.centre.x + i * propRadius * Math.cos(j * propAlpha),
+                    this.centre.y - i * propHeight,
+                    this.centre.z + i * propRadius * Math.sin(j * propAlpha),
                 ))
             }
         }

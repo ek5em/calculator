@@ -4,15 +4,24 @@ class UI3DComponent extends Component {
         this.num = 1;
         this.menuOpen = false;
     }
-    addEventListeners() {
 
+    addEventListeners() {
+        document.querySelector('.lightPower').addEventListener('change', () => this.lightHandler())
         document.querySelector('.menuGraph3DButton').addEventListener('click', this.menuHandler)
         document.querySelector('.addFigure').addEventListener('click', () => this.openFiguresListHandler());
         document.addEventListener('keypress', (event) => this.callbacks.keyPress(event));
-        document.getElementById('PolygonsCheckBox').addEventListener('change', this.callbacks.togglePolygons);
-        document.getElementById('EdgesCheckBox').addEventListener('change', this.callbacks.toggleEdges);
-        document.getElementById('PointsCheckBox').addEventListener('change', this.callbacks.togglePoints);
+        document.querySelectorAll('.figuresCheckBoxes > input').forEach((checkBox) => {
+            checkBox.addEventListener('change', (event) => this.changeCheckBoxHandler(event));
+        })
         document.getElementById('figuresList').addEventListener('click', (event) => this.addFigureHandler(event));
+    }
+
+    changeCheckBoxHandler(event) {
+        this.callbacks.toggleCheckBox(event.target.dataset.setting);
+    }
+
+    lightHandler() {
+        this.callbacks.changeLightPower(document.querySelector('.lightPower').value - 0);
     }
 
     menuHandler() {
@@ -36,6 +45,39 @@ class UI3DComponent extends Component {
         this.callbacks.addFigure(figure, this.num);
         document.querySelector('.figuresContainer').appendChild(
             this.createSettings(figure));
+    }
+
+    changeFigureSettigHandler(event) {
+        const elem = event.target;
+        let value = elem.value;
+        switch (elem.dataset.setting) {
+            case "color":
+                break;
+            case "count":
+                value -= 0;
+                if (value < 3) {
+                    elem.value = 3;
+                    value = 3;
+                }
+                break;
+            case "radius2":
+            case "radius":
+            case "size":
+            case "height":
+                value -= 0;
+                if (value < 0) {
+                    elem.value = 0;
+                    value = 0;
+                }
+                break;
+            default:
+                value -= 0;
+        }
+        this.callbacks.changeFigureSettig(
+            elem.dataset.num,
+            elem.dataset.setting,
+            value,
+        )
     }
 
     createSettings(figure) {
@@ -115,39 +157,6 @@ class UI3DComponent extends Component {
             this.changeFigureSettigHandler(event));
 
         return input;
-    }
-
-    changeFigureSettigHandler(event) {
-        const elem = event.target;
-        let value = elem.value;
-        switch (elem.dataset.setting) {
-            case "color":
-                break;
-            case "count":
-                value -= 0;
-                if (value < 3) {
-                    elem.value = 3;
-                    value = 3;
-                }
-                break;
-            case "radius2":
-            case "radius":
-            case "size":
-            case "height":
-                value -= 0;
-                if (value < 0) {
-                    elem.value = 0;
-                    value = 0;
-                }
-                break;
-            default:
-                value -= 0;
-        }
-        this.callbacks.changeFigureSettig(
-            elem.dataset.num,
-            elem.dataset.setting,
-            value,
-        )
     }
 
 }
