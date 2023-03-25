@@ -12,7 +12,8 @@ class UI3DComponent extends Component {
         document.addEventListener('keypress', (event) => this.callbacks.keyPress(event));
         document.querySelectorAll('.figuresCheckBoxes > input').forEach((checkBox) => {
             checkBox.addEventListener('change', (event) => this.changeCheckBoxHandler(event));
-        })
+        });
+        document.getElementById('animationCheckBox').addEventListener('change', () => this.callbacks.animationHandler());
         document.getElementById('figuresList').addEventListener('click', (event) => this.addFigureHandler(event));
     }
 
@@ -53,6 +54,7 @@ class UI3DComponent extends Component {
         switch (elem.dataset.setting) {
             case "color":
                 break;
+
             case "count":
                 value -= 0;
                 if (value < 3) {
@@ -60,16 +62,19 @@ class UI3DComponent extends Component {
                     value = 3;
                 }
                 break;
+
             case "radius2":
             case "radius":
             case "size":
             case "height":
+            case "width":
                 value -= 0;
                 if (value < 0) {
                     elem.value = 0;
                     value = 0;
                 }
                 break;
+
             default:
                 value -= 0;
         }
@@ -81,9 +86,9 @@ class UI3DComponent extends Component {
     }
 
     createSettings(figure) {
-        const inputX = this.createInput('number', 'x', 'inputCenterPointFigure', 'x');
-        const inputY = this.createInput('number', 'y', 'inputCenterPointFigure', 'y');
-        const inputZ = this.createInput('number', 'z', 'inputCenterPointFigure', 'z');
+        const inputX = this.createInput('number', 'x', 'x', 'inputCenterPointFigure');
+        const inputY = this.createInput('number', 'y', 'y', 'inputCenterPointFigure');
+        const inputZ = this.createInput('number', 'z', 'z', 'inputCenterPointFigure');
         const inputColor = this.createInput('color', 'color', 'inputColor');
 
         const figureCenter = document.createElement('div');
@@ -99,32 +104,68 @@ class UI3DComponent extends Component {
 
         switch (figure) {
             case 'Cube':
-                settingsBlock.appendChild(this.createInput('number', 'size', 'cubeLength', 'Длина'));
+                settingsBlock.appendChild(this.createInput('number', 'size', 'Длина'));
                 break;
 
             case 'Sphere':
-                settingsBlock.appendChild(this.createInput('number', 'radius', 'sphereRadius', 'Радиус'));
-                settingsBlock.appendChild(this.createInput('number', 'count', 'sphereCount', 'Кольца'));
+                settingsBlock.appendChild(this.createInput('number', 'radius', 'Радиус'));
+                settingsBlock.appendChild(this.createInput('number', 'count', 'Кольца'));
                 break;
 
             case 'Ellipsoid':
-                settingsBlock.appendChild(this.createInput('number', 'focusOx', 'ellipsoidFocus', 'ФокусOx'));
-                settingsBlock.appendChild(this.createInput('number', 'focusOy', 'ellipsoidFocus', 'ФокусOy'));
-                settingsBlock.appendChild(this.createInput('number', 'focusOz', 'ellipsoidFocus', 'ФокусOz'));
-                settingsBlock.appendChild(this.createInput('number', 'count', 'ellipsoidCount', 'Кольца'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOx', 'ФокусOx', 'ellipsoidFocus'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOy', 'ФокусOy', 'ellipsoidFocus'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOz', 'ФокусOz', 'ellipsoidFocus'));
+                settingsBlock.appendChild(this.createInput('number', 'count', 'Кольца'));
                 break;
 
             case 'Cone':
-                settingsBlock.appendChild(this.createInput('number', 'radius', 'coneRadius', 'Радиус'));
-                settingsBlock.appendChild(this.createInput('number', 'count', 'coneCount', 'Кольца'));
-                settingsBlock.appendChild(this.createInput('number', 'height', 'coneHeight', 'Высота'));
+            case 'Cylinder':
+                settingsBlock.appendChild(this.createInput('number', 'radius', 'Радиус'));
+                settingsBlock.appendChild(this.createInput('number', 'count', 'Кольца'));
+                settingsBlock.appendChild(this.createInput('number', 'height', 'Высота'));
+                break;
+
+            case 'ParabolicСylinder':
+                settingsBlock.appendChild(this.createInput('number', 'count', 'Дуги'));
+                settingsBlock.appendChild(this.createInput('number', 'width', 'Ширина'));
+                settingsBlock.appendChild(this.createInput('number', 'height', 'Высота'));
+                break;
+
+            case 'HyperbolicCylinder':
+                settingsBlock.appendChild(this.createInput('number', 'count', 'Дуги'));
+                settingsBlock.appendChild(this.createInput('number', 'width', 'Ширина'));
+                settingsBlock.appendChild(this.createInput('number', 'height', 'Высота'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOx', 'ФокусOx'));
+                break;
+
+            case 'SingleCavityHyperboloid':
+            case 'DoubleCavityHyperboloid':
+                settingsBlock.appendChild(this.createInput('number', 'count', 'Кольца'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOx', 'ФокусOx'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOy', 'ФокусOy'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOz', 'ФокусOz'));
+                break;
+
+            case 'EllipticalParaboloid':
+                settingsBlock.appendChild(this.createInput('number', 'count', 'Кольца'));
+                settingsBlock.appendChild(this.createInput('number', 'height', 'Высота'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOx', 'ФокусOx'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOy', 'ФокусOy'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOz', 'ФокусOz'));
+                break;
+
+            case 'HyperbolicParaboloid':
+                settingsBlock.appendChild(this.createInput('number', 'count', 'Кольца'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOx', 'ФокусOx'));
+                settingsBlock.appendChild(this.createInput('number', 'focusOz', 'ФокусOz'));
                 break;
 
             case 'Tor':
-                settingsBlock.appendChild(this.createInput('number', 'radius', 'torRadius', 'Внутренний радиус'));
-                settingsBlock.appendChild(this.createInput('number', 'radius2', 'torRadius', 'Радиус'));
-                settingsBlock.appendChild(this.createInput('number', 'count', 'torCount', 'Кольца'));
-
+                settingsBlock.appendChild(this.createInput('number', 'radius', 'Внутренний радиус'));
+                settingsBlock.appendChild(this.createInput('number', 'radius2', 'Радиус'));
+                settingsBlock.appendChild(this.createInput('number', 'count', 'Кольца'));
+                break;
         }
 
         const button = document.createElement('div');
@@ -142,7 +183,7 @@ class UI3DComponent extends Component {
         return settingsBlock;
     }
 
-    createInput(type, dataset, className, placeholder = '') {
+    createInput(type, dataset, placeholder, className) {
         const input = document.createElement('input');
         input.setAttribute('type', type);
         input.setAttribute('placeholder', placeholder);

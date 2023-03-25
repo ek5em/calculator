@@ -368,9 +368,26 @@ textarea {
     border-radius: 10px;
 }
 
-#figuresList{
-    overflow-y:hidden;
-    width: 92px;
+#figuresList {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    width: 130px;
     text-align: center;
     outline: none;
+}
+
+#figuresList>div {
+    background-color: #c9bc71;
+    margin: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .1s;
+}
+
+#figuresList>div:hover {
+    background-color: #afa364;
+}
+
+#figuresList>div:active {
+    transform: translateY(1px);
 }

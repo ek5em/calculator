@@ -3,15 +3,14 @@ class Polygon {
         points,
         color = '#ee8448',
         centre = new Point,
-        distance = 0,
-        lumen = 1
     ) {
         this.points = points;
         this.centre = centre;
-        this.distance = distance;
-        this.lumen = lumen;
-        this.color = color;
-        this.normVector = {};
+        this.distance = 0;
+        this.lumen = 1;
+        this.color = this.hexToRGB(color);
+        this.figureIndex;
+        this.normVector;
     }
 
     hexToRGB(hex) {

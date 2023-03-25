@@ -10,19 +10,18 @@ class Graph3DComponent extends Component {
         this.showEdges = true;
         this.showPolygons = true;
         this.showAnimation = false;
+        this.animate;
+
+        let FPS = 0;
+        this.FPS = 0;
+        let lastTimestamp = Date.now();
 
         this.zoomStep = 1.1;
         this.canRotate = false;
 
-        this.LIGHT = new Light(-20, 20, 10, 400);
+        this.LIGHT = new Light(-20, 20, 10);
 
-        this.scene = {
-            points: [],
-            edges: [],
-            polygons: [],
-        };
-
-        this.figures = [];
+        this.scene = [];
 
         this.WIN = {
             WIDTH: 20 * this.prop,
@@ -31,7 +30,7 @@ class Graph3DComponent extends Component {
             LEFT: -10 * this.prop,
             FOCUS: new Point(0, 0, 20),
             CAMERA: new Point(0, 0, 30),
-        }
+        };
 
         this.canvas = new Canvas({
             id: "canvas3D",
@@ -45,7 +44,7 @@ class Graph3DComponent extends Component {
                 mouseMove: (event) => this.mouseMove(event),
                 mouseLeave: () => this.mouseLeave(),
             }
-        })
+        });
 
         this.math3D = new Math3D({
             WIN: this.WIN
@@ -64,121 +63,101 @@ class Graph3DComponent extends Component {
                     this.changeFigureSettig(num, setting, settingValue),
                 delFigure: (num) => this.delFigure(num),
                 changeLightPower: (value) => this.changeLightPower(value),
+                animationHandler: () => this.animationHandler(),
             }
         });
 
-        setInterval(() => {
+        const animLoop = () => {
+            FPS++;
+            const timestamp = Date.now();
+            if (timestamp - lastTimestamp >= 1000) {
+                this.FPS = FPS;
+                FPS = 0;
+                lastTimestamp = timestamp;
+            }
             this.renderScene();
-        }, 15)
+            window.requestAnimFrame(animLoop);
+        }
 
+        animLoop();
     }
 
     renderScene() {
-        this.generateScene();
         this.canvas.clear();
 
         if (this.showPolygons) {
-            this.drawPolygons();
+            const polygons = [];
+            this.scene.forEach((figure, index) => {
+                if (figure) {
+                    this.math3D.calcCenters(figure);
+
+                    this.math3D.calcDistance(figure, this.WIN.CAMERA, 'distance');
+
+                    this.math3D.calcDistance(figure, this.LIGHT, 'lumen');
+
+                    figure.polygons.forEach((polygon) => {
+                        polygon.figureIndex = index;
+                        polygons.push(polygon);
+                    });
+                }
+            });
+            this.math3D.sortByArtistAlgoritm(polygons);
+
+            this.drawPolygons(polygons);
         }
+
         if (this.showEdges) {
             this.drawEdges();
         }
+
         if (this.showPoints) {
             this.drawPoints();
         }
-    }
 
-    generateScene() {
-        this.scene.points = [];
-        this.scene.edges = [];
-        this.scene.polygons = [];
-
-        const vect = [
-            this.WIN.CAMERA.x - this.WIN.FOCUS.x,
-            this.WIN.CAMERA.y - this.WIN.FOCUS.y,
-            this.WIN.CAMERA.z - this.WIN.FOCUS.z,
-        ];
-
-        this.figures.forEach((figure) => {
-            if (figure) {
-                this.math3D.calcCenters(figure);
-                this.math3D.calcNormVectors(figure);
-
-                this.math3D.calcDistance(
-                    figure,
-                    this.WIN.CAMERA,
-                    'distance',
-                );
-
-                this.math3D.calcDistance(
-                    figure,
-                    this.LIGHT,
-                    'lumen',
-                );
-
-                const indexStep = this.scene.points.length;
-
-                this.scene.edges = this.scene.edges.concat(figure.edges.map((edge) =>
-                    new Edge(edge.point1 + indexStep, edge.point2 + indexStep)
-                ));
-
-                const polygons = [];
-
-                figure.polygons.forEach((polygon) => {
-                    //if (this.math3D.calcAngle(polygon.normVector, vect) >= Math.PI / 2) {
-                    polygons.push(new Polygon(
-                        polygon.points.map((index) => index += indexStep),
-                        polygon.color,
-                        polygon.centre,
-                        polygon.distance,
-                        polygon.lumen,
-                    ))
-                    //}
-                });
-
-                this.scene.polygons = this.scene.polygons.concat(polygons);
-
-                this.scene.points = this.scene.points.concat(figure.points);
-            }
-
-            this.math3D.sortByArtistAlgoritm(this.scene.polygons);
-
-        })
+        this.canvas.render();
     }
 
     drawPoints() {
-        this.scene.points.forEach((point) => {
-            this.canvas.point(this.math3D.xs(point), this.math3D.ys(point), 'black', 2);
+        this.scene.forEach((figure) => {
+            if (figure) {
+                figure.points.forEach((point) => {
+                    this.canvas.point(this.math3D.xs(point), this.math3D.ys(point), 'black', 2);
+                });
+            }
         });
     }
 
     drawEdges() {
-        this.scene.edges.forEach((edge) => {
-            this.canvas.line(
-                this.math3D.xs(this.scene.points[edge.point1]),
-                this.math3D.ys(this.scene.points[edge.point1]),
-                this.math3D.xs(this.scene.points[edge.point2]),
-                this.math3D.ys(this.scene.points[edge.point2])
-            )
+        this.scene.forEach((figure) => {
+            if (figure) {
+                figure.edges.forEach((edge) => {
+                    this.canvas.line(
+                        this.math3D.xs(figure.points[edge.point1]),
+                        this.math3D.ys(figure.points[edge.point1]),
+                        this.math3D.xs(figure.points[edge.point2]),
+                        this.math3D.ys(figure.points[edge.point2]),
+                    )
+                });
+            }
         });
     }
 
-    drawPolygons() {
-        this.scene.polygons.forEach((polygon) => {
-            const polygonPoints = [];
+    drawPolygons(polygons) {
+        polygons.forEach((polygon) => {
+            const points = [];
 
             for (let i = 0; i < polygon.points.length; i++) {
-                polygonPoints.push(this.scene.points[polygon.points[i]]);
+                points.push(this.scene[polygon.figureIndex].points[polygon.points[i]]);
             }
 
-            let { r, g, b } = polygon.hexToRGB(polygon.color);
+            let { r, g, b } = polygon.color;
             const lumen = this.math3D.calcIllumination(polygon.distance, this.LIGHT.lumen);
             r = Math.round(r * lumen);
             g = Math.round(g * lumen);
             b = Math.round(b * lumen);
 
             this.canvas.polygon(
-                polygonPoints.map((point) => {
+                points.map((point) => {
                     return {
                         x: this.math3D.xs(point),
                         y: this.math3D.ys(point),
@@ -191,11 +170,12 @@ class Graph3DComponent extends Component {
 
     wheel(event) {
         const delta = (event.wheelDelta > 0) ? this.zoomStep : 1 / this.zoomStep;
-        this.figures.forEach((figure) => {
+        this.scene.forEach((figure) => {
             if (figure) {
                 figure.points.forEach((point) => {
                     this.math3D.transformPoint(this.math3D.zoom(delta), point);
                 });
+                this.math3D.transformPoint(this.math3D.zoom(delta), figure.centre);
             }
         })
     }
@@ -209,14 +189,16 @@ class Graph3DComponent extends Component {
     }
 
     mouseMove(event) {
-        if (this.canRotate && !this.showAnimation) {
+        if (this.canRotate) {
             const prop = 240;
-            this.figures.forEach((figure) => {
+            this.scene.forEach((figure) => {
                 if (figure) {
                     figure.points.forEach((point) => {
                         this.math3D.transformPoint(this.math3D.rotateOx(event.movementY / prop), point);
                         this.math3D.transformPoint(this.math3D.rotateOy(-event.movementX / prop), point);
                     })
+                    this.math3D.transformPoint(this.math3D.rotateOx(event.movementY / prop), figure.centre);
+                    this.math3D.transformPoint(this.math3D.rotateOy(-event.movementX / prop), figure.centre);
                 }
             })
         }
@@ -230,21 +212,23 @@ class Graph3DComponent extends Component {
         const gradusRotate = 0.1;
         switch (event.code) {
             case "KeyQ":
-                this.figures.forEach((figure) => {
-                    if (figure && !this.showAnimation) {
+                this.scene.forEach((figure) => {
+                    if (figure) {
                         figure.points.forEach((point) => {
                             this.math3D.transformPoint(this.math3D.rotateOz(-gradusRotate), point);
                         })
+                        this.math3D.transformPoint(this.math3D.rotateOz(-gradusRotate), figure.centre);
                     };
                 });
                 break;
 
             case "KeyE":
-                this.figures.forEach((figure) => {
-                    if (figure && !this.showAnimation) {
+                this.scene.forEach((figure) => {
+                    if (figure) {
                         figure.points.forEach((point) => {
                             this.math3D.transformPoint(this.math3D.rotateOz(gradusRotate), point);
                         })
+                        this.math3D.transformPoint(this.math3D.rotateOz(gradusRotate), figure.centre);
                     };
                 });
                 break;
@@ -252,7 +236,7 @@ class Graph3DComponent extends Component {
     }
 
     movePoint(dx, dy, dz = 0) {
-        this.figures.forEach((figure) => {
+        this.scene.forEach((figure) => {
             if (figure) {
                 figure.points.forEach((point) => {
                     this.math3D.transformPoint(this.math3D.move(dx, dy, dz), point)
@@ -262,44 +246,77 @@ class Graph3DComponent extends Component {
     }
 
     addFigure(figure, num) {
-        switch (figure) {
-            case 'Cube':
-                this.figures[num] = new Cube({});
-                break;
 
-            case 'Sphere':
-                this.figures[num] = new Sphere({});
-                break;
+        this.scene[num] = eval(`new ${figure}({})`);
 
-            case 'Ellipsoid':
-                this.figures[num] = new Ellipsoid({});
-                break;
+        // switch (figure) {
+        //     case 'Cube':
+        //         this.scene[num] = new Cube({});
+        //         break;
 
-            case 'Cone':
-                this.figures[num] = new Cone({});
-                break;
+        //     case 'Sphere':
+        //         this.scene[num] = new Sphere({});
+        //         break;
 
-            case "Tor":
-                this.figures[num] = new Tor({});
-                break;
-        }
+        //     case 'Ellipsoid':
+        //         this.scene[num] = new Ellipsoid({});
+        //         break;
+
+        //     case 'Cone':
+        //         this.scene[num] = new Cone({});
+        //         break;
+
+        //     case 'Tor':
+        //         this.scene[num] = new Tor({});
+        //         break;
+
+        //     case 'HyperbolicCylinder':
+        //         this.scene[num] = new HyperbolicCylinder({});
+        //         break;
+
+        //     case 'Cylinder':
+        //         this.scene[num] = new Cylynder({});
+        //         break;
+
+        //     case 'ParabolicСylinder':
+        //         this.scene[num] = new ParabolicСylinder({});
+        //         break;
+        // }
+
+        this.scene[num].setAnimation('rotateOy', 0.05);
+        this.scene[num].setAnimation('rotateOx', 0.05);
+
     }
 
     changeFigureSettig(num, setting, settingValue) {
         if (setting === 'x' || setting === 'y' || setting === 'z') {
-            this.figures[num]['centre'][setting] = settingValue;
+            this.scene[num]['centre'][setting] = settingValue;
         } else {
-            this.figures[num][setting] = settingValue;
+            this.scene[num][setting] = settingValue;
         }
-        this.figures[num].generateFigure();
+        this.scene[num].generateFigure();
     }
 
     toggleCheckBox(name) {
         this[name] = !this[name];
     }
 
+    animationHandler() {
+        if (this.showAnimation) {
+            this.animate = setInterval(() => {
+                this.scene.forEach((figure) => {
+                    if (figure) {
+                        figure.doAnimation(this.math3D);
+                    }
+                })
+            }, 60);
+        } else {
+            clearInterval(this.animate);
+        }
+    }
+
     delFigure(num) {
-        this.figures[num] = null;
+        this.scene[num] = null;
     }
 
     changeLightPower(value) {

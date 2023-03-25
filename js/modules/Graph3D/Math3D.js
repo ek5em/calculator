@@ -130,24 +130,10 @@ class Math3D {
 
     calcNormVectors(figure) {
         figure.polygons.forEach((polygon) => {
-            const p1 = figure.points[polygon.points[0]];
-            const p2 = figure.points[polygon.points[1]];
-            const p3 = figure.points[polygon.points[2]];
-            const a = [
-                p2.x - p1.x,
-                p2.y - p1.y,
-                p2.z - p1.z
-            ]
-            const b = [
-                p2.x - p3.x,
-                p2.y - p3.y,
-                p2.z - p3.z
-            ]
-
             polygon.normVector = [
-                a[1] * b[2] - a[2] * b[1],
-                a[2] * b[0] - a[0] * b[2],
-                a[0] * b[1] - a[1] * b[0],
+                polygon.centre.x - figure.centre.x,
+                polygon.centre.y - figure.centre.y,
+                polygon.centre.z - figure.centre.z,
             ]
         })
     }
@@ -172,7 +158,7 @@ class Math3D {
     }
 
     calcIllumination(distance, lumen) {
-        const res = distance ? lumen / Math.pow(distance, 2) : 1;
+        const res = distance ? lumen / Math.pow(distance, 3) : 1;
         return res > 1 ? 1 : res;
     }
 

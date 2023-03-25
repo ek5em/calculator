@@ -3,7 +3,8 @@ class Sphere extends Figure {
         radius = 10,
         count = 20,
         color = "#532190",
-        centre }) {
+        centre
+    }) {
         super({ color, centre });
 
         this.radius = radius;

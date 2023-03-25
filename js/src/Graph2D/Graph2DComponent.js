@@ -89,6 +89,8 @@ class Graph2DComponent extends Component {
                 }
             }
         });
+
+        this.canvas.render();
     }
 
     // callbacks

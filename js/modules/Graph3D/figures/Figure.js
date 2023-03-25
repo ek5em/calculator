@@ -26,12 +26,15 @@ class Figure {
                 anim.centre.y,
                 anim.centre.z,
             );
-            const matrix = (t1, t2, t3);
+
+            const matrix = math3D.getTranformMatrix(t1, t2, t3);
+
             this.points.forEach((point) => {
                 math3D.transformPoint(matrix, point);
             });
+
             math3D.transformPoint(matrix, this.centre);
-        })
+        });
     }
 
     dropAnimation() {
