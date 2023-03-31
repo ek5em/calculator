@@ -10,7 +10,7 @@ class Polygon {
         this.lumen = 1;
         this.color = this.hexToRGB(color);
         this.figureIndex;
-        this.normVector;
+        this.radius = 1;
     }
 
     hexToRGB(hex) {

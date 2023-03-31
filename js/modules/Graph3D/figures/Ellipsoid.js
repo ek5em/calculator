@@ -65,6 +65,7 @@ class Ellipsoid extends Figure {
                 0,
                 this.points.length - i - 1,
                 this.points.length - i - 2,
+                0,
             ], this.color))
         }
 
@@ -72,6 +73,7 @@ class Ellipsoid extends Figure {
             0,
             this.points.length - this.count,
             this.count * 2 - 1,
+            0,
         ], this.color))
     }
 }

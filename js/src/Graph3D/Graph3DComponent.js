@@ -90,9 +90,8 @@ class Graph3DComponent extends Component {
             this.scene.forEach((figure, index) => {
                 if (figure) {
                     this.math3D.calcCenters(figure);
-
+                    this.math3D.calcRadius(figure);
                     this.math3D.calcDistance(figure, this.WIN.CAMERA, 'distance');
-
                     this.math3D.calcDistance(figure, this.LIGHT, 'lumen');
 
                     figure.polygons.forEach((polygon) => {
@@ -151,7 +150,9 @@ class Graph3DComponent extends Component {
             }
 
             let { r, g, b } = polygon.color;
-            const lumen = this.math3D.calcIllumination(polygon.distance, this.LIGHT.lumen);
+            const { isShadow, dark } = this.math3D.calcShadow(polygon, this.scene, this.LIGHT);
+            const lumen = this.math3D.calcIllumination(polygon.distance,
+                this.LIGHT.lumen * (isShadow ? dark : 1));
             r = Math.round(r * lumen);
             g = Math.round(g * lumen);
             b = Math.round(b * lumen);
@@ -247,45 +248,11 @@ class Graph3DComponent extends Component {
 
     addFigure(figure, num) {
 
-        this.scene[num] = eval(`new ${figure}({})`);
-
-        // switch (figure) {
-        //     case 'Cube':
-        //         this.scene[num] = new Cube({});
-        //         break;
-
-        //     case 'Sphere':
-        //         this.scene[num] = new Sphere({});
-        //         break;
-
-        //     case 'Ellipsoid':
-        //         this.scene[num] = new Ellipsoid({});
-        //         break;
-
-        //     case 'Cone':
-        //         this.scene[num] = new Cone({});
-        //         break;
-
-        //     case 'Tor':
-        //         this.scene[num] = new Tor({});
-        //         break;
-
-        //     case 'HyperbolicCylinder':
-        //         this.scene[num] = new HyperbolicCylinder({});
-        //         break;
-
-        //     case 'Cylinder':
-        //         this.scene[num] = new Cylynder({});
-        //         break;
-
-        //     case 'ParabolicСylinder':
-        //         this.scene[num] = new ParabolicСylinder({});
-        //         break;
-        // }
-
-        this.scene[num].setAnimation('rotateOy', 0.05);
-        this.scene[num].setAnimation('rotateOx', 0.05);
-
+        if (figure === 'sunSystem') {
+            this.scene[num] = eval(`new ${figure}({})`);
+            this.scene[num].setAnimation('rotateOy', 0.05, new Point);
+            this.scene[num].setAnimation('rotateOx', 0.05, new Point);
+        }
     }
 
     changeFigureSettig(num, setting, settingValue) {

@@ -128,29 +128,80 @@ class Math3D {
         });
     }
 
-    calcNormVectors(figure) {
-        figure.polygons.forEach((polygon) => {
-            polygon.normVector = [
-                polygon.centre.x - figure.centre.x,
-                polygon.centre.y - figure.centre.y,
-                polygon.centre.z - figure.centre.z,
-            ]
-        })
+    calcVector(a, b) {
+        return {
+            x: b.x - a.x,
+            y: b.y - a.y,
+            z: b.z - a.z,
+        }
     }
 
-    calcAngle(a, b) {
-        const mult = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-        const moduleA = Math.sqrt(
-            Math.pow(a[0], 2) +
-            Math.pow(a[1], 2) +
-            Math.pow(a[2], 2)
+    vectProd(a, b) {
+        return {
+            x: a.y * b.z - a.z * b.y,
+            y: a.x * b.z + a.z * b.x,
+            z: a.x * b.y - a.y * b.x,
+        }
+    }
+
+    calcVectorModule(a) {
+        return Math.sqrt(
+            Math.pow(a.x, 2) +
+            Math.pow(a.y, 2) +
+            Math.pow(a.z, 2)
         );
-        const moduleB = Math.sqrt(
-            Math.pow(b[0], 2) +
-            Math.pow(b[1], 2) +
-            Math.pow(b[2], 2)
-        )
-        return Math.acos(mult / moduleA / moduleB);
+    }
+
+    calcRadius(figure) {
+        const points = figure.points;
+        figure.polygons.forEach((polygon) => {
+            const centre = polygon.centre;
+            const p1 = points[polygon.points[0]];
+            const p2 = points[polygon.points[1]];
+            const p3 = points[polygon.points[2]];
+            const p4 = points[polygon.points[3]];
+
+            polygon.radius = (
+                this.calcVectorModule(this.calcVector(centre, p1)) +
+                this.calcVectorModule(this.calcVector(centre, p2)) +
+                this.calcVectorModule(this.calcVector(centre, p3)) +
+                this.calcVectorModule(this.calcVector(centre, p4))
+            ) / 4;
+        });
+    }
+
+    calcShadow(polygon, figures, LIGHT) {
+        const m1 = polygon.centre;
+        const radius = polygon.radius;
+        const s = this.calcVector(m1, LIGHT);
+        for (let i = 0; i < figures.length; i++) {
+            if (polygon.figureIndex === i) {
+                continue;
+            }
+
+            if (figures[i]) {
+                for (let j = 0; j < figures[i].polygons.length; j++) {
+                    const polygon2 = figures[i].polygons[j];
+                    const m0 = polygon2.centre;
+                    if (polygon.lumen > polygon2.lumen) {
+                        continue;
+                    }
+                    const dark = this.calcVectorModule(
+                        this.vectProd(this.calcVector(m0, m1),
+                            s
+                        )) / this.calcVectorModule(s);
+                    if (dark < radius) {
+                        return {
+                            isShadow: true,
+                            dark: dark / 1.3
+                        }
+                    }
+                }
+            }
+        }
+        return {
+            isShadow: false,
+        }
     }
 
     sortByArtistAlgoritm(polygons) {

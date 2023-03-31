@@ -1,7 +1,7 @@
 class UI3DComponent extends Component {
     constructor(props) {
         super(props);
-        this.num = 1;
+        this.num = 0;
         this.menuOpen = false;
     }
 
