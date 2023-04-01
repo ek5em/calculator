@@ -59,6 +59,7 @@ class Graph3DComponent extends Component {
                 keyPress: (event) => this.keyPress(event),
                 toggleCheckBox: (name) => this.toggleCheckBox(name),
                 addFigure: (figure, num) => this.addFigure(figure, num),
+                clearScene: () => this.clearScene(),
                 changeFigureSettig: (num, setting, settingValue) =>
                     this.changeFigureSettig(num, setting, settingValue),
                 delFigure: (num) => this.delFigure(num),
@@ -114,6 +115,10 @@ class Graph3DComponent extends Component {
         }
 
         this.canvas.render();
+    }
+
+    clearScene(){
+        this.scene = [];
     }
 
     drawPoints() {
@@ -248,7 +253,9 @@ class Graph3DComponent extends Component {
 
     addFigure(figure, num) {
 
-        if (figure === 'sunSystem') {
+        if (figure === 'SunSystem') {
+
+        } else {
             this.scene[num] = eval(`new ${figure}({})`);
             this.scene[num].setAnimation('rotateOy', 0.05, new Point);
             this.scene[num].setAnimation('rotateOx', 0.05, new Point);

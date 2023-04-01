@@ -27,6 +27,7 @@ Template.prototype.UI3D = () => `
                 <div data-figure = "EllipticalParaboloid">Эллиптический параболоид</div>
                 <div data-figure = "HyperbolicParaboloid">Гиперболический параболоид</div>
                 <div data-figure = "Tor">Тор</div>
+                <div data-figure = "SunSystem">Солнечная система</div>
             </div>
 
             <div class="figuresContainer"></div>

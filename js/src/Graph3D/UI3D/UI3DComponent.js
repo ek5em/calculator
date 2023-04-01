@@ -44,8 +44,23 @@ class UI3DComponent extends Component {
         const figure = event.target.dataset.figure;
         document.getElementById('figuresList').classList.add('hide');
         this.callbacks.addFigure(figure, this.num);
-        document.querySelector('.figuresContainer').appendChild(
-            this.createSettings(figure));
+
+        if (figure === "SunSystem") {
+            const child = document.createElement('div')
+            const button = document.createElement('div');
+            button.innerHTML = '&#10006';
+            button.className = 'deleteFunc';
+            button.addEventListener('click', () => {
+                document.querySelector('.figuresContainer').removeChild(child);
+                this.callbacks.clearScene();
+                this.num = 0;
+            });
+            child.appendChild(button);
+            document.querySelector('.figuresContainer').appendChild(child);
+        } else {
+            document.querySelector('.figuresContainer').appendChild(this.createSettings(figure));
+        }
+
     }
 
     changeFigureSettigHandler(event) {
