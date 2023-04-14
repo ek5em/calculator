@@ -1,5 +1,5 @@
 
-class Canvas {
+export default class Canvas {
     constructor({ id, width = 500, height = 500, WIN, callbacks }) {
 
         this.canvas = document.getElementById(id);

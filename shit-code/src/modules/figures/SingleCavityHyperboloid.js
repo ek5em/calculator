@@ -1,4 +1,6 @@
-class SingleCavityHyperboloid extends Figure {
+import {Figure, Point, Edge, Polygon} from "../entities";
+
+export default class SingleCavityHyperboloid extends Figure {
     constructor({
         color = '#129e25',
         centre,

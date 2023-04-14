@@ -15,13 +15,14 @@ class Tor extends Figure {
     }
 
     generatePoints() {
+        const sizeProp = 0.5;
         const prop = 2 * Math.PI / this.count;
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.centre.x + (this.radius + this.radius2 * Math.cos(i * prop)) * Math.cos(j * prop),
-                    this.centre.y + this.radius2 * Math.sin(i * prop),
-                    this.centre.z + (this.radius + this.radius2 * Math.cos(i * prop)) * Math.sin(j * prop),
+                    this.centre.x + sizeProp * (this.radius + this.radius2 * Math.cos(i * prop)) * Math.cos(j * prop),
+                    this.centre.y + sizeProp * this.radius2 * Math.sin(i * prop),
+                    this.centre.z + sizeProp * (this.radius + this.radius2 * Math.cos(i * prop)) * Math.sin(j * prop),
                 ));
             }
         }

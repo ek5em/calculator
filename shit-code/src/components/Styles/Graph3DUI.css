@@ -1,0 +1,58 @@
+.graph3DUI {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+}
+
+.graph3DUI>button {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.figures-menu {
+    margin: 1px 0 0 1px;
+    background-color: #99b325;
+    justify-content: center;
+    width: 400px;
+    height: 800px;
+    max-height: 800px;
+}
+
+.figures-menu>div {
+    width: 100%;
+}
+
+.checkboxes {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.checkboxes>div {
+    margin: 2px 5px;
+}
+
+.add-button {
+    display: flex;
+    justify-content: center;
+}
+
+.add-button>div>div {
+    display:flex;
+    justify-content: center;
+    text-align: center;
+    width: 150px;
+}
+
+.figure-button {
+    background: #ddd232;
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.figure-button:hover{
+    background: #afa629;
+}

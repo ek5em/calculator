@@ -1,32 +1,35 @@
-class SingleCavityHyperboloid extends Figure {
+import {Figure, Point, Edge, Polygon} from "../entities";
+
+export default class EllipticalParaboloid extends Figure {
     constructor({
-        color = '#129e25',
+        color = '#fef941',
         centre,
-        count = 10,
-        focusOx = 5,
-        focusOy = 10,
+        count = 20,
+        height = 15,
+        focusOx = 4,
+        focusOy = 3,
         focusOz = 5,
     }) {
         super({ color, centre });
-        this.count = count;
+        this.height = height;
         this.focusOx = focusOx;
         this.focusOy = focusOy;
         this.focusOz = focusOz;
+        this.count = count;
 
         this.generateFigure();
     }
 
     generatePoints() {
-        const focusProp = 0.1;
-        const prop = 2 * Math.PI / this.count;
+        const propJ = 2 * Math.PI / this.count;
+        const propI = this.height / this.count * 0.1;
         for (let i = 0; i < this.count; i++) {
-            const k = i - this.count / 2;
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.centre.x + focusProp * this.focusOx * Math.cosh(k * prop) * Math.cos(j * prop),
-                    this.centre.y + focusProp * this.focusOy * Math.sinh(k * prop),
-                    this.centre.z + focusProp * this.focusOz * Math.cosh(k * prop) * Math.sin(j * prop),
-                ));
+                    this.centre.x + this.focusOx * i * propI * Math.cos(j * propJ),
+                    this.centre.y + this.focusOy * Math.pow(i * propI, 2),
+                    this.centre.z + this.focusOz * i * propI * Math.sin(j * propJ),
+                ))
             }
         }
     }

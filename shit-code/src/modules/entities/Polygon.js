@@ -1,15 +1,17 @@
-class Polygon {
+import Point from "./Point";
+
+export default class Polygon {
     constructor(
         points,
         color = '#ee8448',
-        centre = new Point,
+        centre = new Point(),
     ) {
         this.points = points;
         this.centre = centre;
         this.distance = 0;
         this.lumen = 1;
         this.color = this.hexToRGB(color);
-        this.figureIndex;
+        this.figureIndex = 0;
         this.radius = 0;
     }
 

@@ -1,42 +1,46 @@
-class DoubleCavityHyperboloid extends Figure {
+import {Figure, Point, Edge, Polygon} from "../entities";
+
+export default class HyperbolicCylinder extends Figure {
     constructor({
-        color = '#40cac7',
+        color = '#41a7b4',
         centre,
-        count = 20,
-        focusOx = 10,
-        focusOy = 10,
-        focusOz = 10,
+        count = 15,
+        focusOx = 5,
+        width = 5,
+        height = 80,
     }) {
         super({ color, centre });
+
         this.count = count;
         this.focusOx = focusOx;
-        this.focusOy = focusOy;
-        this.focusOz = focusOz;
+        this.width = width;
+        this.height = height;
 
         this.generateFigure();
     }
 
     generatePoints() {
-        const focusProp = 0.1;
-        const prop = 2 * Math.PI / this.count;
+        const propI = 2 * Math.PI / this.count;
+        const propJ = this.height / this.count;
+        const halfCount = this.count / 2;
+        const sizeProp = 0.3;
+
         for (let i = 0; i < this.count; i++) {
-            const k = i - this.count / 2;
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.centre.x + focusProp * this.focusOx * Math.sinh(k * prop) * Math.cos(j * prop),
-                    this.centre.y + focusProp * this.focusOy * Math.cosh(k * prop),
-                    this.centre.z + focusProp * this.focusOz * Math.sinh(k * prop) * Math.sin(j * prop),
+                    this.centre.x + sizeProp * this.focusOx * Math.cosh((i - halfCount) * propI),
+                    this.centre.y + sizeProp * (j - halfCount) * propJ,
+                    this.centre.z + sizeProp * this.width * Math.sinh((i - halfCount) * propI),
                 ));
             }
         }
 
         for (let i = 0; i < this.count; i++) {
-            const k = i - this.count / 2;
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.centre.x + focusProp * this.focusOx * Math.sinh(k * prop) * Math.cos(j * prop),
-                    this.centre.y - focusProp * this.focusOy * Math.cosh(k * prop),
-                    this.centre.z + focusProp * this.focusOz * Math.sinh(k * prop) * Math.sin(j * prop),
+                    this.centre.x - sizeProp * this.focusOx * Math.cosh((i - halfCount) * propI),
+                    this.centre.y + sizeProp * (j - halfCount) * propJ,
+                    this.centre.z + sizeProp * this.width * Math.sinh((i - halfCount) * propI),
                 ));
             }
         }
@@ -53,14 +57,13 @@ class DoubleCavityHyperboloid extends Figure {
                 this.edges.push(new Edge((i ? i - 1 : i) * this.count + sqrCount + j, i * this.count + sqrCount + j));
             }
             this.edges.push(new Edge(k, k + this.count));
-            this.edges.push(new Edge(i * this.count, (i + 1) * this.count - 1));
             this.edges.push(new Edge(k + sqrCount, k + sqrCount + this.count));
-            this.edges.push(new Edge(i * this.count + sqrCount, (i + 1) * this.count + sqrCount - 1));
         }
     }
 
     generatePolygons() {
         const sqrCount = Math.pow(this.count, 2);
+
         for (let i = 0; i < this.count - 1; i++) {
             for (let j = 0; j < this.count - 1; j++) {
                 this.polygons.push(new Polygon([
@@ -76,22 +79,7 @@ class DoubleCavityHyperboloid extends Figure {
                     (i + 1) * this.count + sqrCount + j + 1,
                     i * this.count + sqrCount + j + 1,
                 ], this.color));
-
             }
-
-            this.polygons.push(new Polygon([
-                i * this.count,
-                (i + 1) * this.count - 1,
-                (i + 2) * this.count - 1,
-                (i + 1) * this.count,
-            ], this.color));
-
-            this.polygons.push(new Polygon([
-                i * this.count + sqrCount,
-                (i + 1) * this.count + sqrCount - 1,
-                (i + 2) * this.count + sqrCount - 1,
-                (i + 1) * this.count + sqrCount,
-            ], this.color));
         }
     }
 }

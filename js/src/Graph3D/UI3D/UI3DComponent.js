@@ -15,6 +15,12 @@ class UI3DComponent extends Component {
         });
         document.getElementById('animationCheckBox').addEventListener('change', () => this.callbacks.animationHandler());
         document.getElementById('figuresList').addEventListener('click', (event) => this.addFigureHandler(event));
+        document.getElementById('sunSystem').addEventListener('click', () => {
+            this.callbacks.clearScene();
+            document.querySelectorAll('.figuresContainer > div').forEach((elem) => {
+                document.querySelector('.figuresContainer').removeChild(elem);
+            });
+        })
     }
 
     changeCheckBoxHandler(event) {
@@ -52,7 +58,6 @@ class UI3DComponent extends Component {
             button.className = 'deleteFunc';
             button.addEventListener('click', () => {
                 document.querySelector('.figuresContainer').removeChild(child);
-                this.callbacks.clearScene();
                 this.num = 0;
             });
             child.appendChild(button);
@@ -141,7 +146,7 @@ class UI3DComponent extends Component {
                 settingsBlock.appendChild(this.createInput('number', 'height', 'Высота'));
                 break;
 
-            case 'ParabolicСylinder':
+            case 'ParabolicCylinder':
                 settingsBlock.appendChild(this.createInput('number', 'count', 'Дуги'));
                 settingsBlock.appendChild(this.createInput('number', 'width', 'Ширина'));
                 settingsBlock.appendChild(this.createInput('number', 'height', 'Высота'));

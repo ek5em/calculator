@@ -1,0 +1,28 @@
+.header{
+    width: 900px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.menu-button{
+    background-color: #d4dd57;
+    border-radius: 10px;
+    margin: 5px;
+    width: 150px;
+    height: 40px;
+    text-align: center;
+    line-height: 250%;
+    user-select: none;
+    cursor: pointer;
+    transition: .1s;
+}
+
+.menu-button:hover{
+    background-color: #b6b84c;
+}
+
+.menu-button:active{
+    transform: translateY(1px);
+}

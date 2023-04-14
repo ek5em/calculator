@@ -10,6 +10,7 @@ class Graph3DComponent extends Component {
         this.showEdges = true;
         this.showPolygons = true;
         this.showAnimation = false;
+        this.showShadows = true;
         this.animate;
 
         let FPS = 0;
@@ -19,7 +20,7 @@ class Graph3DComponent extends Component {
         this.zoomStep = 1.1;
         this.canRotate = false;
 
-        this.LIGHT = new Light(-20, 20, 10);
+        this.LIGHT = new Light(20, 20, -10);
 
         this.scene = [];
 
@@ -91,7 +92,11 @@ class Graph3DComponent extends Component {
             this.scene.forEach((figure, index) => {
                 if (figure) {
                     this.math3D.calcCenters(figure);
-                    this.math3D.calcRadius(figure);
+
+                    if (this.showShadows) {
+                        this.math3D.calcRadius(figure);
+                    }
+
                     this.math3D.calcDistance(figure, this.WIN.CAMERA, 'distance');
                     this.math3D.calcDistance(figure, this.LIGHT, 'lumen');
 
@@ -117,7 +122,7 @@ class Graph3DComponent extends Component {
         this.canvas.render();
     }
 
-    clearScene(){
+    clearScene() {
         this.scene = [];
     }
 
@@ -195,7 +200,7 @@ class Graph3DComponent extends Component {
     }
 
     mouseMove(event) {
-        if (this.canRotate) {
+        if (this.canRotate && !this.showAnimation) {
             const prop = 240;
             this.scene.forEach((figure) => {
                 if (figure) {
@@ -219,7 +224,7 @@ class Graph3DComponent extends Component {
         switch (event.code) {
             case "KeyQ":
                 this.scene.forEach((figure) => {
-                    if (figure) {
+                    if (figure && !this.showAnimation) {
                         figure.points.forEach((point) => {
                             this.math3D.transformPoint(this.math3D.rotateOz(-gradusRotate), point);
                         })
@@ -230,7 +235,7 @@ class Graph3DComponent extends Component {
 
             case "KeyE":
                 this.scene.forEach((figure) => {
-                    if (figure) {
+                    if (figure && !this.showAnimation) {
                         figure.points.forEach((point) => {
                             this.math3D.transformPoint(this.math3D.rotateOz(gradusRotate), point);
                         })
@@ -254,9 +259,71 @@ class Graph3DComponent extends Component {
     addFigure(figure, num) {
 
         if (figure === 'SunSystem') {
+            this.scene[0] = new Sphere({ radius: 15, color: '#d9e142' });
+            this.scene[1] = new Sphere({ radius: 5, centre: new Point(30), color: '#59caee' });
+            this.scene[2] = new Sphere({ radius: 2, centre: new Point(38), color: '#a6a6a8' });
+
+            this.scene[1].setAnimation('rotateOx', 0.02);
+            this.scene[1].setAnimation('rotateOy', 0.02);
+            this.scene[1].setAnimation('rotateOy', 0.04, new Point);
+
+            this.scene[2].setAnimation('rotateOx', 0.07);
+            this.scene[2].setAnimation('rotateOy', 0.07);
+            this.scene[2].setAnimation('rotateOy', 0.05, this.scene[1].centre);
+            this.scene[2].setAnimation('rotateOx', 0.05, this.scene[1].centre);
+
 
         } else {
-            this.scene[num] = eval(`new ${figure}({})`);
+            switch (figure) {
+                case "Cube":
+                    this.scene[num] = new Cube({});
+                    break;
+
+                case "Cone":
+                    this.scene[num] = new Cone({});
+                    break;
+
+                case "Cylinder":
+                    this.scene[num] = new Cylinder({});
+                    break;
+
+                case "DoubleCavityHyperboloid":
+                    this.scene[num] = new DoubleCavityHyperboloid({});
+                    break;
+
+                case "Ellipsoid":
+                    this.scene[num] = new Ellipsoid({});
+                    break;
+
+                case "EllipticalParaboloid":
+                    this.scene[num] = new EllipticalParaboloid({});
+                    break;
+
+                case "HyperbolicParaboloid":
+                    this.scene[num] = new HyperbolicParaboloid({});
+                    break;
+
+                case "HyperbolicCylinder":
+                    this.scene[num] = new HyperbolicCylinder({});
+                    break;
+
+                case "ParabolicCylinder":
+                    this.scene[num] = new ParabolicCylinder({});
+                    break;
+
+                case "SingleCavityHyperboloid":
+                    this.scene[num] = new SingleCavityHyperboloid({});
+                    break;
+
+                case "Sphere":
+                    this.scene[num] = new Sphere({});
+                    break;
+
+                case "Tor":
+                    this.scene[num] = new Tor({});
+                    break;
+            }
+
             this.scene[num].setAnimation('rotateOy', 0.05, new Point);
             this.scene[num].setAnimation('rotateOx', 0.05, new Point);
         }

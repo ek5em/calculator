@@ -1,31 +1,30 @@
-class SingleCavityHyperboloid extends Figure {
-    constructor({
-        color = '#129e25',
-        centre,
-        count = 10,
-        focusOx = 5,
-        focusOy = 10,
-        focusOz = 5,
-    }) {
-        super({ color, centre });
-        this.count = count;
-        this.focusOx = focusOx;
-        this.focusOy = focusOy;
-        this.focusOz = focusOz;
+import {Figure, Point, Edge, Polygon} from "../entities";
 
-        this.generateFigure();
+export default class Tor extends Figure {
+    constructor({
+        radius = 20,
+        radius2 = 10,
+        count = 20,
+        color = '#482153',
+        centre }) {
+        super({ color, centre });
+
+        this.radius = radius;
+        this.radius2 = radius2;
+        this.count = count;
+
+        this.generateFigure()
     }
 
     generatePoints() {
-        const focusProp = 0.1;
+        const sizeProp = 0.5;
         const prop = 2 * Math.PI / this.count;
         for (let i = 0; i < this.count; i++) {
-            const k = i - this.count / 2;
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.centre.x + focusProp * this.focusOx * Math.cosh(k * prop) * Math.cos(j * prop),
-                    this.centre.y + focusProp * this.focusOy * Math.sinh(k * prop),
-                    this.centre.z + focusProp * this.focusOz * Math.cosh(k * prop) * Math.sin(j * prop),
+                    this.centre.x + sizeProp * (this.radius + this.radius2 * Math.cos(i * prop)) * Math.cos(j * prop),
+                    this.centre.y + sizeProp * this.radius2 * Math.sin(i * prop),
+                    this.centre.z + sizeProp * (this.radius + this.radius2 * Math.cos(i * prop)) * Math.sin(j * prop),
                 ));
             }
         }
@@ -38,8 +37,9 @@ class SingleCavityHyperboloid extends Figure {
                 this.edges.push(new Edge(i * this.count + j, i * this.count + j + 1));
                 this.edges.push(new Edge((i ? i - 1 : i) * this.count + j, i * this.count + j));
             }
-            this.edges.push(new Edge(k, k + this.count));
             this.edges.push(new Edge(i * this.count, (i + 1) * this.count - 1));
+            this.edges.push(new Edge(k, k + this.count));
+            this.edges.push(new Edge(i, this.points.length - this.count + i));
         }
     }
 
@@ -60,6 +60,20 @@ class SingleCavityHyperboloid extends Figure {
                 (i + 2) * this.count - 1,
                 (i + 1) * this.count,
             ], this.color));
+
+            this.polygons.push(new Polygon([
+                i,
+                this.points.length - this.count + i,
+                this.points.length - this.count + i + 1,
+                i + 1,
+            ], this.color))
         }
+
+        this.polygons.push(new Polygon([
+            this.points.length - 1,
+            this.points.length - this.count,
+            0,
+            this.count - 1,
+        ], this.color));
     }
 }
