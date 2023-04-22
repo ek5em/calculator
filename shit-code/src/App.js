@@ -1,32 +1,51 @@
-import React from 'react';
-import Header from './components/Header';
-import Calculator from './components/Calculator';
-import PolyCalculator from './components/PolyCalculator';
-import Graph2D from './components/Graph2D';
-import Graph3D from './components/Graph3D';
+import { useState } from 'react';
+
+import Header from './components/Header/Header';
+import CalculatorComp from './components/Calculator/CalculatorComp';
+import PolyCalculatorComp from './components/PolyCalculator/PolyCalculatorComp';
+import Graph2D from './components/Graph2D/Graph2D';
+import Graph3D from './components/Graph3D/Graph3D';
+
 import './App.css'
 
+const App = () => {
+  const [showComponent, setShowComponent] = useState('Graph3D');
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { showComponent: 'graph3D' };
-  }
+  const components = [
+    {
+      name: 'Graph2D',
+      text: 'Графики',
+    },
+    {
+      name: 'Calculator',
+      text: 'Калькулятор',
+    },
+    {
+      name: 'PolyCalculator',
+      text: 'Полиномы',
+    },
+    {
+      name: 'Graph3D',
+      text: '3D Графика',
+    }
+  ];
 
-  render() {
-    return (<div className='App'>
-      <Header showComponent={name => this.showComponent(name)} />
+  return (
+    <div className='App'>
+      <Header
+        components={components}
+        showComponent={setShowComponent}
+        selectedComponent={showComponent}
+      />
       {
-        this.state.showComponent === 'calculator' ? <Calculator /> :
-          this.state.showComponent === 'polyCalculator' ? <PolyCalculator /> :
-            this.state.showComponent === 'graph2D' ? <Graph2D /> :
-              this.state.showComponent === 'graph3D' ? <Graph3D /> :
+        showComponent === 'Calculator' ? <CalculatorComp /> :
+          showComponent === 'PolyCalculator' ? <PolyCalculatorComp /> :
+            showComponent === 'Graph2D' ? <Graph2D /> :
+              showComponent === 'Graph3D' ? <Graph3D /> :
                 <></>
       }
-    </div>)
-  }
-
-  showComponent(name) {
-    this.setState({ showComponent: name });
-  }
+    </div>
+  )
 }
+
+export default App;
