@@ -1,5 +1,7 @@
-import PolynomialCalculator from '../../modules/PolyCalculator/PolynomialCalculator';
-import Calculator from '../../modules/Calculator/Calculator';
+import { useRef } from 'react';
+
+import usePolyCalc from '../../modules/PolyCalculator/usePolyCalc';
+import usePolyResult from '../../modules/PolyCalculator/usePolyResult';
 
 import PolyCalcInput from './polyCalcComponents/input/PolyCalcInput';
 import NewPoly from './polyCalcComponents/newPoly/NewPoly';
@@ -10,8 +12,14 @@ import './PolyCalculatorComp.css';
 
 const PolyCalculatorComp = () => {
 
-    const calc = new PolynomialCalculator();
-    let newPoly = '';
+    const refInputA = useRef(null);
+    const refInputB = useRef(null);
+    const refNewPoly = useRef(null);
+    const refResult = useRef(null);
+    const refInputX = useRef(null);
+
+    const polyCalc = usePolyCalc(refInputA, refInputB, refNewPoly);
+    const polyResult = usePolyResult(refNewPoly, refInputX, refResult);
 
     const operandButtons = [
         {
@@ -28,36 +36,23 @@ const PolyCalculatorComp = () => {
         },
     ]
 
-    const onClickOperandHandle = (operand) => {
-        const inputA = document.querySelector('.poly-input-a');
-        const inputB = document.querySelector('.poly-input-b');
-        const a = calc.getPolynomial(inputA.value);
-        const b = calc.getPolynomial(inputB.value);
-
-        console.log(a, b);
-
-        const c = calc[operand](a, b);
-        newPoly = c.toString();
-        document.querySelector('.new-poly').innerHTML = newPoly;
-    }
-
-    const onClickResultHandler = () => {
-        const inputX = document.querySelector('.poly-result-container>div');
-        const x = (new Calculator()).getEntity(inputX.value);
-        const c = calc.getPolynomial(newPoly);
-        document.querySelector('.poly-result').innerHTML = (c.getValue(x)).toString();
-    }
-
     return (
         <div className='poly-calculactor'>
-            <PolyCalcInput />
-            <NewPoly />
+            <PolyCalcInput
+                inputA={refInputA}
+                inputB={refInputB}
+            />
+            <NewPoly
+                newPoly={refNewPoly}
+            />
             <PolyOperandBlock
                 operandButtons={operandButtons}
-                onClick={onClickOperandHandle}
+                onClick={polyCalc}
             />
             <PolyResult
-                onClick={onClickResultHandler}
+                onClick={polyResult}
+                inputX={refInputX}
+                result={refResult}
             />
         </div>
     );

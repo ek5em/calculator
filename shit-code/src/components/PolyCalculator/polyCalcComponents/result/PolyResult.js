@@ -2,17 +2,22 @@ import CalcButton from '../../../components/calculatorButton/CalcButton';
 
 import './PolyResult.css';
 
-const PolyResult = ({ onClick }) => {
+const PolyResult = ({ onClick, inputX, result }) => {
     return (
         <div className='poly-result-container'>
-            <textarea placeholder='X'></textarea>
+            <textarea
+                placeholder='X'
+                ref={inputX}
+            ></textarea>
             <CalcButton
                 onClick={onClick}
                 text={'Подставить X'}
             />
             <textarea
                 className='poly-result'
-                disabled></textarea>
+                disabled
+                ref={result}
+            ></textarea>
         </div>
     )
 }

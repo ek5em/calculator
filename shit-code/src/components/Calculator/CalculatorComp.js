@@ -1,4 +1,6 @@
-import Calculator from '../../modules/Calculator/Calculator';
+import { useRef } from 'react';
+
+import useCalculator from '../../modules/Calculator/useCalculator';
 
 import CalcInput from './CalcComp/input/CalcInput';
 import CalcResult from './CalcComp/result/CalcResult';
@@ -9,7 +11,11 @@ import './CalculatorComp.css';
 
 const CalculatorComp = () => {
 
-    const calc = new Calculator();
+    const refInputA = useRef(null);
+    const refInputB = useRef(null);
+    const refResult = useRef(null);
+
+    const calc = useCalculator(refInputA, refInputB, refResult);
 
     const operandButtons = [
         {
@@ -38,21 +44,17 @@ const CalculatorComp = () => {
         },
     ]
 
-    const onClickOperandHandler = (operand) => {
-        const inputA = document.querySelector('.inputA');
-        const inputB = document.querySelector('.inputB');
-        const a = calc.getEntity(inputA.value);
-        const b = calc.getEntity(inputB.value);
-        const c = calc[operand](a, b);
-        document.querySelector('.calc-result').innerHTML = c.toString();
-    }
-
     return (
         <div className='calculator'>
-            <CalcInput />
-            <CalcResult />
+            <CalcInput
+                inputA={refInputA}
+                inputB={refInputB}
+            />
+            <CalcResult
+                result={refResult}
+            />
             <OperandBlock
-                onClick={onClickOperandHandler}
+                onClick={calc}
                 operandButtons={operandButtons}
             />
         </div>

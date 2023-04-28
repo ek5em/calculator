@@ -1,10 +1,10 @@
-.graph3DUI {
+.graph2DUI {
     position: absolute;
     display: flex;
     flex-direction: row;
 }
 
-.graph3DUI>button {
+.graph2DUI>button {
     border-radius: 100%;
     border: 1px solid #707ebd;
     background-color: #707ebd;
@@ -15,19 +15,14 @@
     text-align: center;
 }
 
-.figures-menu {
+.funcs-menu {
+    display: flex;
+    flex-direction: column;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     margin: 1px 0 0 1px;
     background-color: #bdae2c;
-    justify-content: center;
     width: 400px;
     height: 800px;
     max-height: 800px;
-}
-
-.add-button-block {
-    width: 100%;
-    display: flex;
-    justify-content: center;
 }

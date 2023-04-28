@@ -1,4 +1,4 @@
-class Graph2d {
+export default class Graph2d {
     constructor(WIN, canvas) {
         this.WIN = WIN;
         this.canvas = canvas;

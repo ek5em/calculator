@@ -5,14 +5,14 @@ import './PolyOperandBlock.css';
 const PolyOperandBlock = ({ operandButtons, onClick }) => {
     return (
         <div className='poly-operands-block'>
-            {operandButtons.map((button) => {
+            {operandButtons.map((button, index) => {
                 return (
-                    <>
+                    <div key={index}>
                         <CalcButton
                             onClick={() => onClick(button.operand)}
                             text={button.text}
                         />
-                    </>
+                    </div>
                 )
             })}
         </div>

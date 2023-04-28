@@ -262,7 +262,7 @@ textarea {
 }
 
 .deleteFunc:hover {
-    background-color: rgb(218, 79, 79);
+    background-color: #da4f4f;
 }
 
 .addFunction,
@@ -279,7 +279,7 @@ textarea {
 
 .addFunction:hover,
 .addFigure:hover {
-    background-color: rgb(208, 245, 245);
+    background-color: #d0f5f5;
     cursor: pointer;
 }
 

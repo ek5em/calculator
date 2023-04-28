@@ -2,8 +2,8 @@ class Graph2DComponent extends Component {
     constructor(props) {
         super(props);
 
-        const height = 800;
         const width = 1200;
+        const height = 800;
 
         this.prop = width / height;
         this.WIN = {

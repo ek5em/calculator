@@ -1,16 +1,16 @@
-#canvas3D {
+#canvas2D {
+    border-radius: 20px;
     cursor: grab;
     border: 1px solid black;
     position: absolute;
     z-index: -1;
-    border-radius: 20px;
 }
 
-#canvas3D:active {
+#canvas2D:active {
     cursor: grabbing;
 }
 
-.graph3D {
+.graph2D {
     position: relative;
     display: flex;
     width: 1200px;

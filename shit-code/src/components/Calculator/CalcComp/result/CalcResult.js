@@ -1,9 +1,14 @@
 import './CalcResult.css';
 
-const CalcResult = () => {
+const CalcResult = ({ result }) => {
     return (
         <div className="result-container">
-            <textarea className="calc-result" disabled></textarea>
+            <textarea
+                className="calc-result"
+                disabled
+                ref={result}
+            >
+            </textarea>
         </div>
     )
 }

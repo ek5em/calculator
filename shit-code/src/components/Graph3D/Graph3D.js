@@ -1,6 +1,7 @@
 import { useEffect } from "react";
+import { useRef } from "react";
 
-import Canvas from '../../modules/Canvas/Canvas';
+import useCanvas from "../../modules/Canvas/useCanvas";
 import Math3D, {
     Point, Light, Cube, Cone, Cylinder,
     DoubleCavityHyperboloid, Ellipsoid, EllipticalParaboloid,
@@ -16,7 +17,19 @@ const Graph3D = () => {
     const width = 1200;
     const height = 800;
     const proportion = width / height;
+
     const zoomStep = 1.1;
+
+    const scene = [];
+
+    const WIN = {
+        WIDTH: 20 * proportion,
+        HEIGHT: 20,
+        BOTTOM: -10,
+        LEFT: -10 * proportion,
+        FOCUS: new Point(0, 0, 20),
+        CAMERA: new Point(0, 0, 30),
+    }
 
     const LIGHT = new Light(20, 20, -10);
 
@@ -99,19 +112,6 @@ const Graph3D = () => {
         },
     ]
 
-    let canRotate = false;
-
-    const scene = [];
-
-    const WIN = {
-        WIDTH: 20 * proportion,
-        HEIGHT: 20,
-        BOTTOM: -10,
-        LEFT: -10 * proportion,
-        FOCUS: new Point(0, 0, 20),
-        CAMERA: new Point(0, 0, 30),
-    }
-
     const math3D = new Math3D({ WIN });
 
     const interval = setInterval(() => {
@@ -124,10 +124,13 @@ const Graph3D = () => {
         }
     }, 60);
 
-    let request, canvas;
+    const Canvas = useCanvas((FPS) => renderScene(FPS));
+    const canvas = useRef(null);
+
+    let canRotate = false;
 
     useEffect(() => {
-        canvas = new Canvas({
+        canvas.current = Canvas({
             id: 'canvas3D',
             width: width,
             height: height,
@@ -142,18 +145,11 @@ const Graph3D = () => {
             },
         });
 
-        const animLoop = () => {
-            renderScene();
-            request = window.requestAnimationFrame(animLoop)
-        }
-
-        animLoop();
         addFigure('Cube');
 
         return () => {
             clearInterval(interval);
-            window.cancelAnimationFrame(request);
-            canvas = null
+            canvas.current = null
         }
     })
 
@@ -181,7 +177,7 @@ const Graph3D = () => {
         scene.forEach((figure) => {
             if (figure) {
                 figure.points.forEach((point) => {
-                    canvas.point(math3D.xs(point), math3D.ys(point), 'black', 2);
+                    canvas.current.point(math3D.xs(point), math3D.ys(point), 'black', 2);
                 });
             }
         });
@@ -191,7 +187,7 @@ const Graph3D = () => {
         scene.forEach((figure) => {
             if (figure) {
                 figure.edges.forEach((edge) => {
-                    canvas.line(
+                    canvas.current.line(
                         math3D.xs(figure.points[edge.point1]),
                         math3D.ys(figure.points[edge.point1]),
                         math3D.xs(figure.points[edge.point2]),
@@ -219,7 +215,7 @@ const Graph3D = () => {
             g = Math.round(g * lumen);
             b = Math.round(b * lumen);
 
-            canvas.polygon(
+            canvas.current.polygon(
                 points.map((point) => {
                     return {
                         x: math3D.xs(point),
@@ -231,42 +227,47 @@ const Graph3D = () => {
         });
     }
 
-    const renderScene = () => {
-        canvas.clear();
+    const renderScene = (FPS) => {
+        if (canvas.current) {
+            //console.log(FPS);
 
-        if (checkBoxes[2].checked) {
-            const polygons = [];
-            scene.forEach((figure, index) => {
-                if (figure) {
-                    math3D.calcCenters(figure);
+            canvas.current.clear();
 
-                    if (checkBoxes[4].checked) {
-                        math3D.calcRadius(figure);
+            if (checkBoxes[2].checked) {
+                const polygons = [];
+                scene.forEach((figure, index) => {
+                    if (figure) {
+                        math3D.calcCenters(figure);
+
+                        if (checkBoxes[4].checked) {
+                            math3D.calcRadius(figure);
+                        }
+
+                        math3D.calcDistance(figure, WIN.CAMERA, 'distance');
+                        math3D.calcDistance(figure, LIGHT, 'lumen');
+
+                        figure.polygons.forEach((polygon) => {
+                            polygon.figureIndex = index;
+                            polygons.push(polygon);
+                        });
                     }
+                });
+                math3D.sortByArtistAlgoritm(polygons);
 
-                    math3D.calcDistance(figure, WIN.CAMERA, 'distance');
-                    math3D.calcDistance(figure, LIGHT, 'lumen');
+                drawPolygons(polygons);
+            }
 
-                    figure.polygons.forEach((polygon) => {
-                        polygon.figureIndex = index;
-                        polygons.push(polygon);
-                    });
-                }
-            });
-            math3D.sortByArtistAlgoritm(polygons);
+            if (checkBoxes[1].checked) {
+                drawEdges();
+            }
 
-            drawPolygons(polygons);
+            if (checkBoxes[0].checked) {
+                drawPoints();
+            }
+
+            canvas.current.render();
         }
 
-        if (checkBoxes[1].checked) {
-            drawEdges();
-        }
-
-        if (checkBoxes[0].checked) {
-            drawPoints();
-        }
-
-        canvas.render();
     }
 
     const wheel = (event) => {
@@ -383,7 +384,7 @@ const Graph3D = () => {
             <Graph3DUI
                 checkBoxes={checkBoxes}
                 figures={figures}
-                addFigure={(figure) => addFigure(figure)}
+                addFigure={addFigure}
             />
             <canvas id='canvas3D'></canvas>
         </div>

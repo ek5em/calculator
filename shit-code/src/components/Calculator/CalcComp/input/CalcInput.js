@@ -1,10 +1,16 @@
 import './CalcInput.css';
 
-const CalcInput = () => {
+const CalcInput = ({ inputA, inputB }) => {
     return (
         <div className='calc-input'>
-            <textarea className="inputA" placeholder='a'></textarea>
-            <textarea className="inputB" placeholder='b'></textarea>
+            <textarea
+                placeholder='a'
+                ref={inputA}
+            ></textarea>
+            <textarea
+                placeholder='b'
+                ref={inputB}
+            ></textarea>
         </div>
     )
 }

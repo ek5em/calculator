@@ -1,12 +1,16 @@
 import './PolyCalcInput.css';
 
-const PolyCalcInput = () => {
-
-
+const PolyCalcInput = ({ inputA, inputB }) => {
     return (
         <div className='poly-calc-input'>
-            <textarea className="poly-input-a" placeholder="Полином"></textarea>
-            <textarea className="poly-input-b" placeholder="Полином"></textarea>
+            <textarea
+                placeholder="Полином"
+                ref={inputA}
+            ></textarea>
+            <textarea
+                placeholder="Полином"
+                ref={inputB}
+            ></textarea>
         </div>
     )
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCallback } from "react";
 
 import CheckBoxes from "./CheckBoxes/CheckBoxes";
 import FiguresList from "./FiguresList/FiguresList";
@@ -9,12 +10,18 @@ const Graph3DUI = ({ addFigure, checkBoxes, figures }) => {
     const [showPanel, setShowPanel] = useState(false);
     const [showAddList, setShowAddList] = useState(false);
 
-    const showHidePanel = () => setShowPanel(!showPanel);
-    const showHideAddList = () => setShowAddList(!showAddList);
-    const addFigureOnClickHandler = (figure) => {
+    const showHidePanel = useCallback(() => {
+        setShowPanel(!showPanel);
+    }, [setShowPanel, showPanel]);
+
+    const showHideAddList = useCallback(() => {
+        setShowAddList(!showAddList);
+    }, [setShowAddList, showAddList])
+
+    const addFigureOnClickHandler = useCallback((figure) => {
         addFigure(figure);
         showHideAddList();
-    }
+    }, [addFigure, showHideAddList])
 
     return (
         (<div className="graph3DUI">

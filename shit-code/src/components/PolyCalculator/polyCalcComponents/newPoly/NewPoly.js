@@ -1,9 +1,13 @@
 import './NewPoly.css';
 
-const NewPoly = () => {
+const NewPoly = ({ newPoly }) => {
     return (
         <div className='new-poly-container'>
-            <textarea className="new-poly" placeholder="Новый полином" ></textarea>
+            <textarea
+                className="new-poly"
+                placeholder="Новый полином"
+                ref={newPoly}
+            ></textarea>
         </div>
     )
 }
