@@ -1,13 +1,14 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class Sphere extends Figure {
     constructor({
         radius = 10,
         count = 20,
         color = "#532190",
-        centre
+        centre,
+        name = 'Sphere',
     }) {
-        super({ color, centre });
+        super({ color, centre, name });
 
         this.radius = radius;
         this.count = count;

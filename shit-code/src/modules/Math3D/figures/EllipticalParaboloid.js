@@ -1,4 +1,4 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class EllipticalParaboloid extends Figure {
     constructor({
@@ -9,8 +9,9 @@ export default class EllipticalParaboloid extends Figure {
         focusOx = 4,
         focusOy = 3,
         focusOz = 5,
+        name = 'EllipticalParaboloid',
     }) {
-        super({ color, centre });
+        super({ color, centre, name });
         this.height = height;
         this.focusOx = focusOx;
         this.focusOy = focusOy;

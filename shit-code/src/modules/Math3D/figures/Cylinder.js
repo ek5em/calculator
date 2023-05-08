@@ -1,4 +1,4 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class Cylinder extends Figure {
     constructor({
@@ -7,8 +7,9 @@ export default class Cylinder extends Figure {
         height = 20,
         count = 20,
         radius = 10,
+        name = 'Cylinder',
     }) {
-        super({color, centre});
+        super({ color, centre, name });
         this.count = count;
         this.radius = radius;
         this.height = height;

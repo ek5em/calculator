@@ -1,4 +1,4 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class DoubleCavityHyperboloid extends Figure {
     constructor({
@@ -8,8 +8,9 @@ export default class DoubleCavityHyperboloid extends Figure {
         focusOx = 10,
         focusOy = 10,
         focusOz = 10,
+        name = 'DoubleCavityHyperboloid',
     }) {
-        super({ color, centre });
+        super({ color, centre, name });
         this.count = count;
         this.focusOx = focusOx;
         this.focusOy = focusOy;

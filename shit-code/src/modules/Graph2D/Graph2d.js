@@ -72,7 +72,7 @@ export default class Graph2d {
         }
     }
 
-    printIntegral(f, a, b, integral, d = 100, color = 'r#dbadec') {
+    printIntegral(f, a, b, integral, d = 100, color = '#dbadec') {
         const dx = (b - a) / d;
         let x = a;
         const points = [];

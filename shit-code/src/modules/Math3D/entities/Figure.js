@@ -3,8 +3,12 @@ import { Point } from "../entities";
 export default class Figure {
     constructor({
         color = '#ee8844',
-        centre = new Point()
+        centre = new Point(),
+        name = '',
+        index = 0,
     }) {
+        this.index = index;
+        this.name = name;
         this.points = [];
         this.edges = [];
         this.polygons = [];

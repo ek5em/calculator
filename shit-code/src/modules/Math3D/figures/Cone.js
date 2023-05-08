@@ -1,4 +1,4 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class Cone extends Figure {
     constructor({
@@ -6,8 +6,10 @@ export default class Cone extends Figure {
         height = 10,
         count = 20,
         color = '#335544',
-        centre }) {
-        super({ color, centre });
+        name = 'Cone',
+        centre
+    }) {
+        super({ color, centre, name });
 
         this.radius = radius;
         this.height = height;

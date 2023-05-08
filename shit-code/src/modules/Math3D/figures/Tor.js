@@ -1,16 +1,18 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class Tor extends Figure {
     constructor({
-        radius = 20,
-        radius2 = 10,
+        innerRadius = 20,
+        radius = 10,
         count = 20,
         color = '#482153',
-        centre }) {
-        super({ color, centre });
+        centre,
+        name = 'Tor',
+    }) {
+        super({ color, centre, name });
 
+        this.innerRadius = innerRadius;
         this.radius = radius;
-        this.radius2 = radius2;
         this.count = count;
 
         this.generateFigure()
@@ -22,9 +24,9 @@ export default class Tor extends Figure {
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.centre.x + sizeProp * (this.radius + this.radius2 * Math.cos(i * prop)) * Math.cos(j * prop),
-                    this.centre.y + sizeProp * this.radius2 * Math.sin(i * prop),
-                    this.centre.z + sizeProp * (this.radius + this.radius2 * Math.cos(i * prop)) * Math.sin(j * prop),
+                    this.centre.x + sizeProp * (this.innerRadius + this.radius * Math.cos(i * prop)) * Math.cos(j * prop),
+                    this.centre.y + sizeProp * this.radius * Math.sin(i * prop),
+                    this.centre.z + sizeProp * (this.innerRadius + this.radius * Math.cos(i * prop)) * Math.sin(j * prop),
                 ));
             }
         }

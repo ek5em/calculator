@@ -1,4 +1,4 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class Ellipsoid extends Figure {
     constructor({
@@ -7,8 +7,10 @@ export default class Ellipsoid extends Figure {
         focusOz = 20,
         count = 20,
         color = '#225533',
-        centre }) {
-        super({ color, centre });
+        centre,
+        name = 'Ellipsoid',
+    }) {
+        super({ color, centre, name });
 
         this.focusOx = focusOx;
         this.focusOy = focusOy;

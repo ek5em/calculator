@@ -1,14 +1,30 @@
-import { useState } from "react";
-import { useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
 import CheckBoxes from "./CheckBoxes/CheckBoxes";
-import FiguresList from "./FiguresList/FiguresList";
+import FiguresSetting from "./FiguresSetting/FiguresSetting";
 
 import './Graph3DUI.css';
 
-const Graph3DUI = ({ addFigure, checkBoxes, figures }) => {
+const Graph3DUI = ({
+    addFigure,
+    checkBoxes,
+    figuresList,
+    changeLightPower,
+    scene,
+    light,
+    figuresCallbacks,
+    deleteFigure
+}) => {
     const [showPanel, setShowPanel] = useState(false);
     const [showAddList, setShowAddList] = useState(false);
+
+    const refLight = useRef(null);
+
+    useEffect(() => {
+        if (showPanel) {
+            refLight.current.value = light.lumen;
+        }
+    })
 
     const showHidePanel = useCallback(() => {
         setShowPanel(!showPanel);
@@ -18,10 +34,14 @@ const Graph3DUI = ({ addFigure, checkBoxes, figures }) => {
         setShowAddList(!showAddList);
     }, [setShowAddList, showAddList])
 
-    const addFigureOnClickHandler = useCallback((figure) => {
-        addFigure(figure);
+    const addFigureOnClick = useCallback((figure, index) => {
+        addFigure(figure, index);
         showHideAddList();
-    }, [addFigure, showHideAddList])
+    }, [addFigure, showHideAddList]);
+
+    const changeLightPowerHandler = () => {
+        changeLightPower(refLight.current.value - 0);
+    }
 
     return (
         (<div className="graph3DUI">
@@ -29,14 +49,24 @@ const Graph3DUI = ({ addFigure, checkBoxes, figures }) => {
                 <CheckBoxes
                     checkBoxes={checkBoxes}
                 />
-                <div className="add-button-block">
-                    {showAddList ? <FiguresList
-                        figures={figures}
-                        onClick={addFigureOnClickHandler}
-                    /> :
-                        <button onClick={showHideAddList}>Выбрать фигуру</button>
-                    }
-                </div>
+                <input
+                    className="light-power"
+                    type="range"
+                    step={1000}
+                    min={0}
+                    max={50000}
+                    ref={refLight}
+                    onChange={changeLightPowerHandler}
+                />
+                <FiguresSetting
+                    addFigure={addFigureOnClick}
+                    showHideAddList={showHideAddList}
+                    figuresList={figuresList}
+                    showAddList={showAddList}
+                    scene={scene}
+                    figuresCallbacks={figuresCallbacks}
+                    deleteFigure={deleteFigure}
+                />
             </div>
             }
             <button onClick={showHidePanel}>

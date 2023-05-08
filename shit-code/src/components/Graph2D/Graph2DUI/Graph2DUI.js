@@ -1,32 +1,42 @@
-import { useRef, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+
+import Function from '../../../modules/Graph2D/Function';
 
 import AddButton from './AddButton/AddButton';
 import FunctionList from './FunctionList/FunctionList';
-import FunctionBlock from './FunctionBlock/FunctionBlock';
 
 
 import './Graph2DUI.css';
 
-const Graph2DUI = () => {
+const Graph2DUI = ({ funcsList, delFunc }) => {
 
-    const listRef = useRef(null);
     const [showPanel, setShowPanel] = useState(false);
     const [functionsCount, setFunctionsCount] = useState(0);
+    const [deleteFunction, setDeleteFunction] = useState(0);
 
     const showHidePanel = useCallback(() => {
         setShowPanel(!showPanel);
     }, [setShowPanel, showPanel]);
 
     const addFunction = useCallback(() => {
-        listRef.current.appendChild(<FunctionBlock />)
+        funcsList[functionsCount] = new Function({ index: functionsCount });
         setFunctionsCount(functionsCount + 1);
-    }, [setFunctionsCount, functionsCount])
+    }, [setFunctionsCount, functionsCount, funcsList])
+
+    const deleteFunctionHandler = useCallback((index) => {
+        delFunc(index);
+        setDeleteFunction(deleteFunction + 1);
+    }, [delFunc, setDeleteFunction, deleteFunction]);
+
 
     return (
         <div className='graph2DUI'>
             {showPanel && <div className='funcs-menu'>
                 <AddButton onClick={addFunction} />
-                <FunctionList list={listRef} />
+                <FunctionList
+                    list={funcsList.filter(func => func)}
+                    delFunc={deleteFunctionHandler}
+                />
             </div>
             }
             <button onClick={showHidePanel}>

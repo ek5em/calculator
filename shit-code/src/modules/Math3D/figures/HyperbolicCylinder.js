@@ -1,4 +1,4 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class HyperbolicCylinder extends Figure {
     constructor({
@@ -6,22 +6,23 @@ export default class HyperbolicCylinder extends Figure {
         centre,
         count = 15,
         focusOx = 5,
-        width = 5,
-        height = 80,
+        focusOy = 5,
+        focusOz = 8,
+        name = 'HyperbolicCylinder',
     }) {
-        super({ color, centre });
+        super({ color, centre, name });
 
         this.count = count;
         this.focusOx = focusOx;
-        this.width = width;
-        this.height = height;
+        this.focusOy = focusOy;
+        this.focusOz = focusOz;
 
         this.generateFigure();
     }
 
     generatePoints() {
         const propI = 2 * Math.PI / this.count;
-        const propJ = this.height / this.count;
+        const propJ = 10 * this.focusOz / this.count;
         const halfCount = this.count / 2;
         const sizeProp = 0.3;
 
@@ -30,7 +31,7 @@ export default class HyperbolicCylinder extends Figure {
                 this.points.push(new Point(
                     this.centre.x + sizeProp * this.focusOx * Math.cosh((i - halfCount) * propI),
                     this.centre.y + sizeProp * (j - halfCount) * propJ,
-                    this.centre.z + sizeProp * this.width * Math.sinh((i - halfCount) * propI),
+                    this.centre.z + sizeProp * this.focusOy * Math.sinh((i - halfCount) * propI),
                 ));
             }
         }
@@ -40,7 +41,7 @@ export default class HyperbolicCylinder extends Figure {
                 this.points.push(new Point(
                     this.centre.x - sizeProp * this.focusOx * Math.cosh((i - halfCount) * propI),
                     this.centre.y + sizeProp * (j - halfCount) * propJ,
-                    this.centre.z + sizeProp * this.width * Math.sinh((i - halfCount) * propI),
+                    this.centre.z + sizeProp * this.focusOy * Math.sinh((i - halfCount) * propI),
                 ));
             }
         }

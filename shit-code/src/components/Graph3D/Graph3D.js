@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import useCanvas from "../../modules/Canvas/useCanvas";
 import Math3D, {
@@ -112,6 +111,59 @@ const Graph3D = () => {
         },
     ]
 
+    const figuresCallbacks = {
+        changeX: (figure, value) => {
+            figure.centre.x = value;
+            figure.generateFigure();
+        },
+        changeY: (figure, value) => {
+            figure.centre.y = value;
+            figure.generateFigure();
+        },
+        changeZ: (figure, value) => {
+            figure.centre.z = value;
+            figure.generateFigure();
+        },
+        changeColor: (figure, value) => {
+            figure.color = value;
+            figure.generateFigure();
+        },
+        changeSize: (figure, value) => {
+            figure.size = value > 0 ? value : 0;
+            figure.generateFigure();
+        },
+        changeRadius: (figure, value) => {
+            figure.radius = value > 0 ? value : 0;
+            figure.generateFigure();
+        },
+        changeCount: (figure, value) => {
+            figure.count = value >= 3 ? value : 3;
+            figure.generateFigure();
+        },
+        changeHeight: (figure, value) => {
+            figure.height = value > 0 ? value : 0;
+            figure.generateFigure();
+        },
+        changeFocusX: (figure, value) => {
+            figure.focusOx = value;
+            figure.generateFigure();
+        },
+        changeFocusY: (figure, value) => {
+            figure.focusOy = value;
+            figure.generateFigure();
+        },
+        changeFocusZ: (figure, value) => {
+            figure.focusOz = value;
+            figure.generateFigure();
+        },
+        changeInnerRadius: (figure, value) => {
+            figure.innerRadius = value;
+            figure.generateFigure();
+        }
+
+
+    }
+
     const math3D = new Math3D({ WIN });
 
     const interval = setInterval(() => {
@@ -132,9 +184,9 @@ const Graph3D = () => {
     useEffect(() => {
         canvas.current = Canvas({
             id: 'canvas3D',
-            width: width,
-            height: height,
-            WIN: WIN,
+            width,
+            height,
+            WIN,
             callbacks: {
                 wheel,
                 mouseUp,
@@ -171,6 +223,10 @@ const Graph3D = () => {
 
     const showHideShadows = (value) => {
         checkBoxes[4].checked = value;
+    }
+
+    const changeLightPower = (value) => {
+        LIGHT.lumen = value;
     }
 
     const drawPoints = () => {
@@ -229,8 +285,6 @@ const Graph3D = () => {
 
     const renderScene = (FPS) => {
         if (canvas.current) {
-            //console.log(FPS);
-
             canvas.current.clear();
 
             if (checkBoxes[2].checked) {
@@ -320,8 +374,7 @@ const Graph3D = () => {
         })
     }
 
-    const addFigure = (figure) => {
-        const num = 0;
+    const addFigure = (figure, num = 0) => {
         switch (figure) {
             case "Cube":
                 scene[num] = new Cube({});
@@ -373,18 +426,29 @@ const Graph3D = () => {
 
             default:
                 break;
+
         }
+        scene[num].index = num;
 
         scene[num].setAnimation('rotateOy', 0.025, new Point());
         scene[num].setAnimation('rotateOx', 0.05, new Point());
+    }
+
+    const deleteFigure = (index) => {
+        scene[index] = null;
     }
 
     return (
         <div className="graph3D">
             <Graph3DUI
                 checkBoxes={checkBoxes}
-                figures={figures}
+                figuresList={figures}
+                scene={scene}
                 addFigure={addFigure}
+                changeLightPower={changeLightPower}
+                light={LIGHT}
+                figuresCallbacks={figuresCallbacks}
+                deleteFigure={deleteFigure}
             />
             <canvas id='canvas3D'></canvas>
         </div>

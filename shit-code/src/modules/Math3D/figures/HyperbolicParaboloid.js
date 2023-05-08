@@ -1,4 +1,4 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class HyperbolicParaboloid extends Figure {
     constructor({
@@ -7,8 +7,9 @@ export default class HyperbolicParaboloid extends Figure {
         count = 20,
         focusOx = 4,
         focusOz = 3,
+        name = 'HyperbolicParaboloid',
     }) {
-        super({ color, centre });
+        super({ color, centre, name });
         this.focusOx = focusOx;
         this.focusOz = focusOz;
         this.count = count;

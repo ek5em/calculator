@@ -1,4 +1,4 @@
-import {Figure, Point, Edge, Polygon} from "../entities"
+import { Figure, Point, Edge, Polygon } from "../entities"
 
 export default class ParabolicCylinder extends Figure {
     constructor({
@@ -6,12 +6,13 @@ export default class ParabolicCylinder extends Figure {
         centre,
         count = 20,
         height = 10,
-        width = 5,
+        focusOx = 5,
+        name = 'ParabolicCylinder',
     }) {
-        super({ color, centre });
+        super({ color, centre, name });
         this.count = count;
         this.height = height;
-        this.width = width;
+        this.focusOx = focusOx;
 
         this.generateFigure();
     }
@@ -24,7 +25,7 @@ export default class ParabolicCylinder extends Figure {
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.centre.x + sizeProp * Math.sqrt(this.width * j * propJ),
+                    this.centre.x + sizeProp * Math.sqrt(this.focusOx * j * propJ),
                     this.centre.y + sizeProp * (i * propI - this.height / 2),
                     this.centre.z + sizeProp * j * propJ,
                 ));
@@ -34,7 +35,7 @@ export default class ParabolicCylinder extends Figure {
         for (let i = 0; i < this.count; i++) {
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
-                    this.centre.x - sizeProp * Math.sqrt(this.width * j * propJ),
+                    this.centre.x - sizeProp * Math.sqrt(this.focusOx * j * propJ),
                     this.centre.y + sizeProp * (i * propI - this.height / 2),
                     this.centre.z + sizeProp * j * propJ,
                 ));

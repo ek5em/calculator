@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import Graph2DUI from "./Graph2DUI/Graph2DUI";
 
@@ -98,7 +97,13 @@ const Graph2D = () => {
 
             funcs.forEach(func => {
                 if (func) {
-                    const { f, color, width, a, b, showDerivative, showIntegral } = func;
+                    const { color, width, a, b, showDerivative, showIntegral } = func;
+                    let f;
+                    try {
+                        eval(`f = function (x) {return ${func.func}}`);
+                    } catch (e) {
+                        console.log(e);
+                    }
                     if (f) {
                         graph2D.current.printFunction(f, color, width);
                         if (showDerivative) {
@@ -124,11 +129,15 @@ const Graph2D = () => {
         }
     }
 
-    
+    const deleteFunction = (num) => {
+        funcs[num] = null;
+    }
 
     return (
         <div className="graph2D">
-            <Graph2DUI />
+            <Graph2DUI
+                funcsList={funcs}
+                delFunc={deleteFunction} />
             <canvas id='canvas2D'></canvas>
         </div>
     );

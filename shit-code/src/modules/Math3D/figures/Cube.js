@@ -1,11 +1,13 @@
-import {Figure, Point, Edge, Polygon} from "../entities";
+import { Figure, Point, Edge, Polygon } from "../entities";
 
 export default class Cube extends Figure {
     constructor({
         color = '#ee8844',
         size = 10,
-        centre }) {
-        super({ color, centre });
+        centre,
+        name = 'Cube',
+    }) {
+        super({ color, centre, name });
         this.size = size;
 
         this.generateFigure();
