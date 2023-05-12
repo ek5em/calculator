@@ -8,7 +8,7 @@ export default class HyperbolicCylinder extends Figure {
         focusOx = 5,
         focusOy = 5,
         focusOz = 8,
-        name = 'HyperbolicCylinder',
+        name = 'Гиперболический цилиндр',
     }) {
         super({ color, centre, name });
 

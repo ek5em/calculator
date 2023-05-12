@@ -7,7 +7,7 @@ export default class ParabolicCylinder extends Figure {
         count = 20,
         height = 10,
         focusOx = 5,
-        name = 'ParabolicCylinder',
+        name = 'Параболический цилиндр',
     }) {
         super({ color, centre, name });
         this.count = count;

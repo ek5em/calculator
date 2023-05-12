@@ -3,13 +3,11 @@ import { useRef, useEffect } from "react";
 const HyperbolicParaboloid = ({ callbacks, figure }) => {
     const refCount = useRef(null);
     const refFocusX = useRef(null);
-    const refFocusY = useRef(null);
     const refFocusZ = useRef(null);
 
     useEffect(() => {
         refCount.current.value = figure.count ? figure.count : '';
         refFocusX.current.value = figure.focusOx ? figure.focusOx : '';
-        refFocusY.current.value = figure.focusOy ? figure.focusOy : '';
         refFocusZ.current.value = figure.focusOz ? figure.focusOz : '';
     })
     return (

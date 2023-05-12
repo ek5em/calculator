@@ -70,24 +70,24 @@ const Graph3D = () => {
             text: 'Сфера',
         },
         {
-            name: 'Cone',
-            text: 'Конус',
-        },
-        {
             name: 'Ellipsoid',
             text: 'Эллипсоид',
+        },
+        {
+            name: 'Cone',
+            text: 'Конус',
         },
         {
             name: 'Cylinder',
             text: 'Цилиндр',
         },
         {
-            name: 'ParabolicCylinder',
-            text: 'Параболический цилиндр',
-        },
-        {
             name: 'HyperbolicCylinder',
             text: 'Гиперболический цилиндр',
+        },
+        {
+            name: 'ParabolicCylinder',
+            text: 'Параболический цилиндр',
         },
         {
             name: 'SingleCavityHyperboloid',
@@ -197,7 +197,7 @@ const Graph3D = () => {
             },
         });
 
-        addFigure('Cube');
+        addFigure('Куб');
 
         return () => {
             clearInterval(interval);
@@ -357,6 +357,7 @@ const Graph3D = () => {
                     math3D.transformPoint(math3D.rotateOy(-event.movementX / prop), figure.centre);
                 }
             })
+
         }
     }
 
@@ -376,51 +377,51 @@ const Graph3D = () => {
 
     const addFigure = (figure, num = 0) => {
         switch (figure) {
-            case "Cube":
+            case "Куб":
                 scene[num] = new Cube({});
                 break;
 
-            case "Cone":
+            case "Конус":
                 scene[num] = new Cone({});
                 break;
 
-            case "Cylinder":
+            case "Цилиндр":
                 scene[num] = new Cylinder({});
                 break;
 
-            case "DoubleCavityHyperboloid":
+            case "Двуполостный гиперболоид":
                 scene[num] = new DoubleCavityHyperboloid({});
                 break;
 
-            case "Ellipsoid":
+            case "Эллипсоид":
                 scene[num] = new Ellipsoid({});
                 break;
 
-            case "EllipticalParaboloid":
+            case "Эллиптический параболоид":
                 scene[num] = new EllipticalParaboloid({});
                 break;
 
-            case "HyperbolicParaboloid":
-                scene[num] = new HyperbolicParaboloid({});
-                break;
-
-            case "HyperbolicCylinder":
+            case "Гиперболический цилиндр":
                 scene[num] = new HyperbolicCylinder({});
                 break;
 
-            case "ParabolicCylinder":
+            case "Гиперболический параболоид":
+                scene[num] = new HyperbolicParaboloid({});
+                break;
+
+            case "Параболический цилиндр":
                 scene[num] = new ParabolicCylinder({});
                 break;
 
-            case "SingleCavityHyperboloid":
+            case "Однополостный гиперболоид":
                 scene[num] = new SingleCavityHyperboloid({});
                 break;
 
-            case "Sphere":
+            case "Сфера":
                 scene[num] = new Sphere({});
                 break;
 
-            case "Tor":
+            case "Тор":
                 scene[num] = new Tor({});
                 break;
 

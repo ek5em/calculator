@@ -3,6 +3,8 @@ import { useState } from "react";
 import SceneBlock from "./SceneBlock/SceneBlock";
 import FiguresList from "./FiguresList/FiguresList";
 
+import './FiguresSetting.css';
+
 const FiguresSetting = ({
     addFigure,
     showHideAddList,
@@ -23,9 +25,9 @@ const FiguresSetting = ({
     return (
         <div className="figures-setting">
             <div className="add-figure-block">
-                <button
+                <div
                     className="add-figure-button"
-                    onClick={showHideAddList}>Выбрать фигуру</button>
+                    onClick={showHideAddList}>Добавить фигуру</div>
                 {showAddList ? <FiguresList
                     figures={figuresList}
                     onClick={addFigureOnClickHandler}

@@ -13,7 +13,7 @@ import ParabolicCylinder from './Figures/ParabolicCylinder';
 import SingleCavityHyperboloid from './Figures/SingleCavityHyperboloid';
 import Tor from './Figures/Tor';
 
-import './FigureBlock';
+import './FigureBlock.css';
 
 const FigureBlock = ({ figure, callbacks, deleteFigureHandler }) => {
 
@@ -31,52 +31,58 @@ const FigureBlock = ({ figure, callbacks, deleteFigureHandler }) => {
 
     return (
         <>
-            <div className='figure-center'>
+            <span>{figure.name}</span>
+            <div className='figure-centre'>
                 <input
                     ref={refX}
+                    className='input-centre'
                     type='number'
                     placeholder='x'
                     onChange={() => callbacks.changeX(figure, refX.current.value - 0)}
                 />
                 <input
                     ref={refY}
+                    className='input-centre'
                     type='number'
                     placeholder='y'
                     onChange={() => callbacks.changeY(figure, refY.current.value - 0)}
                 />
                 <input
                     ref={refZ}
+                    className='input-centre'
                     type='number'
                     placeholder='z'
                     onChange={() => callbacks.changeZ(figure, refZ.current.value - 0)}
                 />
+
                 <input
                     ref={refColor}
+                    className='input-color'
                     type='color'
                     onChange={() => callbacks.changeColor(figure, refColor.current.value)}
                 />
             </div>
             <div className='figure-options'>
                 {
-                    figure.name === 'Cube' ? <Cube callbacks={callbacks} figure={figure} /> :
-                        figure.name === 'Sphere' ? <Sphere callbacks={callbacks} figure={figure} /> :
-                            figure.name === 'Cone' ? <Cone callbacks={callbacks} figure={figure} /> :
-                                figure.name === 'Cylinder' ? <Cylinder callbacks={callbacks} figure={figure} /> :
-                                    figure.name === 'DoubleCavityHyperboloid' ? <DoubleCavityHyperboloid callbacks={callbacks} figure={figure} /> :
-                                        figure.name === 'Ellipsoid' ? <Ellipsoid callbacks={callbacks} figure={figure} /> :
-                                            figure.name === 'EllipticalParaboloid' ? <EllipticalParaboloid callbacks={callbacks} figure={figure} /> :
-                                                figure.name === 'HyperbolicCylinder' ? <HyperbolicCylinder callbacks={callbacks} figure={figure} /> :
-                                                    figure.name === 'HyperbolicParaboloid' ? <HyperbolicParaboloid callbacks={callbacks} figure={figure} /> :
-                                                        figure.name === 'ParabolicCylinder' ? <ParabolicCylinder callbacks={callbacks} figure={figure} /> :
-                                                            figure.name === 'SingleCavityHyperboloid' ? <SingleCavityHyperboloid callbacks={callbacks} figure={figure} /> :
-                                                                figure.name === 'Tor' ? <Tor callbacks={callbacks} figure={figure} /> :
+                    figure.name === 'Куб' ? <Cube callbacks={callbacks} figure={figure} /> :
+                        figure.name === 'Сфера' ? <Sphere callbacks={callbacks} figure={figure} /> :
+                            figure.name === 'Конус' ? <Cone callbacks={callbacks} figure={figure} /> :
+                                figure.name === 'Цилиндр' ? <Cylinder callbacks={callbacks} figure={figure} /> :
+                                    figure.name === 'Двуполостный гиперболоид' ? <DoubleCavityHyperboloid callbacks={callbacks} figure={figure} /> :
+                                        figure.name === 'Эллипсоид' ? <Ellipsoid callbacks={callbacks} figure={figure} /> :
+                                            figure.name === 'Эллиптический параболоид' ? <EllipticalParaboloid callbacks={callbacks} figure={figure} /> :
+                                                figure.name === 'Гиперболический цилиндр' ? <HyperbolicCylinder callbacks={callbacks} figure={figure} /> :
+                                                    figure.name === 'Гиперболический параболоид' ? <HyperbolicParaboloid callbacks={callbacks} figure={figure} /> :
+                                                        figure.name === 'Параболический цилиндр' ? <ParabolicCylinder callbacks={callbacks} figure={figure} /> :
+                                                            figure.name === 'Однополостный гиперболоид' ? <SingleCavityHyperboloid callbacks={callbacks} figure={figure} /> :
+                                                                figure.name === 'Тор' ? <Tor callbacks={callbacks} figure={figure} /> :
                                                                     <></>
                 }
             </div>
-            <button
+            <div
                 className='delete-figure-button'
                 onClick={() => deleteFigureHandler(figure.index)}
-            >x</button>
+            >Удалить</div>
         </>
     )
 }

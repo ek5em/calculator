@@ -7,7 +7,7 @@ export default class HyperbolicParaboloid extends Figure {
         count = 20,
         focusOx = 4,
         focusOz = 3,
-        name = 'HyperbolicParaboloid',
+        name = 'Гиперболический параболоид',
     }) {
         super({ color, centre, name });
         this.focusOx = focusOx;

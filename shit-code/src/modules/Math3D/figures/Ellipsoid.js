@@ -8,7 +8,7 @@ export default class Ellipsoid extends Figure {
         count = 20,
         color = '#225533',
         centre,
-        name = 'Ellipsoid',
+        name = 'Эллипсоид',
     }) {
         super({ color, centre, name });
 

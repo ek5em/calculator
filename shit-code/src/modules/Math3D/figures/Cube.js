@@ -5,7 +5,7 @@ export default class Cube extends Figure {
         color = '#ee8844',
         size = 10,
         centre,
-        name = 'Cube',
+        name = 'Куб',
     }) {
         super({ color, centre, name });
         this.size = size;

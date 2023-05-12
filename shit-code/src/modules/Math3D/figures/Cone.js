@@ -6,7 +6,7 @@ export default class Cone extends Figure {
         height = 10,
         count = 20,
         color = '#335544',
-        name = 'Cone',
+        name = 'Конус',
         centre
     }) {
         super({ color, centre, name });

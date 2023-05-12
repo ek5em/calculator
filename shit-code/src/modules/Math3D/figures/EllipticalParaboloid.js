@@ -9,7 +9,7 @@ export default class EllipticalParaboloid extends Figure {
         focusOx = 4,
         focusOy = 3,
         focusOz = 5,
-        name = 'EllipticalParaboloid',
+        name = 'Эллиптический параболоид',
     }) {
         super({ color, centre, name });
         this.height = height;

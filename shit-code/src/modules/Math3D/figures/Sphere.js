@@ -6,7 +6,7 @@ export default class Sphere extends Figure {
         count = 20,
         color = "#532190",
         centre,
-        name = 'Sphere',
+        name = 'Сфера',
     }) {
         super({ color, centre, name });
 

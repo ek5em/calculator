@@ -20,20 +20,12 @@
     border-bottom-left-radius: 20px;
     margin: 1px 0 0 1px;
     background-color: #bdae2c;
-    justify-content: center;
     width: 400px;
     height: 800px;
-    max-height: 800px;
 }
 
-.add-figure-block {
-    width: 100%;
+.light-power-block {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-}
-
-.add-figure-button{
-    width: 200px;
+    height: 15px;
 }

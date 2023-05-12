@@ -7,7 +7,7 @@ export default class Cylinder extends Figure {
         height = 20,
         count = 20,
         radius = 10,
-        name = 'Cylinder',
+        name = 'Цилиндр',
     }) {
         super({ color, centre, name });
         this.count = count;

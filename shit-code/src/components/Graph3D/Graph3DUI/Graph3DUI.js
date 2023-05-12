@@ -49,15 +49,17 @@ const Graph3DUI = ({
                 <CheckBoxes
                     checkBoxes={checkBoxes}
                 />
-                <input
-                    className="light-power"
-                    type="range"
-                    step={1000}
-                    min={0}
-                    max={50000}
-                    ref={refLight}
-                    onChange={changeLightPowerHandler}
-                />
+                <div className="light-power-block">
+                    <input
+                        className="light-power"
+                        type="range"
+                        step={1000}
+                        min={0}
+                        max={50000}
+                        ref={refLight}
+                        onChange={changeLightPowerHandler}
+                    />
+                </div>
                 <FiguresSetting
                     addFigure={addFigureOnClick}
                     showHideAddList={showHideAddList}

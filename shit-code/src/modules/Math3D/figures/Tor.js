@@ -7,7 +7,7 @@ export default class Tor extends Figure {
         count = 20,
         color = '#482153',
         centre,
-        name = 'Tor',
+        name = 'Тор',
     }) {
         super({ color, centre, name });
 

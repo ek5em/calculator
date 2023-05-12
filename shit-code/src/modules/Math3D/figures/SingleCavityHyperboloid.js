@@ -8,7 +8,7 @@ export default class SingleCavityHyperboloid extends Figure {
         focusOx = 5,
         focusOy = 10,
         focusOz = 5,
-        name = 'SingleCavityHyperboloid',
+        name = 'Однополостный гиперболоид',
     }) {
         super({ color, centre, name });
         this.count = count;
