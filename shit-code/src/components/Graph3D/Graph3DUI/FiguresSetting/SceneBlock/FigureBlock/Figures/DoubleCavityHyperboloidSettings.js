@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-const Ellipsoid = ({ callbacks, figure }) => {
+const DoubleCavityHyperboloidSettings = ({ callbacks, figure }) => {
     const refCount = useRef(null);
     const refFocusX = useRef(null);
     const refFocusY = useRef(null);
@@ -42,4 +42,4 @@ const Ellipsoid = ({ callbacks, figure }) => {
     )
 }
 
-export default Ellipsoid;
+export default DoubleCavityHyperboloidSettings;

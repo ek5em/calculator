@@ -52,7 +52,7 @@ export default class Cylinder extends Figure {
                     (i + 1) * this.count + j,
                     (i + 1) * this.count + j + 1,
                     i * this.count + j + 1,
-                ], this.color));
+                ], this.color, i * this.count + j));
             }
 
             this.polygons.push(new Polygon([
@@ -60,7 +60,7 @@ export default class Cylinder extends Figure {
                 (i + 1) * this.count - 1,
                 (i + 2) * this.count - 1,
                 (i + 1) * this.count,
-            ], this.color));
+            ], this.color, (i + 1) * this.count - 1));
         }
     }
 }

@@ -4,6 +4,7 @@ export default class Polygon {
     constructor(
         points,
         color = '#ee8448',
+        index,
         centre = new Point(),
     ) {
         this.points = points;
@@ -13,6 +14,7 @@ export default class Polygon {
         this.color = this.hexToRGB(color);
         this.figureIndex = 0;
         this.radius = 0;
+        this.index = index;
     }
 
     hexToRGB(hex) {

@@ -1,13 +1,16 @@
+
 import { useRef, useEffect } from "react";
 
-const HyperbolicParaboloid = ({ callbacks, figure }) => {
+const SingleCavityHyperboloidSettings = ({ callbacks, figure }) => {
     const refCount = useRef(null);
     const refFocusX = useRef(null);
+    const refFocusY = useRef(null);
     const refFocusZ = useRef(null);
 
     useEffect(() => {
         refCount.current.value = figure.count ? figure.count : '';
         refFocusX.current.value = figure.focusOx ? figure.focusOx : '';
+        refFocusY.current.value = figure.focusOy ? figure.focusOy : '';
         refFocusZ.current.value = figure.focusOz ? figure.focusOz : '';
     })
     return (
@@ -25,6 +28,12 @@ const HyperbolicParaboloid = ({ callbacks, figure }) => {
                 onChange={() => callbacks.changeFocusX(figure, refFocusX.current.value - 0)}
             />
             <input
+                ref={refFocusY}
+                type="number"
+                placeholder="Фокус OY"
+                onChange={() => callbacks.changeFocusY(figure, refFocusY.current.value - 0)}
+            />
+            <input
                 ref={refFocusZ}
                 type="number"
                 placeholder="Фокус OZ"
@@ -34,4 +43,4 @@ const HyperbolicParaboloid = ({ callbacks, figure }) => {
     )
 }
 
-export default HyperbolicParaboloid;
+export default SingleCavityHyperboloidSettings;

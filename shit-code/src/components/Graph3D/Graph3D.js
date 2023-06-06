@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import useCanvas from "../../modules/Canvas/useCanvas";
+import useCheckboxes from "./hooks/useCheckboxes";
 import Math3D, {
     Point, Light, Cube, Cone, Cylinder,
     DoubleCavityHyperboloid, Ellipsoid, EllipticalParaboloid,
@@ -32,149 +33,15 @@ const Graph3D = () => {
 
     const LIGHT = new Light(20, 20, -10);
 
-    const checkBoxes = [
-        {
-            text: 'Точки',
-            onClick: (value) => showHidePoints(value),
-            checked: false,
-        },
-        {
-            text: 'Рёбра',
-            onClick: (value) => showHideEdges(value),
-            checked: false,
-        },
-        {
-            text: 'Полигоны',
-            onClick: (value) => showHidePolygons(value),
-            checked: true,
-        },
-        {
-            text: 'Анимация',
-            onClick: (value) => showHideAnimation(value),
-            checked: false,
-        },
-        {
-            text: 'Тени',
-            onClick: (value) => showHideShadows(value),
-            checked: false,
-        },
-    ]
-
-    const figures = [
-        {
-            name: 'Cube',
-            text: 'Куб',
-        },
-        {
-            name: 'Sphere',
-            text: 'Сфера',
-        },
-        {
-            name: 'Ellipsoid',
-            text: 'Эллипсоид',
-        },
-        {
-            name: 'Cone',
-            text: 'Конус',
-        },
-        {
-            name: 'Cylinder',
-            text: 'Цилиндр',
-        },
-        {
-            name: 'HyperbolicCylinder',
-            text: 'Гиперболический цилиндр',
-        },
-        {
-            name: 'ParabolicCylinder',
-            text: 'Параболический цилиндр',
-        },
-        {
-            name: 'SingleCavityHyperboloid',
-            text: 'Однополостный гиперболоид',
-        },
-        {
-            name: 'DoubleCavityHyperboloid',
-            text: 'Двуполостный гиперболоид',
-        },
-        {
-            name: 'EllipticalParaboloid',
-            text: 'Эллиптический параболоид',
-        },
-        {
-            name: 'HyperbolicParaboloid',
-            text: 'Гиперболический параболоид',
-        },
-        {
-            name: 'Tor',
-            text: 'Тор',
-        },
-    ]
-
-    const figuresCallbacks = {
-        changeX: (figure, value) => {
-            figure.centre.x = value;
-            figure.generateFigure();
-        },
-        changeY: (figure, value) => {
-            figure.centre.y = value;
-            figure.generateFigure();
-        },
-        changeZ: (figure, value) => {
-            figure.centre.z = value;
-            figure.generateFigure();
-        },
-        changeColor: (figure, value) => {
-            figure.color = value;
-            figure.generateFigure();
-        },
-        changeSize: (figure, value) => {
-            figure.size = value > 0 ? value : 0;
-            figure.generateFigure();
-        },
-        changeRadius: (figure, value) => {
-            figure.radius = value > 0 ? value : 0;
-            figure.generateFigure();
-        },
-        changeCount: (figure, value) => {
-            figure.count = value >= 3 ? value : 3;
-            figure.generateFigure();
-        },
-        changeHeight: (figure, value) => {
-            figure.height = value > 0 ? value : 0;
-            figure.generateFigure();
-        },
-        changeFocusX: (figure, value) => {
-            figure.focusOx = value;
-            figure.generateFigure();
-        },
-        changeFocusY: (figure, value) => {
-            figure.focusOy = value;
-            figure.generateFigure();
-        },
-        changeFocusZ: (figure, value) => {
-            figure.focusOz = value;
-            figure.generateFigure();
-        },
-        changeInnerRadius: (figure, value) => {
-            figure.innerRadius = value;
-            figure.generateFigure();
-        }
-
-
-    }
+    const checkBoxes = useCheckboxes({
+        showHideAnimation,
+        showHideEdges,
+        showHidePoints,
+        showHidePolygons,
+        showHideShadows,
+    })
 
     const math3D = new Math3D({ WIN });
-
-    const interval = setInterval(() => {
-        if (checkBoxes[3].checked) {
-            scene.forEach((figure) => {
-                if (figure) {
-                    figure.doAnimation(math3D);
-                }
-            })
-        }
-    }, 60);
 
     const Canvas = useCanvas((FPS) => renderScene(FPS));
     const canvas = useRef(null);
@@ -197,31 +64,41 @@ const Graph3D = () => {
             },
         });
 
-        addFigure('Куб');
+        addFigure('Двуполостный гиперболоид');
+
+        const interval = setInterval(() => {
+            if (checkBoxes[3].checked) {
+                scene.forEach((figure) => {
+                    if (figure) {
+                        figure.doAnimation(math3D);
+                    }
+                })
+            }
+        }, 60);
 
         return () => {
             clearInterval(interval);
-            canvas.current = null
+            canvas.current = null;
         }
     })
 
-    const showHidePoints = (value) => {
+    function showHidePoints(value) {
         checkBoxes[0].checked = value;
     }
 
-    const showHideEdges = (value) => {
+    function showHideEdges(value) {
         checkBoxes[1].checked = value;
     }
 
-    const showHidePolygons = (value) => {
+    function showHidePolygons(value) {
         checkBoxes[2].checked = value;
     }
 
-    const showHideAnimation = (value) => {
+    function showHideAnimation(value) {
         checkBoxes[3].checked = value;
     }
 
-    const showHideShadows = (value) => {
+    function showHideShadows(value) {
         checkBoxes[4].checked = value;
     }
 
@@ -280,6 +157,11 @@ const Graph3D = () => {
                 }),
                 polygon.rgbToColor(r, g, b),
             );
+
+            // canvas.current.printText(
+            //     polygon.index,
+            //     math3D.xs(polygon.centre),
+            //     math3D.ys(polygon.centre));
         });
     }
 
@@ -443,12 +325,10 @@ const Graph3D = () => {
         <div className="graph3D">
             <Graph3DUI
                 checkBoxes={checkBoxes}
-                figuresList={figures}
                 scene={scene}
                 addFigure={addFigure}
                 changeLightPower={changeLightPower}
                 light={LIGHT}
-                figuresCallbacks={figuresCallbacks}
                 deleteFigure={deleteFigure}
             />
             <canvas id='canvas3D'></canvas>

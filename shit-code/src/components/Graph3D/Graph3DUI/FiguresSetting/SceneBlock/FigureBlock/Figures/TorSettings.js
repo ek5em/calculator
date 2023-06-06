@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-const Tor = ({ callbacks, figure }) => {
+const TorSettings = ({ callbacks, figure }) => {
     const refRadius = useRef(null);
     const refInnerRadius = useRef(null);
 
@@ -26,4 +26,4 @@ const Tor = ({ callbacks, figure }) => {
     )
 }
 
-export default Tor;
+export default TorSettings;

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const Cylinder = ({ callbacks, figure }) => {
+const ConeSettings = ({ callbacks, figure }) => {
 
     const refRadius = useRef(null);
     const refCount = useRef(null);
@@ -37,4 +37,4 @@ const Cylinder = ({ callbacks, figure }) => {
     )
 }
 
-export default Cylinder;
+export default ConeSettings;

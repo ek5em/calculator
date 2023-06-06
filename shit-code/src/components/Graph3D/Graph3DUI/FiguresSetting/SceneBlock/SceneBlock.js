@@ -4,7 +4,7 @@ import FigureBlock from './FigureBlock/FigureBlock';
 
 import './SceneBlock.css';
 
-const SceneBlock = ({ scene, figuresCallbacks, deleteFigure }) => {
+const SceneBlock = ({ scene, deleteFigure }) => {
 
     const [delFigure, setDelFigure] = useState(0);
 
@@ -24,7 +24,6 @@ const SceneBlock = ({ scene, figuresCallbacks, deleteFigure }) => {
                         >
                             <FigureBlock
                                 figure={figure}
-                                callbacks={figuresCallbacks}
                                 deleteFigureHandler={deleteFigureHandler}
                             />
                         </div>

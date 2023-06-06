@@ -67,19 +67,20 @@ export default class HyperbolicCylinder extends Figure {
 
         for (let i = 0; i < this.count - 1; i++) {
             for (let j = 0; j < this.count - 1; j++) {
+
                 this.polygons.push(new Polygon([
                     i * this.count + j,
                     (i + 1) * this.count + j,
                     (i + 1) * this.count + j + 1,
                     i * this.count + j + 1,
-                ], this.color));
+                ], this.color, i * this.count + j - i));
 
                 this.polygons.push(new Polygon([
                     i * this.count + sqrCount + j,
                     (i + 1) * this.count + sqrCount + j,
                     (i + 1) * this.count + sqrCount + j + 1,
                     i * this.count + sqrCount + j + 1,
-                ], this.color));
+                ], this.color, i * this.count + sqrCount + j - i))
             }
         }
     }

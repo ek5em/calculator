@@ -20,9 +20,10 @@ export default class DoubleCavityHyperboloid extends Figure {
     }
 
     generatePoints() {
+        this.count = (this.count % 2) ? this.count + 1 : this.count;
         const focusProp = 0.1;
         const prop = 2 * Math.PI / this.count;
-        for (let i = 0; i < this.count; i++) {
+        for (let i = 0; i < this.count / 2; i++) {
             const k = i - this.count / 2;
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
@@ -33,7 +34,7 @@ export default class DoubleCavityHyperboloid extends Figure {
             }
         }
 
-        for (let i = 0; i < this.count; i++) {
+        for (let i = 0; i < this.count / 2; i++) {
             const k = i - this.count / 2;
             for (let j = 0; j < this.count; j++) {
                 this.points.push(new Point(
@@ -46,55 +47,49 @@ export default class DoubleCavityHyperboloid extends Figure {
     }
 
     generateEdges() {
-        const sqrCount = Math.pow(this.count, 2);
-        for (let i = 0; i < this.count; i++) {
-            const k = i ? i * this.count - 1 : i;
-            for (let j = 0; j < this.count - 1; j++) {
-                this.edges.push(new Edge(i * this.count + j, i * this.count + j + 1));
-                this.edges.push(new Edge((i ? i - 1 : i) * this.count + j, i * this.count + j));
-                this.edges.push(new Edge(i * this.count + sqrCount + j, i * this.count + sqrCount + j + 1));
-                this.edges.push(new Edge((i ? i - 1 : i) * this.count + sqrCount + j, i * this.count + sqrCount + j));
+        for (let i = 0; i < this.count * 2; i++) {
+            for (let j = 0; j < this.count / 2 - 1; j++) {
+                this.edges.push(new Edge(i * this.count / 2 + j, i * this.count / 2 + j + 1));
             }
-            this.edges.push(new Edge(k, k + this.count));
+        }
+
+        for (let i = 0; i < this.count; i++) {
             this.edges.push(new Edge(i * this.count, (i + 1) * this.count - 1));
-            this.edges.push(new Edge(k + sqrCount, k + sqrCount + this.count));
-            this.edges.push(new Edge(i * this.count + sqrCount, (i + 1) * this.count + sqrCount - 1));
+            this.edges.push(new Edge(i * this.count + this.count / 2, i * this.count + this.count / 2 - 1));
+        }
+
+        for (let i = 0; i < this.count - 1; i++) {
+            for (let j = 0; j < this.count; j++) {
+                if (i !== this.count / 2 - 1) {
+                    this.edges.push(new Edge(i * this.count + j, (i + 1) * this.count + j));
+                }
+            }
         }
     }
 
     generatePolygons() {
-        const sqrCount = Math.pow(this.count, 2);
+        let whiteCol = true;
         for (let i = 0; i < this.count - 1; i++) {
-            for (let j = 0; j < this.count - 1; j++) {
-                this.polygons.push(new Polygon([
-                    i * this.count + j,
-                    (i + 1) * this.count + j,
-                    (i + 1) * this.count + j + 1,
-                    i * this.count + j + 1,
-                ], this.color));
+            if (i !== this.count / 2 - 1) {
+                let whiteRow = whiteCol;
+                whiteCol = (i % 2) ? !whiteCol : whiteCol;;
+                for (let j = 0; j < this.count - 1; j++) {
+                    this.polygons.push(new Polygon([
+                        i * this.count + j,
+                        (i + 1) * this.count + j,
+                        (i + 1) * this.count + j + 1,
+                        i * this.count + j + 1,
+                    ], whiteRow ? '#ffffff' : '#000000',));
+                    whiteRow = (j % 2) ? !whiteRow : whiteRow;
+                }
 
                 this.polygons.push(new Polygon([
-                    i * this.count + sqrCount + j,
-                    (i + 1) * this.count + sqrCount + j,
-                    (i + 1) * this.count + sqrCount + j + 1,
-                    i * this.count + sqrCount + j + 1,
-                ], this.color));
-
+                    i * this.count,
+                    (i + 1) * this.count - 1,
+                    (i + 2) * this.count - 1,
+                    (i + 1) * this.count,
+                ], whiteRow ? '#ffffff' : '#000000'));
             }
-
-            this.polygons.push(new Polygon([
-                i * this.count,
-                (i + 1) * this.count - 1,
-                (i + 2) * this.count - 1,
-                (i + 1) * this.count,
-            ], this.color));
-
-            this.polygons.push(new Polygon([
-                i * this.count + sqrCount,
-                (i + 1) * this.count + sqrCount - 1,
-                (i + 2) * this.count + sqrCount - 1,
-                (i + 1) * this.count + sqrCount,
-            ], this.color));
         }
     }
 }

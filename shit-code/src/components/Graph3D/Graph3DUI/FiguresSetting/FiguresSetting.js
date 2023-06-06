@@ -8,10 +8,8 @@ import './FiguresSetting.css';
 const FiguresSetting = ({
     addFigure,
     showHideAddList,
-    figuresList,
     showAddList,
     scene,
-    figuresCallbacks,
     deleteFigure
 }) => {
 
@@ -29,7 +27,6 @@ const FiguresSetting = ({
                     className="add-figure-button"
                     onClick={showHideAddList}>Добавить фигуру</div>
                 {showAddList ? <FiguresList
-                    figures={figuresList}
                     onClick={addFigureOnClickHandler}
                 /> :
                     <></>
@@ -37,7 +34,6 @@ const FiguresSetting = ({
             </div>
             <SceneBlock
                 scene={scene}
-                figuresCallbacks={figuresCallbacks}
                 deleteFigure={deleteFigure}
             />
         </div>

@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-const Sphere = ({ callbacks, figure }) => {
+const SphereSettings = ({ callbacks, figure }) => {
     const refRadius = useRef(null);
     const refCount = useRef(null);
 
@@ -27,4 +27,4 @@ const Sphere = ({ callbacks, figure }) => {
     )
 }
 
-export default Sphere;
+export default SphereSettings;

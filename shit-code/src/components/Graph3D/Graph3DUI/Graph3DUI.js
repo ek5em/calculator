@@ -8,11 +8,9 @@ import './Graph3DUI.css';
 const Graph3DUI = ({
     addFigure,
     checkBoxes,
-    figuresList,
     changeLightPower,
     scene,
     light,
-    figuresCallbacks,
     deleteFigure
 }) => {
     const [showPanel, setShowPanel] = useState(false);
@@ -63,10 +61,8 @@ const Graph3DUI = ({
                 <FiguresSetting
                     addFigure={addFigureOnClick}
                     showHideAddList={showHideAddList}
-                    figuresList={figuresList}
                     showAddList={showAddList}
                     scene={scene}
-                    figuresCallbacks={figuresCallbacks}
                     deleteFigure={deleteFigure}
                 />
             </div>

@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-const Cube = ({ callbacks, figure }) => {
+const CubeSettings = ({ callbacks, figure }) => {
     const refSize = useRef(null);
 
     useEffect(() => {
@@ -18,4 +18,4 @@ const Cube = ({ callbacks, figure }) => {
     )
 }
 
-export default Cube;
+export default CubeSettings;

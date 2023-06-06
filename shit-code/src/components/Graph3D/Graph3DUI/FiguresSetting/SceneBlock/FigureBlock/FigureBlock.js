@@ -1,21 +1,24 @@
 import { useRef, useEffect } from 'react';
 
-import Cube from './Figures/Cube';
-import Sphere from './Figures/Sphere';
-import Cone from './Figures/Cone';
-import Cylinder from './Figures/Cylinder';
-import DoubleCavityHyperboloid from './Figures/DoubleCavityHyperboloid';
-import Ellipsoid from './Figures/Ellipsoid';
-import EllipticalParaboloid from './Figures/EllipticalParaboloid';
-import HyperbolicCylinder from './Figures/HyperbolicCylinder';
-import HyperbolicParaboloid from './Figures/HyperbolicParaboloid';
-import ParabolicCylinder from './Figures/ParabolicCylinder';
-import SingleCavityHyperboloid from './Figures/SingleCavityHyperboloid';
-import Tor from './Figures/Tor';
+import useFiguresCallbacks from '../../../../hooks/useFiguresCallbacks';
+import Cube from './Figures/CubeSettings';
+import Sphere from './Figures/SphereSettings';
+import Cone from './Figures/ConeSettings';
+import Cylinder from './Figures/CylinderSettings';
+import DoubleCavityHyperboloid from './Figures/DoubleCavityHyperboloidSettings';
+import Ellipsoid from './Figures/EllipsoidSettings';
+import EllipticalParaboloid from './Figures/EllipticalParaboloidSettings';
+import HyperbolicCylinder from './Figures/HyperbolicCylinderSettings';
+import HyperbolicParaboloid from './Figures/HyperbolicParaboloidSettings';
+import ParabolicCylinder from './Figures/ParabolicCylinderSettings';
+import SingleCavityHyperboloid from './Figures/SingleCavityHyperboloidSettings';
+import Tor from './Figures/TorSettings';
 
 import './FigureBlock.css';
 
-const FigureBlock = ({ figure, callbacks, deleteFigureHandler }) => {
+const FigureBlock = ({ figure, deleteFigureHandler }) => {
+
+    const callbacks = useFiguresCallbacks();
 
     const refX = useRef(null);
     const refY = useRef(null);

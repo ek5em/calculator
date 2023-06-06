@@ -1,10 +1,12 @@
+import useFiguresNames from '../../../hooks/useFiguresNames';
+
 import './FiguresList.css';
 
-const FiguresList = ({ figures, onClick }) => {
+const FiguresList = ({ onClick }) => {
     return (
         <div className='figures-list'>
             <div>
-                {figures.map((figure, index) => {
+                {useFiguresNames().map((figure, index) => {
                     return (
                         <div
                             key={index}
