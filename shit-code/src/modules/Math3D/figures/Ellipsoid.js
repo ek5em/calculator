@@ -55,7 +55,10 @@ export default class Ellipsoid extends Figure {
                     j + 1 + i * this.count,
                     j + 1 + (i + 1) * this.count,
                     j + (i + 1) * this.count,
-                ], this.color));
+                ], this.color,
+                    i >= this.count / 2 ?
+                        2 * this.count * (this.count - i - 1 / 2) + j + 1 :
+                        j + i * this.count * 2 + 1));
             }
 
             this.polygons.push(new Polygon([
@@ -63,14 +66,17 @@ export default class Ellipsoid extends Figure {
                 this.points.length - (i ? i - 1 : i) * this.count - 1,
                 i * this.count,
                 (i + 1) * this.count,
-            ], this.color));
+            ], this.color,
+                i >= this.count / 2 ?
+                    2 * (this.count - i - 1 / 2) * this.count : 2 * i * this.count));
+
 
             this.polygons.push(new Polygon([
                 0,
                 this.points.length - i - 1,
                 this.points.length - i - 2,
                 0,
-            ], this.color))
+            ], this.color, 2 * this.count - i - 1));
         }
 
         this.polygons.push(new Polygon([
@@ -78,6 +84,6 @@ export default class Ellipsoid extends Figure {
             this.points.length - this.count,
             this.count * 2 - 1,
             0,
-        ], this.color))
+        ], this.color, this.count));
     }
 }

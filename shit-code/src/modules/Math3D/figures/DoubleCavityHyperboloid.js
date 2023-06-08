@@ -68,27 +68,25 @@ export default class DoubleCavityHyperboloid extends Figure {
     }
 
     generatePolygons() {
-        let whiteCol = true;
+        let index = 0;
         for (let i = 0; i < this.count - 1; i++) {
             if (i !== this.count / 2 - 1) {
-                let whiteRow = whiteCol;
-                whiteCol = (i % 2) ? !whiteCol : whiteCol;;
                 for (let j = 0; j < this.count - 1; j++) {
+                    index++;
                     this.polygons.push(new Polygon([
                         i * this.count + j,
                         (i + 1) * this.count + j,
                         (i + 1) * this.count + j + 1,
                         i * this.count + j + 1,
-                    ], whiteRow ? '#ffffff' : '#000000',));
-                    whiteRow = (j % 2) ? !whiteRow : whiteRow;
+                    ], this.color, index));
                 }
-
+                index++;
                 this.polygons.push(new Polygon([
                     i * this.count,
                     (i + 1) * this.count - 1,
                     (i + 2) * this.count - 1,
                     (i + 1) * this.count,
-                ], whiteRow ? '#ffffff' : '#000000'));
+                ], this.color, index));
             }
         }
     }

@@ -56,14 +56,18 @@ export default class Cone extends Figure {
     }
 
     generatePolygons() {
+        let whiteCol = true;
         for (let i = 0; i < this.count * 2 - 1; i++) {
+            let whiteRow = whiteCol;
+            whiteCol = !whiteCol;
             for (let j = 0; j < this.count - 1; j++) {
                 this.polygons.push(new Polygon([
                     i * this.count + j,
                     (i + 1) * this.count + j,
                     (i + 1) * this.count + j + 1,
                     i * this.count + j + 1,
-                ], this.color));
+                ], whiteRow ? '#ffffff' : '#000000'));
+                whiteRow = !whiteRow;
             }
 
             this.polygons.push(new Polygon([
@@ -71,7 +75,7 @@ export default class Cone extends Figure {
                 (i + 1) * this.count - 1,
                 (i + 2) * this.count - 1,
                 (i + 1) * this.count,
-            ], this.color));
+            ], whiteRow ? '#ffffff' : '#000000'));
         }
     }
 }

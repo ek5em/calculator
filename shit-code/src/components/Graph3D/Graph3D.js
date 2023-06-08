@@ -64,7 +64,7 @@ const Graph3D = () => {
             },
         });
 
-        addFigure('Двуполостный гиперболоид');
+        addFigure('Сфера');
 
         const interval = setInterval(() => {
             if (checkBoxes[3].checked) {

@@ -9,12 +9,12 @@ const useCheckboxes = ({
         {
             text: 'Точки',
             onClick: (value) => showHidePoints(value),
-            checked: true,
+            checked: false,
         },
         {
             text: 'Рёбра',
             onClick: (value) => showHideEdges(value),
-            checked: true,
+            checked: false,
         },
         {
             text: 'Полигоны',

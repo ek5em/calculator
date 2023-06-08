@@ -55,12 +55,14 @@ export default class Sphere extends Figure {
                 ], this.color));
             }
 
+
             this.polygons.push(new Polygon([
                 this.points.length - i * this.count - 1,
                 this.points.length - (i ? i - 1 : i) * this.count - 1,
                 i * this.count,
                 (i + 1) * this.count,
             ], this.color));
+
 
             this.polygons.push(new Polygon([
                 0,
@@ -69,6 +71,7 @@ export default class Sphere extends Figure {
                 0,
             ], this.color))
         }
+
 
         this.polygons.push(new Polygon([
             0,

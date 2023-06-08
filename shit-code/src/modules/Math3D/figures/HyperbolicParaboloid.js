@@ -51,7 +51,7 @@ export default class HyperbolicParaboloid extends Figure {
                     (i + 1) * this.count + j,
                     (i + 1) * this.count + j + 1,
                     i * this.count + j + 1,
-                ], this.color));
+                ], this.color, i * this.count + j));
             }
         }
     }
