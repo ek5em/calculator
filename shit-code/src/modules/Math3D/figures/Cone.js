@@ -56,18 +56,22 @@ export default class Cone extends Figure {
     }
 
     generatePolygons() {
-        let whiteCol = true;
-        for (let i = 0; i < this.count * 2 - 1; i++) {
-            let whiteRow = whiteCol;
-            whiteCol = !whiteCol;
+        const countSqr = Math.pow(this.count, 2);
+        for (let i = 0; i < this.count - 1; i++) {
             for (let j = 0; j < this.count - 1; j++) {
                 this.polygons.push(new Polygon([
                     i * this.count + j,
                     (i + 1) * this.count + j,
                     (i + 1) * this.count + j + 1,
                     i * this.count + j + 1,
-                ], whiteRow ? '#ffffff' : '#000000'));
-                whiteRow = !whiteRow;
+                ], this.color, i * this.count + j));
+
+                this.polygons.push(new Polygon([
+                    i * this.count + countSqr + j,
+                    (i + 1) * this.count + countSqr + j,
+                    (i + 1) * this.count + countSqr + j + 1,
+                    i * this.count + j + countSqr + 1,
+                ], this.color, (i - 1) * this.count + countSqr + j));
             }
 
             this.polygons.push(new Polygon([
@@ -75,7 +79,14 @@ export default class Cone extends Figure {
                 (i + 1) * this.count - 1,
                 (i + 2) * this.count - 1,
                 (i + 1) * this.count,
-            ], whiteRow ? '#ffffff' : '#000000'));
+            ], this.color, (i + 1) * this.count - 1));
+
+            this.polygons.push(new Polygon([
+                i * this.count + countSqr,
+                (i + 1) * this.count + countSqr - 1,
+                (i + 2) * this.count + countSqr - 1,
+                (i + 1) * this.count + countSqr,
+            ], this.color, i * this.count + countSqr - 1));
         }
     }
 }

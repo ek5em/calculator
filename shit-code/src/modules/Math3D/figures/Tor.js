@@ -46,6 +46,7 @@ export default class Tor extends Figure {
     }
 
     generatePolygons() {
+
         for (let i = 0; i < this.count - 1; i++) {
             for (let j = 0; j < this.count - 1; j++) {
                 this.polygons.push(new Polygon([
@@ -53,7 +54,7 @@ export default class Tor extends Figure {
                     (i + 1) * this.count + j,
                     (i + 1) * this.count + j + 1,
                     i * this.count + j + 1,
-                ], this.color));
+                ], this.color, i * this.count + j));
             }
 
             this.polygons.push(new Polygon([
@@ -61,14 +62,14 @@ export default class Tor extends Figure {
                 (i + 1) * this.count - 1,
                 (i + 2) * this.count - 1,
                 (i + 1) * this.count,
-            ], this.color));
+            ], this.color, (i + 1) * this.count - 1));
 
             this.polygons.push(new Polygon([
                 i,
                 this.points.length - this.count + i,
                 this.points.length - this.count + i + 1,
                 i + 1,
-            ], this.color))
+            ], this.color, (this.count - 1) * this.count + i));
         }
 
         this.polygons.push(new Polygon([
@@ -76,6 +77,6 @@ export default class Tor extends Figure {
             this.points.length - this.count,
             0,
             this.count - 1,
-        ], this.color));
+        ], this.color, Math.pow(this.count, 2) - 1));
     }
 }
